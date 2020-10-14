@@ -12,13 +12,13 @@ Shader::Shader()
 }
 
 
-void Shader::initFromSource(const ShaderType type, const string &source)
+void Shader::initFromSource(const ShaderType type, const string& source)
 {
-	const char *sourcePtr = source.c_str();
+	const char* sourcePtr = source.c_str();
 	GLint status;
 	char buffer[512];
 
-	switch(type)
+	switch (type)
 	{
 	case VERTEX_SHADER:
 		shaderId = glCreateShader(GL_VERTEX_SHADER);
@@ -27,7 +27,7 @@ void Shader::initFromSource(const ShaderType type, const string &source)
 		shaderId = glCreateShader(GL_FRAGMENT_SHADER);
 		break;
 	}
-	if(shaderId == 0)
+	if (shaderId == 0)
 		return;
 	glShaderSource(shaderId, 1, &sourcePtr, NULL);
 	glCompileShader(shaderId);
@@ -37,11 +37,11 @@ void Shader::initFromSource(const ShaderType type, const string &source)
 	errorLog.assign(buffer);
 }
 
-bool Shader::initFromFile(const ShaderType type, const string &filename)
+bool Shader::initFromFile(const ShaderType type, const string& filename)
 {
 	string shaderSource;
 
-	if(!loadShaderSource(filename, shaderSource))
+	if (!loadShaderSource(filename, shaderSource))
 		return false;
 	initFromSource(type, shaderSource);
 
@@ -65,17 +65,17 @@ bool Shader::isCompiled() const
 	return compiled;
 }
 
-const string &Shader::log() const
+const string& Shader::log() const
 {
 	return errorLog;
 }
 
-bool Shader::loadShaderSource(const string &filename, string &shaderSource)
+bool Shader::loadShaderSource(const string& filename, string& shaderSource)
 {
 	ifstream fin;
 
 	fin.open(filename.c_str());
-	if(!fin.is_open())
+	if (!fin.is_open())
 		return false;
 	shaderSource.assign(istreambuf_iterator<char>(fin), istreambuf_iterator<char>());
 

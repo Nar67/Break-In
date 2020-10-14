@@ -115,10 +115,13 @@ void TileMap::prepareArrays(const glm::vec2 &minCoords, ShaderProgram &program)
 				// Non-empty tile
 				nTiles++;
 				posTile = glm::vec2(minCoords.x + i * tileSize, minCoords.y + j * tileSize);
-				texCoordTile[0] = glm::vec2(float((tile-1)%2) / tilesheetSize.x, float((tile-1)/2) / tilesheetSize.y);
-				texCoordTile[1] = texCoordTile[0] + tileTexSize;
+				if (tile == 1) {
+					texCoordTile[0] = glm::vec2(float(0) / tilesheetSize.x, float(9.9) / tilesheetSize.y);
+					texCoordTile[1] = texCoordTile[0] + tileTexSize;
+				}		
+							
 				//texCoordTile[0] += halfTexel;
-				texCoordTile[1] -= halfTexel;
+				//texCoordTile[1] -= halfTexel;
 				// First triangle
 				vertices.push_back(posTile.x); vertices.push_back(posTile.y);
 				vertices.push_back(texCoordTile[0].x); vertices.push_back(texCoordTile[0].y);

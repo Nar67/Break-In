@@ -30,7 +30,7 @@ private:
 	void initShaders();
 
 private:
-	TileMap *map;
+	TileMap* map;
 	ShaderProgram texProgram;
 	float currentTime;
 	glm::mat4 projection;

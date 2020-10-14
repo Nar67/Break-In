@@ -89,7 +89,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <LibraryPath>..\libs\freetype-2.3.5-1-bin;..\libs\Simple OpenGL Image Library;..\libs\freeglut;..\libs\glew-1.13.0;$(LibraryPath)</LibraryPath>
+    <LibraryPath>.\libs\freetype-2.3.5-1-bin;.\libs\Simple OpenGL Image Library;.\libs\freeglut;.\libs\glew-1.13.0;$(LibraryPath)</LibraryPath>
+    <ReferencePath>$(ReferencePath)</ReferencePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -106,12 +107,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>..\libs\Simple OpenGL Image Library\src;..\libs\glm;..\libs\freetype-2.3.5-1-bin\include;..\libs\glew-1.13.0\include;..\libs\freeglut\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\libs\Simple OpenGL Image Library\src;.\libs\glm;.\libs\glew-1.13.0\include;.\libs\freeglut\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>..\libs\Simple OpenGL Image Library\projects\VC9\Debug;..\libs\freeglut\lib;..\libs\freetype-2.3.5-1-bin\lib;..\libs\glew-1.13.0\lib\Release\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>.\libs\Simple OpenGL Image Library\projects\VC9\Debug;.\libs\freeglut\lib;.\libs\freetype-2.3.5-1-bin\lib;.\libs\glew-1.13.0\lib\Release\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>freeglut.lib;freetype.lib;SOIL.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
