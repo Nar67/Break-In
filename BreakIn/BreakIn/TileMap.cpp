@@ -93,7 +93,7 @@ bool TileMap::loadLevel(const string& levelFile)
 		for (int i = 0; i < mapSize.x; i++)
 		{
 			fin.get(tile);
-			map[j * mapSize.x + i] = tile - int('0');
+			map[j * mapSize.x + i] = tile;
 		}
 		fin.get(tile);
 #ifndef _WIN32
@@ -118,31 +118,31 @@ void TileMap::prepareArrays(const glm::vec2& minCoords, ShaderProgram& program)
 		for (int i = 0; i < mapSize.x; i++)
 		{
 			tile = map[j * mapSize.x + i];
-			if (tile != 0) {
+			if (tile != 'a') {
 				// Non-empty tile
 				nTiles++;
 				posTile = glm::vec2(minCoords.x + i * tileSize, minCoords.y + j * tileSize / 2);
 
 				switch (tile) {
-				case 1:
+				case 'b':
 					texCoordTile[0] = glm::vec2(float(1) / tilesheetSize.x, float(21) / tilesheetSize.y);
 					break;
-				case 2:
+				case 'c':
 					texCoordTile[0] = glm::vec2(float(1) / tilesheetSize.x, float(22) / tilesheetSize.y);
 					break;
-				case 3: //vermell
+				case 'd': //vermell
 					texCoordTile[0] = glm::vec2(float(0) / tilesheetSize.x, float(1) / tilesheetSize.y);
 					//texCoordTile[0] += halfTexel;
 					break;
-				case 4://blau
+				case 'e'://blau
 					texCoordTile[0] = glm::vec2(float(2) / tilesheetSize.x, float(1) / tilesheetSize.y);
 					//texCoordTile[0] += halfTexel;
 					break;
-				case 5://verd
+				case 'f'://verd
 					texCoordTile[0] = glm::vec2(float(3) / tilesheetSize.x, float(0) / tilesheetSize.y);
 					//texCoordTile[0] += halfTexel;
 					break;
-				case 6://blanc
+				case 'g'://blanc
 					texCoordTile[0] = glm::vec2(float(1) / tilesheetSize.x, float(1) / tilesheetSize.y);
 				default:
 					break;
