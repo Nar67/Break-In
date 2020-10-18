@@ -1,3 +1,5 @@
-2
+4
 levels/level01.txt
 levels/klvl01.txt
+levels/plvl01.txt
+levels/blvl01.txt

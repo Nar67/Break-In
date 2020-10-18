@@ -120,10 +120,10 @@ void TileMap::prepareArrays(const glm::vec2& minCoords, ShaderProgram& program)
 				posTile = glm::vec2(minCoords.x + i * tileSize, minCoords.y + j * tileSize / 2);
 
 				switch (tile) {
-				case 'b':
+				case 'b': //brick top
 					texCoordTile[0] = glm::vec2(float(1) / tilesheetSize.x, float(21) / tilesheetSize.y);
 					break;
-				case 'c':
+				case 'c': // brick bottom
 					texCoordTile[0] = glm::vec2(float(1) / tilesheetSize.x, float(22) / tilesheetSize.y);
 					break;
 				case 'd': //vermell
@@ -146,6 +146,15 @@ void TileMap::prepareArrays(const glm::vec2& minCoords, ShaderProgram& program)
 					break;
 				case 'k'://key bottom
 					texCoordTile[0] = glm::vec2(float(0) / tilesheetSize.x, float(1) / tilesheetSize.y);
+					break;
+				case 'o'://platform left
+					texCoordTile[0] = glm::vec2(float(0) / tilesheetSize.x, float(0) / tilesheetSize.y);
+					break;
+				case 'p'://platform right
+					texCoordTile[0] = glm::vec2(float(1) / tilesheetSize.x, float(0) / tilesheetSize.y);
+					break;
+				case 'l'://ball bottom
+					texCoordTile[0] = glm::vec2(float(0) / tilesheetSize.x, float(0) / tilesheetSize.y);
 					break;
 				default:
 					break;
