@@ -4,6 +4,9 @@
 
 #include <glm/glm.hpp>
 #include "Texture.h"
+#include <fstream>
+#include <sstream>
+#include <vector>
 #include "ShaderProgram.h"
 
 

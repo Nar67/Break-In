@@ -1,9 +1,5 @@
 #include <iostream>
-#include <fstream>
-#include <sstream>
-#include <vector>
 #include "TileMap.h"
-
 
 using namespace std;
 
@@ -144,6 +140,13 @@ void TileMap::prepareArrays(const glm::vec2& minCoords, ShaderProgram& program)
 					break;
 				case 'g'://blanc
 					texCoordTile[0] = glm::vec2(float(1) / tilesheetSize.x, float(1) / tilesheetSize.y);
+					break;
+				case 'j'://key top
+					texCoordTile[0] = glm::vec2(float(0) / tilesheetSize.x, float(0) / tilesheetSize.y);
+					break;
+				case 'k'://key bottom
+					texCoordTile[0] = glm::vec2(float(0) / tilesheetSize.x, float(1) / tilesheetSize.y);
+					break;
 				default:
 					break;
 				}
