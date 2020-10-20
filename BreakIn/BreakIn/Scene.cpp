@@ -67,6 +67,10 @@ void Scene::render()
 	key->render();*/
 }
 
+void Scene::move(Direction const& dir) {
+
+}
+
 void Scene::initShaders()
 {
 	Shader vShader, fShader;
