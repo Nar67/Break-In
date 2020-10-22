@@ -31,7 +31,7 @@ private:
 	void initShaders();
 
 private:
-	//TileMap* map;
+	TileMap* map;
 	//TileMap* key;
 	vector<TileMap*> layers;
 	ShaderProgram texProgram;

@@ -23,8 +23,8 @@ TileMap* TileMap::createTileMap(const string& levelFile, const glm::vec2& minCoo
 
 TileMap::TileMap(const string& levelFile, const glm::vec2& minCoords, ShaderProgram& program)
 {
-	loadLevel(levelFile);
-	prepareArrays(minCoords, program);
+	loadLevel(levelFile, program);
+	//prepareArrays(minCoords, program);
 }
 
 TileMap::~TileMap()
@@ -36,13 +36,19 @@ TileMap::~TileMap()
 
 void TileMap::render() const
 {
-	glEnable(GL_TEXTURE_2D);
+	for (int j = 0; j < mapSize.y; j++)
+	{
+		for (int i = 0; i < mapSize.x; i++)
+			map[j * mapSize.x + i].render();
+	}
+			
+	/*glEnable(GL_TEXTURE_2D);
 	tilesheet.use();
 	glBindVertexArray(vao);
 	glEnableVertexAttribArray(posLocation);
 	glEnableVertexAttribArray(texCoordLocation);
 	glDrawArrays(GL_TRIANGLES, 0, 6 * mapSize.x * mapSize.y);
-	glDisable(GL_TEXTURE_2D);
+	glDisable(GL_TEXTURE_2D);*/
 }
 
 void TileMap::free()
@@ -50,7 +56,7 @@ void TileMap::free()
 	glDeleteBuffers(1, &vbo);
 }
 
-bool TileMap::loadLevel(const string& levelFile)
+bool TileMap::loadLevel(const string& levelFile, ShaderProgram& program)
 {
 	ifstream fin;
 	string line, tilesheetFile;
@@ -82,14 +88,16 @@ bool TileMap::loadLevel(const string& levelFile)
 	sstream >> tilesheetSize.x >> tilesheetSize.y;
 	tileTexSize = glm::vec2(1.f / tilesheetSize.x, 1.f / tilesheetSize.y);
 
-	map = new int[mapSize.x * mapSize.y];
+	map = new Tile[mapSize.x * mapSize.y];
 
 	for (int j = 0; j < mapSize.y; j++)
 	{
 		for (int i = 0; i < mapSize.x; i++)
 		{
 			fin.get(tile);
-			map[j * mapSize.x + i] = tile;
+			map[j * mapSize.x + i] = Tile(i, j, tile, program);
+			map[j * mapSize.x + i].init();
+			//map[j * mapSize.x + i] = tile;
 		}
 		fin.get(tile);
 #ifndef _WIN32
@@ -113,7 +121,7 @@ void TileMap::prepareArrays(const glm::vec2& minCoords, ShaderProgram& program)
 	{
 		for (int i = 0; i < mapSize.x; i++)
 		{
-			tile = map[j * mapSize.x + i];
+			tile = 'a';
 			if (tile != 'a') {
 				// Non-empty tile
 				nTiles++;
@@ -153,7 +161,7 @@ void TileMap::prepareArrays(const glm::vec2& minCoords, ShaderProgram& program)
 				case 'p'://platform right
 					texCoordTile[0] = glm::vec2(float(1) / tilesheetSize.x, float(0) / tilesheetSize.y);
 					break;
-				case 'l'://ball bottom
+				case 'l'://ball 
 					texCoordTile[0] = glm::vec2(float(0) / tilesheetSize.x, float(0) / tilesheetSize.y);
 					break;
 				default:

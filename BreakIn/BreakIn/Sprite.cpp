@@ -48,6 +48,9 @@ void Sprite::loadSprite() {
 
 void Sprite::setCoords(char const& c) {
 	switch (c) {
+	case 'a': //nothing
+		texCoordTile[0] = glm::vec2(float(10) / width, float(0) / height);
+		break;
 	case 'b': //brick top
 		texCoordTile[0] = glm::vec2(float(1) / width, float(21) / height);
 		break;

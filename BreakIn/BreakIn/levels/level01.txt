@@ -9,8 +9,8 @@ bbbbbbbbbbbbbbbb
 cccccccccccccccc
 baaaaaaaaaaaaaab
 caaaaaaaaaaaaaac
-baaaaaaaaaaaaaab
-caaaaaaaaaaaaaac
+baaaaaajaaaaaaab
+caaaaaakaaaaaaac
 baadeeeaaeeedaab
 cadaaaaeeaaaadac
 badddddaadddddab
@@ -28,8 +28,8 @@ caaaaaaaaaaaaaac
 baaaaaaaaaaaaaab
 caaaaaaaaaaaaaac
 baddaaaaaaaaddab
-cafaaaaaaaaaafac
-baggaaaaaaaaggab
+cafaaaaalaaaafac
+baggaaaopaaaggab
 caaaaaaaaaaaaaac
 baaaaaaaaaaaaaab
 caaaaaaaaaaaaaac

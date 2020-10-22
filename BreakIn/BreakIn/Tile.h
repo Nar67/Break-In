@@ -13,6 +13,7 @@ class Tile
 {
 
 public:
+	Tile() = default;
 	Tile(int x, int y, char const& tileType, ShaderProgram& shprog);
 	void render();
 	void init();
