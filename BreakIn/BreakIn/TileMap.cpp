@@ -11,15 +11,6 @@ TileMap* TileMap::createTileMap(const string& levelFile, const glm::vec2& minCoo
 	return map;
 }
 
-/*TileMap *TileMap::createTileMap(const string& levelFile, const glm::vec2& minCoords) {
-	TileMap* map = new TileMap(levelFile, minCoords);
-	return map;
-}*/
-
-/*TileMap::TileMap(const string& levelFile, const glm::vec2& minCoords) {
-	loadLevel(levelFile);
-	prepareArrays(minCoords);
-}*/
 
 TileMap::TileMap(const string& levelFile, const glm::vec2& minCoords, ShaderProgram& program)
 {
@@ -29,26 +20,34 @@ TileMap::TileMap(const string& levelFile, const glm::vec2& minCoords, ShaderProg
 
 TileMap::~TileMap()
 {
-	if (map != NULL)
-		delete map;
+	for (int j = 0; j < mapSize.y; j++)
+	{
+		for (int i = 0; i < mapSize.x; i++)
+			if (map[j * mapSize.x + i] != NULL)
+				map[j * mapSize.x + i]->free();
+	}
+	/*if (map != NULL)
+		delete map;*/
 }
 
 
 void TileMap::render() const
 {
+	glEnable(GL_TEXTURE_2D);
 	for (int j = 0; j < mapSize.y; j++)
 	{
 		for (int i = 0; i < mapSize.x; i++)
-			map[j * mapSize.x + i].render();
+			map[j * mapSize.x + i]->render();
 	}
+	glDisable(GL_TEXTURE_2D);
 			
-	/*glEnable(GL_TEXTURE_2D);
+	/*
 	tilesheet.use();
 	glBindVertexArray(vao);
 	glEnableVertexAttribArray(posLocation);
 	glEnableVertexAttribArray(texCoordLocation);
 	glDrawArrays(GL_TRIANGLES, 0, 6 * mapSize.x * mapSize.y);
-	glDisable(GL_TEXTURE_2D);*/
+	;*/
 }
 
 void TileMap::free()
@@ -58,54 +57,32 @@ void TileMap::free()
 
 bool TileMap::loadLevel(const string& levelFile, ShaderProgram& program)
 {
-	ifstream fin;
-	string line, tilesheetFile;
-	stringstream sstream;
+	ifstream file;
 	char tile;
 
-	fin.open(levelFile.c_str());
-	if (!fin.is_open())
+	file.open(levelFile.c_str());
+	if (!file.is_open())
 		return false;
-	getline(fin, line);
-	if (line.compare(0, 7, "TILEMAP") != 0)
-		return false;
-	getline(fin, line);
-	sstream.str(line);
-	sstream >> mapSize.x >> mapSize.y;
-	getline(fin, line);
-	sstream.str(line);
-	sstream >> tileSize >> blockSize;
-	getline(fin, line);
-	sstream.str(line);
-	sstream >> tilesheetFile;
-	tilesheet.loadFromFile(tilesheetFile, TEXTURE_PIXEL_FORMAT_RGBA);
-	tilesheet.setWrapS(GL_CLAMP_TO_EDGE);
-	tilesheet.setWrapT(GL_CLAMP_TO_EDGE);
-	tilesheet.setMinFilter(GL_NEAREST);
-	tilesheet.setMagFilter(GL_NEAREST);
-	getline(fin, line);
-	sstream.str(line);
-	sstream >> tilesheetSize.x >> tilesheetSize.y;
-	tileTexSize = glm::vec2(1.f / tilesheetSize.x, 1.f / tilesheetSize.y);
-
-	map = new Tile[mapSize.x * mapSize.y];
+	file >> mapSize.x >> mapSize.y;
+	
+	map.resize(mapSize.x * mapSize.y);
+	//map = new vector<Tile*>[mapSize.x * mapSize.y];
 
 	for (int j = 0; j < mapSize.y; j++)
 	{
 		for (int i = 0; i < mapSize.x; i++)
 		{
-			fin.get(tile);
-			map[j * mapSize.x + i] = Tile(i, j, tile, program);
-			map[j * mapSize.x + i].init();
+			file >> tile;
+			map[j * mapSize.x + i] = new Tile(i, j, tile, program);
+			map[j * mapSize.x + i]->init();
 			//map[j * mapSize.x + i] = tile;
 		}
-		fin.get(tile);
 #ifndef _WIN32
 		fin.get(tile);
 #endif
 	}
 
-	fin.close();
+	file.close();
 
 	return true;
 }

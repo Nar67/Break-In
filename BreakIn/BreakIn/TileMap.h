@@ -42,7 +42,7 @@ private:
 	int tileSize, blockSize;
 	Texture tilesheet;
 	glm::vec2 tileTexSize;
-	Tile* map;
+	vector<Tile*> map;
 
 };
 

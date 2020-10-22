@@ -15,6 +15,10 @@ void Tile::init() {
 	texCoordLocation = program.bindVertexAttribute("texCoord", 2, 4 * sizeof(float), (void*)(2 * sizeof(float)));
 }
 
+void Tile::free() {
+	glDeleteBuffers(1, &vbo);
+}
+
 void Tile::calculateVertices() {
 	vertices.clear();
 		

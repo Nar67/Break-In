@@ -17,6 +17,7 @@ public:
 	Tile(int x, int y, char const& tileType, ShaderProgram& shprog);
 	void render();
 	void init();
+	void free();
 	void sendVertices();
 	void calculateVertices();
 
