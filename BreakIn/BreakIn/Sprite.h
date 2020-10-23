@@ -1,34 +1,53 @@
 #ifndef _SPRITE_INCLUDE
 #define _SPRITE_INCLUDE
 
-#include "Texture.h"
-#include <string>
-#include <glm/glm.hpp>
 
-enum class SpriteType {BLOCK, PLATFORM, BALL, KEY};
+#include <vector>
+#include <glm/glm.hpp>
+#include "Texture.h"
+#include "ShaderProgram.h"
+#include "AnimKeyframes.h"
+
+
+// This class is derived from code seen earlier in TexturedQuad but it is also
+// able to manage animations stored as a spritesheet. 
+
 
 class Sprite
 {
-public:
-	Sprite() = default;
-	Sprite(char const& type);
-	void setType(char const& type);
-	void loadSprite();
-	int getWidth();
-	int getHeight();
-	void setCoords(char const& c);
-	Texture getTexture();
-	glm::vec2 getTexCoord0();
-	glm::vec2 getTexCoord1();
-	
 
+public:
+	// Textured quads can only be created inside an OpenGL context
+	static Sprite *createSprite(const glm::vec2 &quadSize, const glm::vec2 &sizeInSpritesheet, Texture *spritesheet, ShaderProgram *program);
+
+	Sprite(const glm::vec2 &quadSize, const glm::vec2 &sizeInSpritesheet, Texture *spritesheet, ShaderProgram *program);
+
+	void update(int deltaTime);
+	void render() const;
+	void free();
+
+	void setNumberAnimations(int nAnimations);
+	void setAnimationSpeed(int animId, int keyframesPerSec);
+	void addKeyframe(int animId, const glm::vec2 &frame);
+	void changeAnimation(int animId);
+	int animation() const;
+	
+	void setPosition(const glm::vec2 &pos);
 
 private:
-	SpriteType type;
-	Texture tilesheet;
-	int width, height;
-	glm::vec2 texCoordTile[2];
+	Texture *texture;
+	ShaderProgram *shaderProgram;
+	GLuint vao;
+	GLuint vbo;
+	GLint posLocation, texCoordLocation;
+	glm::vec2 position;
+	int currentAnimation, currentKeyframe;
+	float timeAnimation;
+	glm::vec2 texCoordDispl;
+	vector<AnimKeyframes> animations;
 
 };
-#endif
+
+
+#endif // _SPRITE_INCLUDE
 

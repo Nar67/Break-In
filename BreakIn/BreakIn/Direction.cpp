@@ -18,3 +18,7 @@ Direction::Direction(DirectionType const& type) {
 	}
 	this->type = type;
 }
+
+pair<int, int> Direction::getDir() const {
+	return dir;
+}

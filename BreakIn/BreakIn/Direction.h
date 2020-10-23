@@ -9,8 +9,9 @@ class Direction
 {
 public:
 
-	Direction();
+	Direction() = default;
 	Direction(DirectionType const& type);
+	pair<int, int> getDir() const;
 
 private:
 

@@ -4,7 +4,7 @@
 #include <utility>
 #include "ShaderProgram.h"
 #include "Texture.h"
-#include "Sprite.h"
+#include "SpriteSheet.h"
 #include <vector>
 
 using namespace std;
@@ -28,7 +28,7 @@ private:
 	GLuint vao, vbo;
 	GLuint posLocation, texCoordLocation;
 	ShaderProgram program;
-	Sprite sprite;
+	SpriteSheet sprite;
 };
 
 #endif
