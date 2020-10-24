@@ -221,3 +221,34 @@ void Ball::removeTile(Tile* tile)
 {
     map->removeTile(tile);
 }
+
+void Ball::moveBall(int deltaTime)
+{
+    if(!stuck)
+    {
+        posBall.x += speed.x * deltaTime;
+        posBall.y += speed.y * deltaTime;
+        if( posBall.x <= float(0))
+        {
+            speed.x *= -1;
+            posBall.x = 0; 
+        }
+        else if(posBall.x >= float(460))
+        {
+            speed.x *= -1;
+            posBall.x = 460; 
+        }
+        if(posBall.y <= float(0))
+        {
+            speed.y *= -1;
+            posBall.y = 0; 
+        }
+        else if(posBall.y >= float(460))
+        {
+            speed.y *= -1;
+            posBall.y = 460; 
+        }
+    }
+    
+}
+
