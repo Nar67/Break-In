@@ -42,6 +42,7 @@ void Scene::init()
 	player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * 28, INIT_PLAYER_Y_TILES * 28/2));
 	player->setTileMap(map);
 
+	ball = new Ball();
 	ball->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
 	ball->setPosition(glm::vec2(INIT_BALL_X_TILES * 25, INIT_BALL_Y_TILES * 26/2));
 	ball->setTileMap(map);
@@ -58,6 +59,7 @@ void Scene::update(int deltaTime)
 {
 	currentTime += deltaTime;
 	player->update(deltaTime);
+	ball->update(deltaTime);
 }
 
 void Scene::render()
@@ -71,6 +73,7 @@ void Scene::render()
 	texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
 	map->render();
 	player->render();
+	ball->render();
 
 	// Money
 	modelview = glm::translate(modelview, glm::vec3(550.f, 15.f, 0.f));
