@@ -42,8 +42,9 @@ void Game::specialKeyPressed(int key)
 
 void Game::specialKeyReleased(int key)
 {
-	if (key == GLUT_KEY_RIGHT)
-		scene.move(Direction(DirectionType::RIGHT));
+	specialKeys[key] = false;
+	//if (key == GLUT_KEY_RIGHT)
+	//	scene.move(Direction(DirectionType::RIGHT));
 }
 
 void Game::mouseMove(int x, int y)
