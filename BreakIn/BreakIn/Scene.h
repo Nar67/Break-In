@@ -9,6 +9,7 @@
 #include "TexturedQuad.h"
 #include "Text.h"
 #include "Menu.h"
+#include <string>
 #include "Ball.h"
 
 #define CAMERA_WIDTH 640
