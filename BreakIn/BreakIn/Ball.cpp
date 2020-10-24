@@ -11,6 +11,8 @@
 #define BALL_SIZE_Y 20
 #define BALL_SPEED 0.1
 
+
+
 #define BALL_RADIUS BALL_SIZE_X
 
 #define SCREEN_SIZE_X 448 - BALL_SIZE_X //448 = blockSize*mapSize.x
