@@ -70,7 +70,7 @@ bool TileMap::loadLevel(const string& levelFile, ShaderProgram& program)
 			map[j * mapSize.x + i]->init();
 		}
 #ifndef _WIN32
-		fin.get(tile);
+		file.get(tile);
 #endif
 	}
 

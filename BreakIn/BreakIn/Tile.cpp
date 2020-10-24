@@ -3,7 +3,7 @@
 Tile::Tile(int x, int y, char const& tileType, ShaderProgram& shprog) {
 	xPos = x;
 	yPos = y;
-	sprite = SpriteSheet::SpriteSheet(tileType);
+	sprite = SpriteSheet(tileType);
 	program = shprog;
 }
 
