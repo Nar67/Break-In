@@ -1,114 +1,110 @@
+#include <GL/glew.h>
+#include <GL/gl.h>
+#include <glm/gtc/matrix_transform.hpp>
 #include "Sprite.h"
 
-Sprite::Sprite(char const& type){
-	setType(type);
-	loadSprite();
-	setCoords(type);
+
+Sprite *Sprite::createSprite(const glm::vec2 &quadSize, const glm::vec2 &sizeInSpritesheet, Texture *spritesheet, ShaderProgram *program)
+{
+	Sprite *quad = new Sprite(quadSize, sizeInSpritesheet, spritesheet, program);
+
+	return quad;
 }
 
-void Sprite::setType(char const& type) {
-	if (type == 'j' or type == 'k')
-		this->type = SpriteType::KEY;
-	else if (type == 'l')
-		this->type = SpriteType::BALL;
-	else if (type == 'o' or type == 'p')
-		this->type = SpriteType::PLATFORM;
-	else
-		this->type = SpriteType::BLOCK;
+
+Sprite::Sprite(const glm::vec2 &quadSize, const glm::vec2 &sizeInSpritesheet, Texture *spritesheet, ShaderProgram *program)
+{
+	float vertices[24] = {0.f, 0.f, 0.f, 0.f, 
+												quadSize.x, 0.f, sizeInSpritesheet.x, 0.f, 
+												quadSize.x, quadSize.y, sizeInSpritesheet.x, sizeInSpritesheet.y, 
+												0.f, 0.f, 0.f, 0.f, 
+												quadSize.x, quadSize.y, sizeInSpritesheet.x, sizeInSpritesheet.y, 
+												0.f, quadSize.y, 0.f, sizeInSpritesheet.y};
+
+	glGenVertexArrays(1, &vao);
+	glBindVertexArray(vao);
+	glGenBuffers(1, &vbo);
+	glBindBuffer(GL_ARRAY_BUFFER, vbo);
+	glBufferData(GL_ARRAY_BUFFER, 24 * sizeof(float), vertices, GL_STATIC_DRAW);
+	posLocation = program->bindVertexAttribute("position", 2, 4*sizeof(float), 0);
+	texCoordLocation = program->bindVertexAttribute("texCoord", 2, 4*sizeof(float), (void *)(2*sizeof(float)));
+	texture = spritesheet;
+	shaderProgram = program;
+	currentAnimation = -1;
+	position = glm::vec2(0.f);
 }
 
-void Sprite::loadSprite() {
-	switch (type) {
-	case SpriteType::KEY:
-		tilesheet.loadFromFile("images/key01.png", TEXTURE_PIXEL_FORMAT_RGBA);
-		width = 1;
-		height = 2;
-		break;
-	case SpriteType::BALL:
-		tilesheet.loadFromFile("images/ball.png", TEXTURE_PIXEL_FORMAT_RGBA);
-		width = 1;
-		height = 1;
-		break;
-	case SpriteType::PLATFORM:
-		tilesheet.loadFromFile("images/platform07-1.png", TEXTURE_PIXEL_FORMAT_RGBA);
-		width = 2;
-		height = 1;
-		break;
-	default:
-		tilesheet.loadFromFile("images/sprite-sheet.png", TEXTURE_PIXEL_FORMAT_RGBA);
-		width = 12;
-		height = 27;
-		break;
+void Sprite::update(int deltaTime)
+{
+	/*if(currentAnimation >= 0)
+	{
+		timeAnimation += deltaTime;
+		while(timeAnimation > animations[currentAnimation].millisecsPerKeyframe)
+		{
+			timeAnimation -= animations[currentAnimation].millisecsPerKeyframe;
+			currentKeyframe = (currentKeyframe + 1) % animations[currentAnimation].keyframeDispl.size();
+		}
+		texCoordDispl = animations[currentAnimation].keyframeDispl[currentKeyframe];
+	}*/
+}
+
+void Sprite::render() const
+{
+	glm::mat4 modelview = glm::translate(glm::mat4(1.0f), glm::vec3(position.x, position.y, 0.f));
+	shaderProgram->setUniformMatrix4f("modelview", modelview);
+	shaderProgram->setUniform2f("texCoordDispl", texCoordDispl.x, texCoordDispl.y);
+	glEnable(GL_TEXTURE_2D);
+	texture->use();
+	glBindVertexArray(vao);
+	glEnableVertexAttribArray(posLocation);
+	glEnableVertexAttribArray(texCoordLocation);
+	glDrawArrays(GL_TRIANGLES, 0, 6);
+	glDisable(GL_TEXTURE_2D);
+}
+
+void Sprite::free()
+{
+	glDeleteBuffers(1, &vbo);
+}
+
+void Sprite::setNumberAnimations(int nAnimations)
+{
+	animations.clear();
+	animations.resize(nAnimations);
+}
+
+void Sprite::setAnimationSpeed(int animId, int keyframesPerSec)
+{
+	if(animId < int(animations.size()))
+		animations[animId].millisecsPerKeyframe = 1000.f / keyframesPerSec;
+}
+
+void Sprite::addKeyframe(int animId, const glm::vec2 &displacement)
+{
+	if(animId < int(animations.size()))
+		animations[animId].keyframeDispl.push_back(displacement);
+}
+
+void Sprite::changeAnimation(int animId)
+{
+	if(animId < int(animations.size()))
+	{
+		currentAnimation = animId;
+		currentKeyframe = 0;
+		timeAnimation = 0.f;
+		texCoordDispl = animations[animId].keyframeDispl[0];
 	}
-	tilesheet.setWrapS(GL_CLAMP_TO_EDGE);
-	tilesheet.setWrapT(GL_CLAMP_TO_EDGE);
-	tilesheet.setMinFilter(GL_NEAREST);
-	tilesheet.setMagFilter(GL_NEAREST);
 }
 
-void Sprite::setCoords(char const& c) {
-	switch (c) {
-	case 'b': //brick top
-		texCoordTile[0] = glm::vec2(float(1) / width, float(21) / height);
-		break;
-	case 'c': // brick bottom
-		texCoordTile[0] = glm::vec2(float(1) / width, float(22) / height);
-		break;
-	case 'd': //vermell
-		texCoordTile[0] = glm::vec2(float(0) / width, float(1) / height);
-		//texCoordTile[0] += halfTexel;
-		break;
-	case 'e'://blau
-		texCoordTile[0] = glm::vec2(float(2) / width, float(1) / height);
-		//texCoordTile[0] += halfTexel;
-		break;
-	case 'f'://verd
-		texCoordTile[0] = glm::vec2(float(3) / width, float(0) / height);
-		//texCoordTile[0] += halfTexel;
-		break;
-	case 'g'://blanc
-		texCoordTile[0] = glm::vec2(float(1) / width, float(1) / height);
-		break;
-	case 'j'://key top
-		texCoordTile[0] = glm::vec2(float(0) / width, float(0) / height);
-		break;
-	case 'k'://key bottom
-		texCoordTile[0] = glm::vec2(float(0) / width, float(1) / height);
-		break;
-	case 'o'://platform left
-		texCoordTile[0] = glm::vec2(float(0) / width, float(0) / height);
-		break;
-	case 'p'://platform right
-		texCoordTile[0] = glm::vec2(float(1) / width, float(0) / height);
-		break;
-	case 'l'://ball bottom
-		texCoordTile[0] = glm::vec2(float(0) / width, float(0) / height);
-		break;
-	default:
-		break;
-	}
-
-	glm::vec2 halfTexel = glm::vec2(0.5f / tilesheet.width(), 0.5f / tilesheet.height());
-	glm::vec2 tileTexSize = glm::vec2(1.f / width, 1.f / height);
-	texCoordTile[1] = texCoordTile[0] + tileTexSize;
-	texCoordTile[1] -= halfTexel;
-}
-int Sprite::getHeight() {
-	return height;
+int Sprite::animation() const
+{
+	return currentAnimation;
 }
 
-int Sprite::getWidth() {
-	return width;
+void Sprite::setPosition(const glm::vec2 &pos)
+{
+	position = pos;
 }
 
-Texture Sprite::getTexture() {
-	return tilesheet;
-}
 
-glm::vec2 Sprite::getTexCoord0() {
-	return texCoordTile[0];
-}
 
-glm::vec2 Sprite::getTexCoord1() {
-	return texCoordTile[1];
-}

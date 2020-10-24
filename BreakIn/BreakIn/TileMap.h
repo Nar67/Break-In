@@ -8,6 +8,8 @@
 #include <sstream>
 #include <vector>
 #include "ShaderProgram.h"
+#include "Tile.h"
+#include "Direction.h"
 
 
 // Class Tilemap is capable of loading a tile map from a text file in a very
@@ -28,10 +30,10 @@ public:
 
 	void render() const;
 	void free();
+	glm::ivec2 getSize();
 
 private:
-	bool loadLevel(const string &levelFile);
-	void prepareArrays(const glm::vec2 &minCoords, ShaderProgram &program);
+	bool loadLevel(const string &levelFile, ShaderProgram& program);
 
 private:
 	GLuint vao;
@@ -41,7 +43,7 @@ private:
 	int tileSize, blockSize;
 	Texture tilesheet;
 	glm::vec2 tileTexSize;
-	int *map;
+	vector<Tile*> map;
 
 };
 

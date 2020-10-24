@@ -6,6 +6,7 @@
 #include "ShaderProgram.h"
 #include "TileMap.h"
 #include "Direction.h"
+#include "Player.h"
 
 #define CAMERA_WIDTH 640
 #define CAMERA_HEIGHT 480
@@ -25,15 +26,15 @@ public:
 	void init();
 	void update(int deltaTime);
 	void render();
-	void move(Direction const& direction);
 
 private:
 	void initShaders();
 
 private:
-	//TileMap* map;
+	TileMap* map;
+	Player* player;
 	//TileMap* key;
-	vector<TileMap*> layers;
+	//vector<TileMap*> layers;
 	ShaderProgram texProgram;
 	float currentTime;
 	glm::mat4 projection;

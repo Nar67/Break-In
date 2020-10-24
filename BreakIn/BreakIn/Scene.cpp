@@ -3,45 +3,35 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include "Scene.h"
 
+#define SCREEN_X 32
+#define SCREEN_Y 16
+
+#define INIT_PLAYER_X_TILES 8
+#define INIT_PLAYER_Y_TILES 25
+
 Scene::Scene()
 {
-	
-	info.open("levels/info01.txt");
-	int size;
-	info >> size;
-	layers = vector<TileMap*> (size);
-	for (int i = 0; i < layers.size(); ++i) {
-		layers[i] = NULL;
-	}
-	/*map = NULL;
-	key = NULL;*/
+	map = NULL;
+	player = NULL;
 }
 
 Scene::~Scene()
 {
-	for (int i = 0; i < layers.size(); ++i) {
-		if (layers[i] != NULL) {
-			delete layers[i];
-		}
-	}
-	/*if (map != NULL)
+	if (map != NULL)
 		delete map;
-	if (key != NULL)
-		delete key;*/
+	if (player != NULL)
+		delete player;
 }
 
 
 void Scene::init()
 {
 	initShaders();
-	for (int i = 0; i < layers.size(); ++i) {
-		string tilemap;
-		info >> tilemap;
-		layers[i] = TileMap::createTileMap(tilemap, glm::vec2(32, 16), texProgram);
-	}
-	info.close();
-	//map = TileMap::createTileMap("levels/level01.txt", glm::vec2(32, 16), texProgram);
-	//key = TileMap::createTileMap("levels/klvl01.txt", glm::vec2(32, 16), texProgram);
+	map = TileMap::createTileMap("levels/level01.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
+	player = new Player();
+	player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+	player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * 26, INIT_PLAYER_Y_TILES * 26/2));
+	player->setTileMap(map);
 	projection = glm::ortho(0.f, float(CAMERA_WIDTH - 1), float(CAMERA_HEIGHT - 1), 0.f);
 	currentTime = 0.0f;
 }
@@ -49,6 +39,7 @@ void Scene::init()
 void Scene::update(int deltaTime)
 {
 	currentTime += deltaTime;
+	player->update(deltaTime);
 }
 
 void Scene::render()
@@ -60,16 +51,11 @@ void Scene::render()
 	texProgram.setUniform4f("color", 1.0f, 1.0f, 1.0f, 1.0f);
 	modelview = glm::mat4(1.0f);
 	texProgram.setUniformMatrix4f("modelview", modelview);
-	for (int i = 0; i < layers.size(); ++i) {
-		layers[i]->render();
-	}
-	/*map->render();
-	key->render();*/
+	texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
+	map->render();
+	player->render();
 }
 
-void Scene::move(Direction const& dir) {
-
-}
 
 void Scene::initShaders()
 {

@@ -1,16 +1,12 @@
-TILEMAP
-16 32				-- Size of tile map in tiles
-26 26				-- Tile size & block size
-images/sprite-sheet.png		-- Tilesheet
-12 27				-- Number of tiles in tilesheet   
+16 32
 aaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaa
 bbbbbbbbbbbbbbbb
 cccccccccccccccc
 baaaaaaaaaaaaaab
 caaaaaaaaaaaaaac
-baaaaaaaaaaaaaab
-caaaaaaaaaaaaaac
+baaaaaajaaaaaaab
+caaaaaakaaaaaaac
 baadeeeaaeeedaab
 cadaaaaeeaaaadac
 badddddaadddddab
@@ -28,7 +24,7 @@ caaaaaaaaaaaaaac
 baaaaaaaaaaaaaab
 caaaaaaaaaaaaaac
 baddaaaaaaaaddab
-cafaaaaaaaaaafac
+cafaaaaalaaaafac
 baggaaaaaaaaggab
 caaaaaaaaaaaaaac
 baaaaaaaaaaaaaab

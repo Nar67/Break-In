@@ -3,7 +3,7 @@
 Tile::Tile(int x, int y, char const& tileType, ShaderProgram& shprog) {
 	xPos = x;
 	yPos = y;
-	sprite = Sprite::Sprite(tileType);
+	sprite = SpriteSheet(tileType);
 	program = shprog;
 }
 
@@ -13,6 +13,10 @@ void Tile::init() {
 	sendVertices();
 	posLocation = program.bindVertexAttribute("position", 2, 4 * sizeof(float), 0);
 	texCoordLocation = program.bindVertexAttribute("texCoord", 2, 4 * sizeof(float), (void*)(2 * sizeof(float)));
+}
+
+void Tile::free() {
+	glDeleteBuffers(1, &vbo);
 }
 
 void Tile::calculateVertices() {
@@ -47,6 +51,9 @@ void Tile::sendVertices() {
 	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(float), &vertices[0], GL_STATIC_DRAW);
 }
 
+SpriteType Tile::getType() {
+	return sprite.getType();
+}
 
 void Tile::render() {
 	sendVertices();
