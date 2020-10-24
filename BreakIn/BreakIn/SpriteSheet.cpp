@@ -9,10 +9,10 @@ SpriteSheet::SpriteSheet(char const& type){
 void SpriteSheet::setType(char const& type) {
 	if (type == 'j' or type == 'k')
 		this->type = SpriteType::KEY;
-	else if (type == 'l')
-		this->type = SpriteType::BALL;
 	else if (type == 'o' or type == 'p')
 		this->type = SpriteType::PLATFORM;
+	else if (type == 'b' or type == 'c')
+		this->type == SpriteType::WALL;
 	else
 		this->type = SpriteType::BLOCK;
 }
@@ -23,11 +23,6 @@ void SpriteSheet::loadSprite() {
 		tilesheet.loadFromFile("images/key01.png", TEXTURE_PIXEL_FORMAT_RGBA);
 		width = 1;
 		height = 2;
-		break;
-	case SpriteType::BALL:
-		tilesheet.loadFromFile("images/ball.png", TEXTURE_PIXEL_FORMAT_RGBA);
-		width = 1;
-		height = 1;
 		break;
 	case SpriteType::PLATFORM:
 		tilesheet.loadFromFile("images/platform07-1.png", TEXTURE_PIXEL_FORMAT_RGBA);
@@ -51,10 +46,10 @@ void SpriteSheet::setCoords(char const& c) {
 	case 'a': //nothing
 		texCoordTile[0] = glm::vec2(float(10) / width, float(0) / height);
 		break;
-	case 'b': //brick top
+	case 'b': //wall top
 		texCoordTile[0] = glm::vec2(float(1) / width, float(21) / height);
 		break;
-	case 'c': // brick bottom
+	case 'c': //wall bottom
 		texCoordTile[0] = glm::vec2(float(1) / width, float(22) / height);
 		break;
 	case 'd': //vermell

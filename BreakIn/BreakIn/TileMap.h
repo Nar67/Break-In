@@ -30,7 +30,7 @@ public:
 
 	void render() const;
 	void free();
-	glm::ivec2 getSize();
+	vector<Tile*> getTiles();
 
 private:
 	bool loadLevel(const string &levelFile, ShaderProgram& program);

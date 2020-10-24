@@ -25,7 +25,7 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 
 void Player::update(int deltaTime)
 {
-	sprite->update(deltaTime);
+		
 	if(Game::instance().getSpecialKey(GLUT_KEY_LEFT))
 	{
 		posPlayer.x -= 2;
