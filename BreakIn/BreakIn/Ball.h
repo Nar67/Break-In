@@ -17,12 +17,14 @@ public:
 	void init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram);
 	void update(int deltaTime);
 	void render();
-	
+	void moveBall(int deltaTime);
 	void setTileMap(TileMap *tileMap);
 	void setPosition(const glm::vec2 &pos);
 	
 private:
 	bool bJumping;
+    bool stuck;
+    glm::vec2 speed;
 	glm::ivec2 tileMapDispl, posBall;
 	int jumpAngle, startY;
 	Texture spritesheet;
