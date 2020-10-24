@@ -9,6 +9,7 @@
 #include "TexturedQuad.h"
 #include "Text.h"
 #include "Menu.h"
+#include "Ball.h"
 
 #define CAMERA_WIDTH 640
 #define CAMERA_HEIGHT 480
@@ -36,6 +37,9 @@ private:
 private:
 	TileMap* map;
 	Player* player;
+	Ball* ball;
+	//TileMap* key;
+	//vector<TileMap*> layers;
 	ShaderProgram texProgram;
 	float currentTime;
 	glm::mat4 projection;
