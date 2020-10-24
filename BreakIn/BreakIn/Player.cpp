@@ -5,12 +5,14 @@
 #include "Player.h"
 #include "Game.h"
 
-
-enum PlayerAnims
+Player::Player()
 {
-	STAND_LEFT, STAND_RIGHT, MOVE_LEFT, MOVE_RIGHT
-};
+}
 
+
+Player::~Player()
+{
+}
 
 void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 {
@@ -20,6 +22,7 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
 }
 
+
 void Player::update(int deltaTime)
 {
 	sprite->update(deltaTime);
@@ -28,9 +31,19 @@ void Player::update(int deltaTime)
 		posPlayer.x -= 2;
 
 	}
-	if(Game::instance().getSpecialKey(GLUT_KEY_RIGHT))
+	else if(Game::instance().getSpecialKey(GLUT_KEY_RIGHT))
 	{
 		posPlayer.x += 2;	
+	}
+
+	if (Game::instance().getSpecialKey(GLUT_KEY_UP))
+	{
+		posPlayer.y -= 2;
+
+	}
+	else if (Game::instance().getSpecialKey(GLUT_KEY_DOWN))
+	{
+		posPlayer.y += 2;
 	}
 		
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));

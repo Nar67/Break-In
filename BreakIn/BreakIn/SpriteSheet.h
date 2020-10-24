@@ -20,6 +20,7 @@ public:
 	Texture getTexture();
 	glm::vec2 getTexCoord0();
 	glm::vec2 getTexCoord1();
+	SpriteType getType();
 	
 
 

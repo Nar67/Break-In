@@ -20,6 +20,7 @@ public:
 	void free();
 	void sendVertices();
 	void calculateVertices();
+	SpriteType getType();
 
 private:
 	int xPos, yPos;

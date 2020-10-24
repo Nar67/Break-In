@@ -30,7 +30,7 @@ public:
 
 	void render() const;
 	void free();
-	void movePlayer(Direction const& dir);
+	glm::ivec2 getSize();
 
 private:
 	bool loadLevel(const string &levelFile, ShaderProgram& program);

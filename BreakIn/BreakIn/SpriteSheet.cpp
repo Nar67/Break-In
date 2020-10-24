@@ -115,3 +115,7 @@ glm::vec2 SpriteSheet::getTexCoord0() {
 glm::vec2 SpriteSheet::getTexCoord1() {
 	return texCoordTile[1];
 }
+
+SpriteType SpriteSheet::getType() {
+	return type;
+}

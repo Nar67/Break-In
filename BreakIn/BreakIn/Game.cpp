@@ -13,7 +13,7 @@ void Game::init()
 bool Game::update(int deltaTime)
 {
 	scene.update(deltaTime);
-	
+
 	return bPlay;
 }
 
@@ -25,7 +25,7 @@ void Game::render()
 
 void Game::keyPressed(int key)
 {
-	if(key == 27) // Escape code
+	if (key == 27) // Escape code
 		bPlay = false;
 	keys[key] = true;
 }
@@ -42,8 +42,7 @@ void Game::specialKeyPressed(int key)
 
 void Game::specialKeyReleased(int key)
 {
-	if (key == GLUT_KEY_RIGHT)
-		scene.move(Direction(DirectionType::RIGHT));
+	specialKeys[key] = false;
 }
 
 void Game::mouseMove(int x, int y)

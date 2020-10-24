@@ -45,6 +45,10 @@ void TileMap::free()
 	glDeleteBuffers(1, &vbo);
 }
 
+glm::ivec2 TileMap::getSize() {
+	return mapSize;
+}
+
 bool TileMap::loadLevel(const string& levelFile, ShaderProgram& program)
 {
 	ifstream file;
@@ -74,3 +78,4 @@ bool TileMap::loadLevel(const string& levelFile, ShaderProgram& program)
 
 	return true;
 }
+

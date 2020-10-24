@@ -51,6 +51,9 @@ void Tile::sendVertices() {
 	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(float), &vertices[0], GL_STATIC_DRAW);
 }
 
+SpriteType Tile::getType() {
+	return sprite.getType();
+}
 
 void Tile::render() {
 	sendVertices();

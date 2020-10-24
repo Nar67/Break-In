@@ -12,12 +12,15 @@
 Scene::Scene()
 {
 	map = NULL;
+	player = NULL;
 }
 
 Scene::~Scene()
 {
 	if (map != NULL)
 		delete map;
+	if (player != NULL)
+		delete player;
 }
 
 
@@ -53,9 +56,6 @@ void Scene::render()
 	player->render();
 }
 
-void Scene::move(Direction const& dir) {
-	
-}
 
 void Scene::initShaders()
 {

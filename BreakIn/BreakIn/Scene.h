@@ -26,7 +26,6 @@ public:
 	void init();
 	void update(int deltaTime);
 	void render();
-	void move(Direction const& direction);
 
 private:
 	void initShaders();
