@@ -5,7 +5,6 @@
 #include "Ball.h"
 #include "Game.h"
 
-
 const int BALL_SIZE_X = 20;
 const int BALL_SIZE_Y = 20;
 const float BALL_SPEED = 0.1;
@@ -16,13 +15,13 @@ const float SCREEN_SIZE_X = 448 - BALL_SIZE_X; //448 = blockSize*mapSize.x
 const float SCREEN_SIZE_Y = 476 - BALL_SIZE_Y; //476 = (blockSize/2)*mapSize.y
 
 
-void Ball::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
+void Ball::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 {
-	spritesheet.loadFromFile("images/ball_pink.png", TEXTURE_PIXEL_FORMAT_RGBA);
-	sprite = Sprite::createSprite(glm::ivec2(BALL_SIZE_X, BALL_SIZE_Y), glm::vec2(1, 1), &spritesheet, &shaderProgram);
-	tileMap = tileMapPos;
+    spritesheet.loadFromFile("images/ball_pink.png", TEXTURE_PIXEL_FORMAT_RGBA);
+    sprite = Sprite::createSprite(glm::ivec2(BALL_SIZE_X, BALL_SIZE_Y), glm::vec2(1, 1), &spritesheet, &shaderProgram);
+    tileMap = tileMapPos;
     speed = glm::vec2(float(BALL_SPEED), float(BALL_SPEED));
-	sprite->setPosition(glm::vec2(float(posBall.x), float(posBall.y)));
+    sprite->setPosition(glm::vec2(float(posBall.x), float(posBall.y)));
 }
 
 void Ball::update(int deltaTime)
@@ -34,7 +33,7 @@ void Ball::update(int deltaTime)
         moveBall(deltaTime);
     }
 
-	sprite->setPosition(glm::vec2(float(posBall.x), float(posBall.y)));
+	//sprite->setPosition(glm::vec2(float(posBall.x), float(posBall.y)));
 }
 
 void Ball::render()
@@ -181,9 +180,6 @@ void Ball::printBallTile()
 	case SpriteType::KEY:
         cout << "KEY" << endl;
 		break;
-	case SpriteType::PLATFORM:
-        cout << "PLATFORM" << endl;
-		break;
     case SpriteType::WALL:
         cout << "WALL" << endl;
 		break;
@@ -206,9 +202,6 @@ string Ball::printTile(Tile* tile)
 	case SpriteType::KEY:
         return "KEY";
 		break;
-	case SpriteType::PLATFORM:
-        return "PLATFORM";
-		break;
     case SpriteType::WALL:
         return "WALL";
 		break;
@@ -226,5 +219,5 @@ string Ball::printTile(Tile* tile)
 
 void Ball::removeTile(Tile* tile)
 {
-    map->removeTile(tile);    
+    map->removeTile(tile);
 }
