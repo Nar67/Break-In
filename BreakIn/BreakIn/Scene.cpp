@@ -13,6 +13,9 @@
 #define INIT_PLAYER_X_TILES 8
 #define INIT_PLAYER_Y_TILES 25
 
+#define INIT_BALL_X_TILES 8
+#define INIT_BALL_Y_TILES 25
+
 Scene::Scene()
 {
 	map = NULL;
@@ -38,6 +41,11 @@ void Scene::init()
 	initSprites();
 	loadLevel();
 	loadPlayer();
+
+	ball->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+	ball->setPosition(glm::vec2(INIT_BALL_X_TILES * 25, INIT_BALL_Y_TILES * 26/2));
+	ball->setTileMap(map);
+
 	projection = glm::ortho(0.f, float(CAMERA_WIDTH - 1), float(CAMERA_HEIGHT - 1), 0.f);
 	projection = glm::translate(projection, glm::vec3(0.f, -894.f, 0.f));
 	currentTime = 0.0f;
