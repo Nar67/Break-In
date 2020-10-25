@@ -47,6 +47,7 @@ private:
 	//debuging funcs
     void printBallTile();
 	string printTile(Tile* tile);
+    void printBallTile();
 
 };
 

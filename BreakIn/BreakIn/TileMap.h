@@ -40,9 +40,6 @@ public:
 
 	void printMap();
 
-
-
-
 private:
 	bool loadLevel(const string &levelFile);
 
@@ -56,6 +53,8 @@ private:
 	glm::vec2 tileTexSize;
 	vector<Tile*> map;
 	ShaderProgram program;
+	void printMap();
+
 };
 
 
