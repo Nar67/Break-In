@@ -22,7 +22,6 @@ public:
 	
 	void setTileMap(TileMap *tileMap);
 	void setPosition(const glm::vec2 &pos);
-	void move(Direction const& dir);
 	
 private:
 	bool bJumping;

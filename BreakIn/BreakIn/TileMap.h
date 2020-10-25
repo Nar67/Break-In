@@ -9,7 +9,6 @@
 #include <vector>
 #include "ShaderProgram.h"
 #include "Tile.h"
-#include "Direction.h"
 
 
 // Class Tilemap is capable of loading a tile map from a text file in a very

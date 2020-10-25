@@ -38,6 +38,10 @@ void Scene::init()
 	player->setTileMap(map);
 	projection = glm::ortho(0.f, float(CAMERA_WIDTH - 1), float(CAMERA_HEIGHT - 1), 0.f);
 	currentTime = 0.0f;
+
+	//Select font
+	if (!text.init("fonts/ArcadepixPlus.ttf"))
+		cout << "Could not load font!!!" << endl;
 }
 
 void Scene::update(int deltaTime)
@@ -48,12 +52,11 @@ void Scene::update(int deltaTime)
 
 void Scene::render()
 {
-	glm::mat4 modelview;
-
+	glm::mat4 modelview = glm::mat4(1.0f);
+	
 	texProgram.use();
 	texProgram.setUniformMatrix4f("projection", projection);
 	texProgram.setUniform4f("color", 1.0f, 1.0f, 1.0f, 1.0f);
-	modelview = glm::mat4(1.0f);
 	texProgram.setUniformMatrix4f("modelview", modelview);
 	texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
 	map->render();
@@ -95,14 +98,18 @@ void Scene::render()
 	texQuad[4]->render(texs[4]);
 	
 	// Room
-	modelview = glm::translate(glm::mat4(1.0f), glm::vec3(550.f, 415.f, 0.f));
+	modelview = glm::translate(glm::mat4(1.0f), glm::vec3(550.f, 400.f, 0.f));
 	modelview = glm::scale(modelview, glm::vec3(1.f, 0.2f, 0.f));
 	modelview = glm::translate(modelview, glm::vec3(-64.f, -64.f, 0.f));
 	texProgram.setUniformMatrix4f("modelview", modelview);
 	texQuad[5]->render(texs[5]);
 
 	
-
+	text.render("0000000", glm::vec2(460, 55), 25, glm::vec4(1, 1, 1, 1));
+	text.render("0000000", glm::vec2(460, 140), 25, glm::vec4(1, 1, 1, 1));
+	text.render("00", glm::vec2(565, 215), 25, glm::vec4(1, 1, 1, 1));
+	text.render("00", glm::vec2(565, 295), 25, glm::vec4(1, 1, 1, 1));
+	text.render("00", glm::vec2(565, 440), 25, glm::vec4(1, 1, 1, 1));
 }
 
 void Scene::initText() {

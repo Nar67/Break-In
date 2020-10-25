@@ -5,9 +5,9 @@
 #include <glm/glm.hpp>
 #include "ShaderProgram.h"
 #include "TileMap.h"
-#include "Direction.h"
 #include "Player.h"
 #include "TexturedQuad.h"
+#include "Text.h"
 
 #define CAMERA_WIDTH 640
 #define CAMERA_HEIGHT 480
@@ -41,6 +41,7 @@ private:
 	TexturedQuad* texQuad[6];
 	Texture texs[6];
 
+	Text text;
 };
 
 
