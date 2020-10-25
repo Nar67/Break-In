@@ -128,3 +128,8 @@ Thumbs.db
 
 # Folder config file
 Desktop.ini
+
+
+#Else here
+
+*.VC.db
