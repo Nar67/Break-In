@@ -61,10 +61,23 @@ void TileMap::changeRoom() {
 	}
 }
 
+glm::ivec2 TileMap::getMapSize()
+{
+	return mapSize;
+}
+
+int TileMap::getBlockSize()
+{
+	return blockSize;
+}
+
+
 bool TileMap::loadLevel(const string& levelFile, ShaderProgram& program)
 {
 	ifstream file;
 	char tile;
+
+	blockSize = 28;
 
 	file.open(levelFile.c_str());
 	if (!file.is_open())
@@ -89,5 +102,32 @@ bool TileMap::loadLevel(const string& levelFile, ShaderProgram& program)
 	file.close();
 
 	return true;
+}
+
+void TileMap::printMap()
+{
+	for (int j = 0; j < mapSize.y; j++)
+	{
+		for (int i = 0; i < mapSize.x; i++)
+		{
+			SpriteType type = map[j * mapSize.x + i]->getType();
+			switch (type) {
+			case SpriteType::KEY:
+    		    cout << "-KEY";
+				break;
+    		case SpriteType::WALL:
+    		    cout << "-WALL";
+				break;
+			case SpriteType::BLOCK:
+				cout << "-BLOCK";
+				break;
+			default:
+    		    cout << "-ELSE";
+				break;
+			}
+		}
+		cout << endl;
+	}
+	cout << endl;
 }
 

@@ -7,7 +7,7 @@
 #include "SpriteManager.h"
 #include "Game.h"
 
-#define SCREEN_X 32
+#define SCREEN_X 34
 #define SCREEN_Y 16
 
 #define INIT_PLAYER_X_TILES 8
@@ -44,7 +44,7 @@ void Scene::init()
 	
 	ball = new Ball();
 	ball->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-	ball->setPosition(glm::vec2(INIT_BALL_X_TILES * 25, INIT_BALL_Y_TILES * 26/2));
+	ball->setPosition(glm::vec2(INIT_BALL_X_TILES * 28, INIT_BALL_Y_TILES * 28/2));
 	ball->setTileMap(map);
 
 	projection = glm::ortho(0.f, float(CAMERA_WIDTH - 1), float(CAMERA_HEIGHT - 1), 0.f);

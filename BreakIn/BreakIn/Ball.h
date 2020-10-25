@@ -3,6 +3,7 @@
 
 
 #include "Sprite.h"
+#include "SpriteSheet.h"
 #include "TileMap.h"
 
 
@@ -22,14 +23,16 @@ public:
 	void setPosition(const glm::vec2 &pos);
 	
 private:
-	bool bJumping;
     bool stuck;
     glm::vec2 speed;
-	glm::ivec2 tileMapDispl, posBall;
+	glm::ivec2 tileMap, posBall;
 	int jumpAngle, startY;
 	Texture spritesheet;
 	Sprite *sprite;
 	TileMap *map;
+
+    Tile* getBallTile(glm::vec2 pos);
+    void printBallTile();
 
 };
 
