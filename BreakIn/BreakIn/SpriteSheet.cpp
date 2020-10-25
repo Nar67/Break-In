@@ -20,7 +20,7 @@ void SpriteSheet::setType(char const& type) {
 void SpriteSheet::loadSprite() {
 	switch (type) {
 	case SpriteType::KEY:
-		tilesheet.loadFromFile("images/key01.png", TEXTURE_PIXEL_FORMAT_RGBA);
+		tilesheet.loadFromFile("images/keyOriginal.png", TEXTURE_PIXEL_FORMAT_RGBA);
 		width = 1;
 		height = 2;
 		break;
