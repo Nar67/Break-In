@@ -21,16 +21,20 @@ Scene::~Scene()
 		delete map;
 	if (player != NULL)
 		delete player;
+	for (int i = 0; i < 2; i++)
+		if (texQuad[i] != NULL)
+			delete texQuad[i];
 }
 
 
 void Scene::init()
 {
 	initShaders();
+	initText();
 	map = TileMap::createTileMap("levels/level01.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
 	player = new Player();
 	player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-	player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * 26, INIT_PLAYER_Y_TILES * 26/2));
+	player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * 28, INIT_PLAYER_Y_TILES * 28/2));
 	player->setTileMap(map);
 	projection = glm::ortho(0.f, float(CAMERA_WIDTH - 1), float(CAMERA_HEIGHT - 1), 0.f);
 	currentTime = 0.0f;
@@ -54,8 +58,70 @@ void Scene::render()
 	texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
 	map->render();
 	player->render();
+
+	// Money
+	modelview = glm::translate(modelview, glm::vec3(550.f, 15.f, 0.f));
+	modelview = glm::scale(modelview, glm::vec3(1.f, 0.25f, 0.f));
+	modelview = glm::translate(modelview, glm::vec3(-64.f, -64.f, 0.f));
+	texProgram.setUniformMatrix4f("modelview", modelview);
+	texQuad[0]->render(texs[0]);
+
+	// Points
+	modelview = glm::translate(glm::mat4(1.0f), glm::vec3(550.f, 95.f, 0.f));
+	modelview = glm::scale(modelview, glm::vec3(1.f, 0.3f, 0.f));
+	modelview = glm::translate(modelview, glm::vec3(-64.f, -64.f, 0.f));
+	texProgram.setUniformMatrix4f("modelview", modelview);
+	texQuad[1]->render(texs[1]);
+	
+	// Lives
+	modelview = glm::translate(glm::mat4(1.0f), glm::vec3(550.f, 175.f, 0.f));
+	modelview = glm::scale(modelview, glm::vec3(1.f, 0.2f, 0.f));
+	modelview = glm::translate(modelview, glm::vec3(-64.f, -64.f, 0.f));
+	texProgram.setUniformMatrix4f("modelview", modelview);
+	texQuad[2]->render(texs[2]);
+
+	// Bank
+	modelview = glm::translate(glm::mat4(1.0f), glm::vec3(550.f, 255.f, 0.f));
+	modelview = glm::scale(modelview, glm::vec3(1.f, 0.2f, 0.f));
+	modelview = glm::translate(modelview, glm::vec3(-64.f, -64.f, 0.f));
+	texProgram.setUniformMatrix4f("modelview", modelview);
+	texQuad[3]->render(texs[3]);
+
+	// Batmode
+	modelview = glm::translate(glm::mat4(1.0f), glm::vec3(550.f, 335.f, 0.f));
+	modelview = glm::scale(modelview, glm::vec3(1.f, 0.3f, 0.f));
+	modelview = glm::translate(modelview, glm::vec3(-64.f, -64.f, 0.f));
+	texProgram.setUniformMatrix4f("modelview", modelview);
+	texQuad[4]->render(texs[4]);
+	
+	// Room
+	modelview = glm::translate(glm::mat4(1.0f), glm::vec3(550.f, 415.f, 0.f));
+	modelview = glm::scale(modelview, glm::vec3(1.f, 0.2f, 0.f));
+	modelview = glm::translate(modelview, glm::vec3(-64.f, -64.f, 0.f));
+	texProgram.setUniformMatrix4f("modelview", modelview);
+	texQuad[5]->render(texs[5]);
+
+	
+
 }
 
+void Scene::initText() {
+	glm::vec2 geom[2] = { glm::vec2 (0.f, 0.f), glm::vec2(128.f, 128.f) };
+	glm::vec2 texCoords[2] = { glm::vec2(0.f, 0.f), glm::vec2(1.f, 1.f) };
+	texQuad[0] = TexturedQuad::createTexturedQuad(geom, texCoords, texProgram);
+	texQuad[1] = TexturedQuad::createTexturedQuad(geom, texCoords, texProgram);
+	texQuad[2] = TexturedQuad::createTexturedQuad(geom, texCoords, texProgram);
+	texQuad[3] = TexturedQuad::createTexturedQuad(geom, texCoords, texProgram);
+	texQuad[4] = TexturedQuad::createTexturedQuad(geom, texCoords, texProgram);
+	texQuad[5] = TexturedQuad::createTexturedQuad(geom, texCoords, texProgram);
+	// Load textures
+	texs[0].loadFromFile("images/money.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	texs[1].loadFromFile("images/points.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	texs[2].loadFromFile("images/lives.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	texs[3].loadFromFile("images/bank.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	texs[4].loadFromFile("images/batmode.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	texs[5].loadFromFile("images/room.png", TEXTURE_PIXEL_FORMAT_RGBA);
+}
 
 void Scene::initShaders()
 {

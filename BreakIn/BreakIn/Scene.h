@@ -7,6 +7,7 @@
 #include "TileMap.h"
 #include "Direction.h"
 #include "Player.h"
+#include "TexturedQuad.h"
 
 #define CAMERA_WIDTH 640
 #define CAMERA_HEIGHT 480
@@ -29,19 +30,19 @@ public:
 
 private:
 	void initShaders();
+	void initText();
 
 private:
 	TileMap* map;
 	Player* player;
-	//TileMap* key;
-	//vector<TileMap*> layers;
 	ShaderProgram texProgram;
 	float currentTime;
 	glm::mat4 projection;
-	ifstream info;
+	TexturedQuad* texQuad[6];
+	Texture texs[6];
 
 };
 
 
-#endif // _SCENE_INCLUDE
+#endif //
 
