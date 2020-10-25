@@ -13,7 +13,9 @@ void SpriteSheet::setType(char const& type) {
 	else if (type == 'o' or type == 'p')
 		this->type = SpriteType::PLATFORM;
 	else if (type == 'b' or type == 'c')
-		this->type == SpriteType::WALL;
+		this->type = SpriteType::WALL;
+	else if (type == 'a')
+		this->type = SpriteType::NOTHING;
 	else
 		this->type = SpriteType::BLOCK;
 }

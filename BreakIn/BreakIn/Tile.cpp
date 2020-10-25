@@ -24,7 +24,7 @@ void Tile::calculateVertices() {
 	vertices.clear();
 	
 	int blockSize = 28;
-	glm::vec2 posTile = glm::vec2(xPos * blockSize,yPos * blockSize / 2 + 2);
+	glm::vec2 posTile = glm::vec2(xPos * blockSize,yPos * blockSize / 2);
 
 	glm::vec2 texCoordTile[2];
 	texCoordTile[0] = sprite->getTexCoord0();
