@@ -8,7 +8,6 @@
 const int BALL_SIZE_X = 20;
 const int BALL_SIZE_Y = 20;
 const float BALL_SPEED = 0.1;
-
 const int BALL_RADIUS = BALL_SIZE_X;
 
 const float SCREEN_SIZE_X = 448 - BALL_SIZE_X; //448 = blockSize*mapSize.x
@@ -224,31 +223,78 @@ void Ball::removeTile(Tile* tile)
 
 void Ball::moveBall(int deltaTime)
 {
-    if(!stuck)
+    int nextPos_x = posBall.x + speed.x * deltaTime;
+    SpriteType type = getBallTile(glm::vec2(nextPos_x, posBall.y))->getType();
+    SpriteType typeWithOffset = getBallTile(glm::vec2(nextPos_x + BALL_SIZE_X, posBall.y))->getType();
+    if(nextPos_x <= float(0))
     {
-        posBall.x += speed.x * deltaTime;
-        posBall.y += speed.y * deltaTime;
-        if( posBall.x <= float(0))
-        {
-            speed.x *= -1;
-            posBall.x = 0; 
-        }
-        else if(posBall.x >= float(460))
-        {
-            speed.x *= -1;
-            posBall.x = 460; 
-        }
-        if(posBall.y <= float(0))
-        {
-            speed.y *= -1;
-            posBall.y = 0; 
-        }
-        else if(posBall.y >= float(460))
-        {
-            speed.y *= -1;
-            posBall.y = 460; 
-        }
+        speed.x *= -1;
+        nextPos_x = 0; 
+    }
+    else if(nextPos_x >= SCREEN_SIZE_X)
+    {
+        speed.x *= -1;
+        nextPos_x = SCREEN_SIZE_X; 
+    }
+    if(type == SpriteType::WALL or typeWithOffset == SpriteType::WALL)
+    {
+        speed.x *= -1;
+        nextPos_x = posBall.x;
     }
     
+    int nextPos_y = posBall.y + speed.y * deltaTime;
+    type = getBallTile(glm::vec2(posBall.x, nextPos_y))->getType();
+    typeWithOffset = getBallTile(glm::vec2(posBall.x, nextPos_y + BALL_SIZE_Y))->getType();
+    if(nextPos_y <= float(0))
+    {
+        speed.y *= -1;
+        nextPos_y = 0; 
+    }
+    else if(nextPos_y >= SCREEN_SIZE_Y)
+    {
+        speed.y *= -1;
+        cout << "touching SCREEN" << endl;
+        nextPos_y = SCREEN_SIZE_Y; 
+    }
+    if(type == SpriteType::WALL or typeWithOffset == SpriteType::WALL)
+    {
+        speed.y *= -1;
+        cout << "touching wall Y" << endl;
+        nextPos_y = posBall.y;
+    }
+
+    posBall.x = nextPos_x;
+    posBall.y = nextPos_y;
+    
+}
+
+Tile *Ball::getBallTile(glm::vec2 pos)
+{
+    int tilePos_x = pos.x / map->getBlockSize();
+    int tilePos_y = pos.y / (map->getBlockSize()/2);
+    return map->getTiles()[tilePos_y * map->getMapSize().x + tilePos_x];
+}
+
+void Ball::printBallTile()
+{
+    Tile* currentTile = getBallTile(posBall);
+    SpriteType type = currentTile->getType();
+	switch (type) {
+	case SpriteType::KEY:
+        cout << "KEY" << endl;
+		break;
+    case SpriteType::WALL:
+        cout << "WALL" << endl;
+		break;
+    case SpriteType::BLOCK:
+        cout << "BLOCK" << endl;
+		break;
+	case SpriteType::NOTHING:
+        cout << "NOTHING" << endl;
+		break;
+    default:
+        cout << "mmmmmmmmmmmmmmmmmmmeh" << endl;
+        break;
+	}
 }
 
