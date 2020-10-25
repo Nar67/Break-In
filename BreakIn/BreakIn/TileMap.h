@@ -32,6 +32,10 @@ public:
 	void changeRoom();
 	vector<Tile*> getTiles();
 
+	glm::ivec2 getMapSize();
+
+	int getBlockSize();
+
 private:
 	bool loadLevel(const string &levelFile, ShaderProgram& program);
 
@@ -44,6 +48,7 @@ private:
 	Texture tilesheet;
 	glm::vec2 tileTexSize;
 	vector<Tile*> map;
+	void printMap();
 
 };
 
