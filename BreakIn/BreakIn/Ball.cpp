@@ -11,6 +11,10 @@
 #define BALL_SIZE_Y 20
 #define BALL_SPEED 0.1
 
+const int BALL_RADIUS = BALL_SIZE_X;
+
+const float SCREEN_SIZE_X = 448 - BALL_SIZE_X; //448 = blockSize*mapSize.x
+const float SCREEN_SIZE_Y = 476 - BALL_SIZE_Y; //476 = (blockSize/2)*mapSize.y
 
 
 #define BALL_RADIUS BALL_SIZE_X

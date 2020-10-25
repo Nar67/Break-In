@@ -52,6 +52,9 @@ private:
     void printBallTile();
 	void printTile(Tile* tile);
 
+    Tile* getBallTile(glm::vec2 pos);
+    void printBallTile();
+
 };
 
 
