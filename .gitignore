@@ -71,6 +71,7 @@
 
 .vc/
 .vs/
+/.vs
 
 # Visual C++ cache files
 ipch/
