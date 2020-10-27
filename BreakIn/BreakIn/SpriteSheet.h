@@ -17,18 +17,20 @@ public:
 	int getWidth();
 	int getHeight();
 	void setCoords(char const& c);
+	char getId();
+
+
 	Texture getTexture();
 	glm::vec2 getTexCoord0();
 	glm::vec2 getTexCoord1();
 	SpriteType getType();
 	
-
-
 private:
 	SpriteType type;
 	Texture tilesheet;
 	int width, height;
 	glm::vec2 texCoordTile[2];
+	char id;
 
 };
 #endif

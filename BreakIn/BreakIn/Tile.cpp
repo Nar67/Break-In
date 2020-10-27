@@ -1,9 +1,10 @@
 #include "Tile.h"
+#include "SpriteManager.h"
 
 Tile::Tile(int x, int y, char const& tileType, ShaderProgram& shprog) {
 	xPos = x;
 	yPos = y;
-	sprite = SpriteSheet(tileType);
+	sprite = SpriteManager::getSprite(tileType);
 	program = shprog;
 }
 
@@ -26,8 +27,8 @@ void Tile::calculateVertices() {
 	glm::vec2 posTile = glm::vec2(xPos * blockSize,yPos * blockSize / 2 - blockSize+2);
 
 	glm::vec2 texCoordTile[2];
-	texCoordTile[0] = sprite.getTexCoord0();
-	texCoordTile[1] = sprite.getTexCoord1();
+	texCoordTile[0] = sprite->getTexCoord0();
+	texCoordTile[1] = sprite->getTexCoord1();
 	// First triangle
 	vertices.push_back(posTile.x); vertices.push_back(posTile.y);
 	vertices.push_back(texCoordTile[0].x); vertices.push_back(texCoordTile[0].y);
@@ -52,13 +53,13 @@ void Tile::sendVertices() {
 }
 
 SpriteType Tile::getType() {
-	return sprite.getType();
+	return sprite->getType();
 }
 
 void Tile::render() {
 	sendVertices();
 	glBindVertexArray(vao);
-	sprite.getTexture().use();
+	sprite->getTexture().use();
 	glEnableVertexAttribArray(posLocation);
 	glEnableVertexAttribArray(texCoordLocation);
 	glDrawArrays(GL_TRIANGLES, 0, 6);

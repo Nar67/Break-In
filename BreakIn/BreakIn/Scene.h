@@ -31,6 +31,7 @@ public:
 private:
 	void initShaders();
 	void initText();
+	void initSprites();
 
 private:
 	TileMap* map;

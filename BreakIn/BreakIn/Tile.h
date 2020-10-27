@@ -29,7 +29,7 @@ private:
 	GLuint vao, vbo;
 	GLuint posLocation, texCoordLocation;
 	ShaderProgram program;
-	SpriteSheet sprite;
+	SpriteSheet* sprite;
 };
 
 #endif

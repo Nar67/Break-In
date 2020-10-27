@@ -1,6 +1,7 @@
 #include "SpriteSheet.h"
 
 SpriteSheet::SpriteSheet(char const& type){
+	id = type;
 	setType(type);
 	loadSprite();
 	setCoords(type);
@@ -113,4 +114,8 @@ glm::vec2 SpriteSheet::getTexCoord1() {
 
 SpriteType SpriteSheet::getType() {
 	return type;
+}
+
+char SpriteSheet::getId() {
+	return id;
 }

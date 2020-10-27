@@ -2,6 +2,7 @@
 #include <cmath>
 #include <glm/gtc/matrix_transform.hpp>
 #include "Scene.h"
+#include "SpriteManager.h"
 
 #define SCREEN_X 32
 #define SCREEN_Y 16
@@ -31,6 +32,7 @@ void Scene::init()
 {
 	initShaders();
 	initText();
+	initSprites();
 	map = TileMap::createTileMap("levels/level01.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
 	player = new Player();
 	player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
@@ -128,6 +130,10 @@ void Scene::initText() {
 	texs[3].loadFromFile("images/bank.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	texs[4].loadFromFile("images/batmode.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	texs[5].loadFromFile("images/room.png", TEXTURE_PIXEL_FORMAT_RGBA);
+}
+
+void Scene::initSprites() {
+	SpriteManager::createSprites();
 }
 
 void Scene::initShaders()
