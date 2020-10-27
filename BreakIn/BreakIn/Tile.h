@@ -22,12 +22,15 @@ public:
 	void calculateVertices();
 	SpriteType getType();
 	void changeRoom();
+	glm::vec2 getPosition();
+	int getBlockSize();
 
 private:
 	int xPos, yPos, room, offset;
 	vector<float> vertices;
 	bool nextRoom;
 
+	glm::vec2 posTile;
 	GLuint vao, vbo;
 	GLuint posLocation, texCoordLocation;
 	ShaderProgram program;
