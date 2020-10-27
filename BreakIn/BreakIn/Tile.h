@@ -21,11 +21,16 @@ public:
 	void sendVertices();
 	void calculateVertices();
 	SpriteType getType();
+<<<<<<< HEAD
 	void changeRoom();
 	glm::vec2 getPosition();
 	int getBlockSize();
 	glm::vec2 getIndex();
 	int decreaseHits();
+=======
+	glm::vec2 getPosition();
+	int getBlockSize();
+>>>>>>> redone collision detection
 
 private:
 	int setHits();

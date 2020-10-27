@@ -201,7 +201,7 @@ bool Ball::outOfScreen(int nextPos_x, int nextPos_y)
         posBall.y = 1;
         return true;
     }
-    else if(nextPos_y >= SCREEN_SIZE_Y)
+    if(nextPos_y <= float(0))
     {
         speed.y *= -1;
         posBall.y = SCREEN_SIZE_Y-1;
