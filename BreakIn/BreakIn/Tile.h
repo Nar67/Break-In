@@ -27,11 +27,14 @@ public:
 	int getBlockSize();
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 	glm::vec2 getIndex();
 	int decreaseHits();
 =======
 	glm::vec2 getPosition();
 	int getBlockSize();
+>>>>>>> redone collision detection
+=======
 >>>>>>> redone collision detection
 
 private:

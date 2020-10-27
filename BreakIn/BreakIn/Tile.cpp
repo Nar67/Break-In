@@ -82,7 +82,6 @@ void Tile::changeRoom() {
 	}
 	
 }
-
 glm::vec2 Tile::getPosition()
 {
 	return posTile;
