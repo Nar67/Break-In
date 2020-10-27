@@ -21,11 +21,14 @@ public:
 	void sendVertices();
 	void calculateVertices();
 	SpriteType getType();
+	glm::vec2 getPosition();
+	int getBlockSize();
 
 private:
 	int xPos, yPos;
 	vector<float> vertices;
 
+	glm::vec2 posTile;
 	GLuint vao, vbo;
 	GLuint posLocation, texCoordLocation;
 	ShaderProgram program;

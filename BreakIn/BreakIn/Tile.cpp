@@ -1,6 +1,8 @@
 #include "Tile.h"
 #include "SpriteManager.h"
 
+const int blockSize = 28;
+
 Tile::Tile(int x, int y, char const& tileType, ShaderProgram& shprog) {
 	xPos = x;
 	yPos = y;
@@ -23,8 +25,7 @@ void Tile::free() {
 void Tile::calculateVertices() {
 	vertices.clear();
 	
-	int blockSize = 28;
-	glm::vec2 posTile = glm::vec2(xPos * blockSize,yPos * blockSize / 2);
+	posTile = glm::vec2(xPos * blockSize, yPos * blockSize / 2);
 
 	glm::vec2 texCoordTile[2];
 	texCoordTile[0] = sprite->getTexCoord0();
@@ -64,4 +65,15 @@ void Tile::render() {
 	glEnableVertexAttribArray(texCoordLocation);
 	glDrawArrays(GL_TRIANGLES, 0, 6);
 }
+
+glm::vec2 Tile::getPosition()
+{
+	return posTile;
+}
+
+int Tile::getBlockSize()
+{
+	return blockSize;
+}
+
 
