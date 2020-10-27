@@ -3,10 +3,14 @@
 
 
 #include "Scene.h"
+#include "Menu.h"
+#include "Instructions.h"
+#include "Credits.h"
 
 
 // Game is a singleton (a class with a single instance) that represents our whole application
 
+enum class GameState { MENU, GAME, CREDITS, INSTRUCTIONS };
 
 class Game
 {
@@ -34,6 +38,7 @@ public:
 	void mouseMove(int x, int y);
 	void mousePress(int button);
 	void mouseRelease(int button);
+	void changeMode(int mode);
 	
 	bool getKey(int key) const;
 	bool getSpecialKey(int key) const;
@@ -43,7 +48,10 @@ private:
 	Scene scene;                      // Scene to render
 	bool keys[256], specialKeys[256]; // Store key states so that 
 	                                  // we can have access at any time
-
+	GameState state;
+	Menu menu;
+	Instructions instructions;
+	Credits credits;
 };
 
 

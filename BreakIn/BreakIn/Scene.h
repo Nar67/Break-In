@@ -8,6 +8,7 @@
 #include "Player.h"
 #include "TexturedQuad.h"
 #include "Text.h"
+#include "Menu.h"
 
 #define CAMERA_WIDTH 640
 #define CAMERA_HEIGHT 480
@@ -15,7 +16,6 @@
 
 // Scene contains all the entities of our game.
 // It is responsible for updating and render them.
-
 
 class Scene
 {
@@ -40,7 +40,6 @@ private:
 	glm::mat4 projection;
 	TexturedQuad* texQuad[6];
 	Texture texs[6];
-
 	Text text;
 };
 
