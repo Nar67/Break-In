@@ -1,6 +1,8 @@
 #include "Tile.h"
 #include "SpriteManager.h"
 
+const int blockSize = 28;
+
 Tile::Tile(int x, int y, char const& tileType, ShaderProgram& shprog) {
 	xPos = x;
 	yPos = y;
@@ -25,7 +27,6 @@ void Tile::free() {
 void Tile::calculateVertices() {
 	vertices.clear();
 	
-	int blockSize = 28;
 	glm::vec2 posTile = glm::vec2(xPos * blockSize,yPos * blockSize / 2 + offset);
 
 	if (nextRoom) {
@@ -80,3 +81,14 @@ void Tile::changeRoom() {
 	}
 	
 }
+glm::vec2 Tile::getPosition()
+{
+	return posTile;
+}
+
+int Tile::getBlockSize()
+{
+	return blockSize;
+}
+
+
