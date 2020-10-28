@@ -36,9 +36,10 @@ void Scene::init()
 	map = TileMap::createTileMap("levels/level01.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
 	player = new Player();
 	player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-	player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * 28, INIT_PLAYER_Y_TILES * 28/2));
+	player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * 28, INIT_PLAYER_Y_TILES * 28 / 2 + 894));
 	player->setTileMap(map);
 	projection = glm::ortho(0.f, float(CAMERA_WIDTH - 1), float(CAMERA_HEIGHT - 1), 0.f);
+	projection = glm::translate(projection, glm::vec3(0.f, -894.f, 0.f));
 	currentTime = 0.0f;
 
 	//Select font
@@ -65,42 +66,42 @@ void Scene::render()
 	player->render();
 
 	// Money
-	modelview = glm::translate(modelview, glm::vec3(550.f, 15.f, 0.f));
+	modelview = glm::translate(modelview, glm::vec3(550.f, 909.f, 0.f));
 	modelview = glm::scale(modelview, glm::vec3(1.f, 0.25f, 0.f));
 	modelview = glm::translate(modelview, glm::vec3(-64.f, -64.f, 0.f));
 	texProgram.setUniformMatrix4f("modelview", modelview);
 	texQuad[0]->render(texs[0]);
 
 	// Points
-	modelview = glm::translate(glm::mat4(1.0f), glm::vec3(550.f, 95.f, 0.f));
+	modelview = glm::translate(glm::mat4(1.0f), glm::vec3(550.f, 989.f, 0.f));
 	modelview = glm::scale(modelview, glm::vec3(1.f, 0.3f, 0.f));
 	modelview = glm::translate(modelview, glm::vec3(-64.f, -64.f, 0.f));
 	texProgram.setUniformMatrix4f("modelview", modelview);
 	texQuad[1]->render(texs[1]);
-	
+
 	// Lives
-	modelview = glm::translate(glm::mat4(1.0f), glm::vec3(550.f, 175.f, 0.f));
+	modelview = glm::translate(glm::mat4(1.0f), glm::vec3(550.f, 1069.f, 0.f));
 	modelview = glm::scale(modelview, glm::vec3(1.f, 0.2f, 0.f));
 	modelview = glm::translate(modelview, glm::vec3(-64.f, -64.f, 0.f));
 	texProgram.setUniformMatrix4f("modelview", modelview);
 	texQuad[2]->render(texs[2]);
 
 	// Bank
-	modelview = glm::translate(glm::mat4(1.0f), glm::vec3(550.f, 255.f, 0.f));
+	modelview = glm::translate(glm::mat4(1.0f), glm::vec3(550.f, 1149.f, 0.f));
 	modelview = glm::scale(modelview, glm::vec3(1.f, 0.2f, 0.f));
 	modelview = glm::translate(modelview, glm::vec3(-64.f, -64.f, 0.f));
 	texProgram.setUniformMatrix4f("modelview", modelview);
 	texQuad[3]->render(texs[3]);
 
 	// Batmode
-	modelview = glm::translate(glm::mat4(1.0f), glm::vec3(550.f, 335.f, 0.f));
+	modelview = glm::translate(glm::mat4(1.0f), glm::vec3(550.f, 1229.f, 0.f));
 	modelview = glm::scale(modelview, glm::vec3(1.f, 0.3f, 0.f));
 	modelview = glm::translate(modelview, glm::vec3(-64.f, -64.f, 0.f));
 	texProgram.setUniformMatrix4f("modelview", modelview);
 	texQuad[4]->render(texs[4]);
-	
+
 	// Room
-	modelview = glm::translate(glm::mat4(1.0f), glm::vec3(550.f, 400.f, 0.f));
+	modelview = glm::translate(glm::mat4(1.0f), glm::vec3(550.f, 1294.f, 0.f));
 	modelview = glm::scale(modelview, glm::vec3(1.f, 0.2f, 0.f));
 	modelview = glm::translate(modelview, glm::vec3(-64.f, -64.f, 0.f));
 	texProgram.setUniformMatrix4f("modelview", modelview);

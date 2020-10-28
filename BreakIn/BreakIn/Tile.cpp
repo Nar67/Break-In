@@ -6,6 +6,7 @@ Tile::Tile(int x, int y, char const& tileType, ShaderProgram& shprog) {
 	yPos = y;
 	sprite = SpriteManager::getSprite(tileType);
 	program = shprog;
+	offset = 0;
 }
 
 void Tile::init() {
@@ -24,7 +25,9 @@ void Tile::calculateVertices() {
 	vertices.clear();
 	
 	int blockSize = 28;
-	glm::vec2 posTile = glm::vec2(xPos * blockSize,yPos * blockSize / 2 + 2);
+	glm::vec2 posTile = glm::vec2(xPos * blockSize,yPos * blockSize / 2 + offset);
+	/*if (offset < 2 * 447)
+		offset += 2;*/
 
 	glm::vec2 texCoordTile[2];
 	texCoordTile[0] = sprite->getTexCoord0();

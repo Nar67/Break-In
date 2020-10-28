@@ -23,7 +23,7 @@ public:
 	SpriteType getType();
 
 private:
-	int xPos, yPos;
+	int xPos, yPos, offset;
 	vector<float> vertices;
 
 	GLuint vao, vbo;

@@ -43,14 +43,14 @@ void Player::update(int deltaTime)
 	if (Game::instance().getSpecialKey(GLUT_KEY_UP))
 	{
 		posPlayer.y -= 2;
-		if (posPlayer.y < 16)
+		if (posPlayer.y < 16 + 894)
 			posPlayer.y += 2;
 
 	}
 	else if (Game::instance().getSpecialKey(GLUT_KEY_DOWN))
 	{
 		posPlayer.y += 2;
-		if (posPlayer.y > 27 * 16 - 14)
+		if (posPlayer.y > 27 * 16 - 14 + 894)
 			posPlayer.y -= 2;
 	}
 		
