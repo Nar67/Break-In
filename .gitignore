@@ -70,7 +70,7 @@
 #packages/
 
 .vc/
-.vs/
+BreakIn/.vs/
 /.vs
 
 # Visual C++ cache files
