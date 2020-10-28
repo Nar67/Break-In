@@ -1,7 +1,6 @@
 #include "Menu.h"
 #include "Game.h"
 #include <GL/glut.h>
-#include <cmath>
 #include <glm/gtc/matrix_transform.hpp>
 #include <iostream>
 
@@ -59,20 +58,23 @@ void Menu::render() {
 	texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
 	breakinQuad->render(breakinImage);
 
+	window_width = glutGet(GLUT_WINDOW_WIDTH);
+	window_height = glutGet(GLUT_WINDOW_HEIGHT);
+
 	if (choice == 0) {
-		text.render("PLAY", glm::vec2(260, 350), 30, glm::vec4(0.5, 0.4, 1, 1));
-		text.render("INSTRUCTIONS", glm::vec2(182, 400), 24, glm::vec4(1, 1, 1, 1));
-		text.render("CREDITS", glm::vec2(232, 450), 24, glm::vec4(1, 1, 1, 1));
+		text.render("PLAY", glm::vec2(window_width/2 - 30*2, window_height/1.37), 30, glm::vec4(0.5, 0.4, 1, 1));
+		text.render("INSTRUCTIONS", glm::vec2(window_width / 2 - 24 * 6, window_height/1.2), 24, glm::vec4(1, 1, 1, 1));
+		text.render("CREDITS", glm::vec2(window_width/2 - 24*3.5f, window_height/1.07), 24, glm::vec4(1, 1, 1, 1));
 	}
 	else if (choice == 1) {
-		text.render("PLAY", glm::vec2(270, 350), 24, glm::vec4(1, 1, 1, 1));
-		text.render("INSTRUCTIONS", glm::vec2(150, 400), 30, glm::vec4(0.5, 0.4, 1, 1));
-		text.render("CREDITS", glm::vec2(232, 450), 24, glm::vec4(1, 1, 1, 1));
+		text.render("PLAY", glm::vec2(window_width / 2 - 24 * 2, window_height / 1.37), 24, glm::vec4(1, 1, 1, 1));
+		text.render("INSTRUCTIONS", glm::vec2(window_width / 2 - 30 * 6, window_height / 1.2), 30, glm::vec4(0.5, 0.4, 1, 1));
+		text.render("CREDITS", glm::vec2(window_width / 2 - 24 * 3.5f, window_height / 1.07), 24, glm::vec4(1, 1, 1, 1));
 	}
 	else {
-		text.render("PLAY", glm::vec2(270, 350), 24, glm::vec4(1, 1, 1, 1));
-		text.render("INSTRUCTIONS", glm::vec2(182, 400), 24, glm::vec4(1, 1, 1, 1));
-		text.render("CREDITS", glm::vec2(216, 450), 30, glm::vec4(0.5, 0.4, 1, 1));
+		text.render("PLAY", glm::vec2(window_width / 2 - 24 * 2, window_height / 1.37), 24, glm::vec4(1, 1, 1, 1));
+		text.render("INSTRUCTIONS", glm::vec2(window_width / 2 - 24 * 6, window_height / 1.2), 24, glm::vec4(1, 1, 1, 1));
+		text.render("CREDITS", glm::vec2(window_width / 2 - 30 * 3.5f, window_height / 1.07), 30, glm::vec4(0.5, 0.4, 1, 1));
 	}
 
 }

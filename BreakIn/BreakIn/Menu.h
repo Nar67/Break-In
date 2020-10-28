@@ -31,7 +31,7 @@ private:
 	TexturedQuad* breakinQuad;
 
 	float currentTime;
-	int choice;
+	int choice, window_width, window_height;
 
 };
 

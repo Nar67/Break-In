@@ -47,6 +47,7 @@ private:
 	Text text;
 	int currentLevel = 1, currentRoom = 1, currentLives = 4;
 	const string levels = "levels/level0";
+	int window_width, window_height;
 };
 
 

@@ -1,6 +1,8 @@
 #include <iostream>
 #include <cmath>
 #include <glm/gtc/matrix_transform.hpp>
+#include <GL/glew.h>
+#include <GL/glut.h>
 #include "Scene.h"
 #include "SpriteManager.h"
 
@@ -104,6 +106,9 @@ void Scene::render()
 	texProgram.setUniformMatrix4f("modelview", modelview);
 	texQuad[5]->render(texs[5]);
 
+
+	/*window_width = glutGet(GLUT_WINDOW_WIDTH);
+	window_height = glutGet(GLUT_WINDOW_HEIGHT);*/
 	// Money
 	text.render("0000000", glm::vec2(460, 55), 25, glm::vec4(1, 1, 1, 1));
 	// Points
