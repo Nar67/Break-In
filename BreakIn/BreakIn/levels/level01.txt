@@ -1,6 +1,4 @@
-16 36
-aaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaa
+16 34
 bbbbbbbbbbbbbbbb
 cccccccccccccccc
 baaaaaaaaaaaaaab

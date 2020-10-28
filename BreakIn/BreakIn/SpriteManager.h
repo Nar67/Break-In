@@ -10,12 +10,9 @@ public:
 	static void createSprites();
 	static SpriteSheet* getSprite(char type);
 
-	static vector<SpriteSheet*> sprites;
-
 private:
-	//static SpriteSheet* sprite;
-	//vector<char> types;
-
+	static vector<SpriteSheet*> sprites;
+	
 };
 #endif // !_SPRITE_MANAGER_INCLUDE
 
