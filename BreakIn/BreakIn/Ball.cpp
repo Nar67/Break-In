@@ -62,28 +62,25 @@ void Ball::moveBall(int deltaTime)
         Tile *tile = getBallTile(glm::vec2(nextPos_x, nextPos_y)); //get the tile the ball is on
 		Tile *tileWithOffsetX = getBallTile(glm::vec2(nextPos_x + BALL_SIZE_X, nextPos_y));
 		Tile *tileWithOffsetY = getBallTile(glm::vec2(nextPos_x, nextPos_y + BALL_SIZE_Y));
+		Tile *tileWithOffsetYHalf = getBallTile(glm::vec2(nextPos_x, nextPos_y + BALL_SIZE_Y/2));
         Tile *tileWithOffsetXY = getBallTile(glm::vec2(nextPos_x + BALL_SIZE_X, nextPos_y + BALL_SIZE_Y));
-        if(colliding(tile->getType(), tileWithOffsetX->getType(), tileWithOffsetY->getType(), tileWithOffsetXY->getType())) //chech if the ball is colliding with some bounceable object
+		Tile *tileWithOffsetXYHalf = getBallTile(glm::vec2(nextPos_x + BALL_SIZE_X, nextPos_y + BALL_SIZE_Y/2));
+		vector<Tile*> tiles {tile, tileWithOffsetX, tileWithOffsetY, tileWithOffsetXY, tileWithOffsetXYHalf, tileWithOffsetYHalf};
+        if(colliding(tiles)) //chech if the ball is colliding with some bounceable object
         {
-            Tile *tileCollided = getTileColliding(tile, tileWithOffsetX, tileWithOffsetY, tileWithOffsetXY); //get the tile that is colliding with something
-            if(collidedFromTop(nextPos_x, nextPos_y, tileCollided) or collidedFromBottom(nextPos_x, nextPos_y, tileCollided))
+            Tile *tileCollided = getTileColliding(tiles); //get the tile that is colliding with something
+            if(collidedFromRight(nextPos_x, nextPos_y, tileCollided) or collidedFromLeft(nextPos_x, nextPos_y, tileCollided))
             {
-				cout << "FROM TOP OR BOTTOM, TYPE-> " << printTile(tileCollided) << endl;
-                speed.y *= -1;
-                nextPos_y = posBall.y;
-                nextPos_x = posBall.x;
-            }
-            else if(collidedFromRight(nextPos_x, nextPos_y, tileCollided) or collidedFromLeft(nextPos_x, nextPos_y, tileCollided))
-            {
-				cout << "FROM RIGHT OR LEFT, TYPE-> " << printTile(tileCollided) << endl;
                 speed.x *= -1;
                 nextPos_x = posBall.x;
                 nextPos_y = posBall.y;
             }
-			cout << "TILE:          x: " << tileCollided->getPosition().x << "\ty: " << tileCollided->getPosition().y << endl; 
-			cout << "BALL:          x: " << posBall.x << "\ty: " << posBall.y << endl << endl << endl;
-
-			
+			else if(collidedFromTop(nextPos_x, nextPos_y, tileCollided) or collidedFromBottom(nextPos_x, nextPos_y, tileCollided))
+            {
+                speed.y *= -1;
+                nextPos_y = posBall.y;
+                nextPos_x = posBall.x;
+            }
         }
         posBall.x = nextPos_x;
         posBall.y = nextPos_y;
@@ -98,33 +95,28 @@ Tile *Ball::getBallTile(glm::vec2 pos)
     return map->getTiles()[tilePos_y * map->getMapSize().x + tilePos_x];
 }
 
-Tile *Ball::getTileColliding(Tile* tile1, Tile* tile2, Tile* tile3, Tile* tile4) //TODO check if two collisions can happen at the same frame
+Tile *Ball::getTileColliding(vector<Tile*> tiles)
 {
-    if(tile1->getType() == SpriteType::WALL or tile1->getType() == SpriteType::BLOCK) //or tile1->getType() == SpriteType::PLATFORM)
-    {
-        return tile1;
-    }
-    else if(tile2->getType() == SpriteType::WALL or tile2->getType() == SpriteType::BLOCK) //or tile2->getType() == SpriteType::PLATFORM)
-    {
-        return tile2;
-    }
-	else if(tile3->getType() == SpriteType::WALL or tile3->getType() == SpriteType::BLOCK) //or tile3->getType() == SpriteType::PLATFORM)
-    {
-        return tile3;
-    }
-	else
+	for(auto tile : tiles)
 	{
-		return tile4;
+		if(tile->getType() == SpriteType::WALL or tile->getType() == SpriteType::BLOCK)
+    	{
+        	return tile;
+    	}
 	}
-	
+    
 }
 
-bool Ball::colliding(SpriteType tile1, SpriteType tile2, SpriteType tile3, SpriteType tile4)
+bool Ball::colliding(vector<Tile*> tiles)
 {
-    return tile1 == SpriteType::WALL or tile1 == SpriteType::BLOCK or //or tile1 == SpriteType::PLATFORM) 
-        tile2 == SpriteType::WALL or tile2 == SpriteType::BLOCK or //or tile2 == SpriteType::PLATFORM
-		tile3 == SpriteType::WALL or tile3 == SpriteType::BLOCK or //or tile3 == SpriteType::PLATFORM)
-		tile4 == SpriteType::WALL or tile4 == SpriteType::BLOCK; //or tile4 == SpriteType::PLATFORM)
+    for(auto tile : tiles)
+	{
+		if(tile->getType() == SpriteType::WALL or tile->getType() == SpriteType::BLOCK)
+    	{
+        	return true;
+    	}
+	}
+	return false;
 }
 
 bool Ball::collidedFromLeft(int next_x, int next_y, Tile* tile)
