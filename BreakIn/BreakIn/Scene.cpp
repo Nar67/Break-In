@@ -33,11 +33,8 @@ void Scene::init()
 	initShaders();
 	initText();
 	initSprites();
-	map = TileMap::createTileMap("levels/level01.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
-	player = new Player();
-	player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-	player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * 28, INIT_PLAYER_Y_TILES * 28 / 2 + 894));
-	player->setTileMap(map);
+	loadLevel();
+	loadPlayer();
 	projection = glm::ortho(0.f, float(CAMERA_WIDTH - 1), float(CAMERA_HEIGHT - 1), 0.f);
 	projection = glm::translate(projection, glm::vec3(0.f, -894.f, 0.f));
 	currentTime = 0.0f;
@@ -107,12 +104,30 @@ void Scene::render()
 	texProgram.setUniformMatrix4f("modelview", modelview);
 	texQuad[5]->render(texs[5]);
 
-	
+	// Money
 	text.render("0000000", glm::vec2(460, 55), 25, glm::vec4(1, 1, 1, 1));
+	// Points
 	text.render("0000000", glm::vec2(460, 140), 25, glm::vec4(1, 1, 1, 1));
-	text.render("00", glm::vec2(565, 215), 25, glm::vec4(1, 1, 1, 1));
-	text.render("00", glm::vec2(565, 295), 25, glm::vec4(1, 1, 1, 1));
-	text.render("00", glm::vec2(565, 440), 25, glm::vec4(1, 1, 1, 1));
+	// Lives
+	text.render("0" + to_string(currentLives), glm::vec2(565, 215), 25, glm::vec4(1, 1, 1, 1));
+	// Bank
+	text.render("0" + to_string(currentLevel), glm::vec2(565, 295), 25, glm::vec4(1, 1, 1, 1));
+	// Room
+	text.render("0" + to_string(currentRoom), glm::vec2(565, 440), 25, glm::vec4(1, 1, 1, 1));
+}
+
+void Scene::loadLevel() {
+	if (map != NULL)
+		map->free();
+	string file = levels + to_string(currentLevel) + ".txt";
+	map = TileMap::createTileMap(file, glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
+}
+
+void Scene::loadPlayer() {
+	player = new Player();
+	player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+	player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * 28, INIT_PLAYER_Y_TILES * 28 / 2 + 894));
+	player->setTileMap(map);
 }
 
 void Scene::initText() {

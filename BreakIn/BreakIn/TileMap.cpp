@@ -42,7 +42,11 @@ void TileMap::render() const
 
 void TileMap::free()
 {
-	glDeleteBuffers(1, &vbo);
+	for (int j = 0; j < mapSize.y; j++)
+	{
+		for (int i = 0; i < mapSize.x; i++)
+			map[j * mapSize.x + i]->free();
+	}
 }
 
 vector<Tile*> TileMap::getTiles() {

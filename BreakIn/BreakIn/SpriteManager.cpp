@@ -6,7 +6,7 @@ vector<SpriteSheet*> SpriteManager::sprites;
 void SpriteManager::createSprites() {
 
 
-	vector<char> types = { '1', '2', '3', '4','a', 'b', 'c', 'd', 'e','f', 'g', 'h', 'j', 'k', 'l', 'm',
+	vector<char> types = { '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e','f', 'g', 'h', 'j', 'k', 'l', 'm',
 							'n', 'o', 'p', 'q' };
 	sprites.resize(types.size());
 	for (int i = 0; i < types.size(); ++i) {

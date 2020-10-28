@@ -9,6 +9,7 @@
 #include "TexturedQuad.h"
 #include "Text.h"
 #include "Menu.h"
+#include <string>
 
 #define CAMERA_WIDTH 640
 #define CAMERA_HEIGHT 480
@@ -32,6 +33,8 @@ private:
 	void initShaders();
 	void initText();
 	void initSprites();
+	void loadLevel();
+	void loadPlayer();
 
 private:
 	TileMap* map;
@@ -42,6 +45,8 @@ private:
 	TexturedQuad* texQuad[6];
 	Texture texs[6];
 	Text text;
+	int currentLevel = 1, currentRoom = 1, currentLives = 4;
+	const string levels = "levels/level0";
 };
 
 

@@ -14,7 +14,7 @@ void SpriteSheet::setType(char const& type) {
 		this->type = SpriteType::ALARM;
 	else if (type >= 'l' and type <= 'q')
 		this->type = SpriteType::MONEY;
-	else if (type >= '1' or type <= '4')
+	else if (type >= '1' or type <= '8')
 		this->type = SpriteType::WALL;
 	else if (type == 'a')
 		this->type == SpriteType::NOTHING;
@@ -59,11 +59,26 @@ void SpriteSheet::setCoords(char const& c) {
 	case '2': //pink brick wall bottom
 		texCoordTile[0] = glm::vec2(float(1) / width, float(22) / height);
 		break;
-	case '3': //cyan neon wall top
+	case '3': //gray neon wall top
 		texCoordTile[0] = glm::vec2(float(4) / width, float(23) / height);
 		break;
-	case '4': //cyan neon wall bottom
+	case '4': //gray neon wall bottom
 		texCoordTile[0] = glm::vec2(float(4) / width, float(24) / height);
+		break;
+	case '5': //cyan puzzle wall top
+		texCoordTile[0] = glm::vec2(float(4) / width, float(9) / height);
+		break;
+	case '6': //cyan puzzle wall bottom
+		texCoordTile[0] = glm::vec2(float(4) / width, float(10) / height);
+		break;
+	case '7': //half cyan
+		texCoordTile[0] = glm::vec2(float(1) / width, float(11) / height);
+		break;
+	case '8': //half gray
+		texCoordTile[0] = glm::vec2(float(3) / width, float(11) / height);
+		break;
+	case '9': //half pink
+		texCoordTile[0] = glm::vec2(float(1) / width, float(13) / height);
 		break;
 	case 'a': //nothing
 		texCoordTile[0] = glm::vec2(float(10) / width, float(0) / height);
