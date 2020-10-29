@@ -6,11 +6,12 @@
 #include "Menu.h"
 #include "Instructions.h"
 #include "Credits.h"
+#include "ShortCuts.h"
 
 
 // Game is a singleton (a class with a single instance) that represents our whole application
 
-enum class GameState { MENU, GAME, CREDITS, INSTRUCTIONS };
+enum class GameState { MENU, GAME, CREDITS, INSTRUCTIONS, SHORTCUTS};
 
 class Game
 {
@@ -52,6 +53,7 @@ private:
 	Menu menu;
 	Instructions instructions;
 	Credits credits;
+	ShortCuts shortcuts;
 };
 
 

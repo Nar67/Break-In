@@ -27,6 +27,9 @@ bool Game::update(int deltaTime)
 	case GameState::INSTRUCTIONS:
 		instructions.update(deltaTime);
 		break;
+	case GameState::SHORTCUTS:
+		shortcuts.update(deltaTime);
+		break;
 	default:
 		break;
 	}
@@ -51,6 +54,9 @@ void Game::render()
 		break;
 	case GameState::INSTRUCTIONS:
 		instructions.render();
+		break;
+	case GameState::SHORTCUTS:
+		shortcuts.render();
 		break;
 	default:
 		break;
@@ -116,9 +122,14 @@ void Game::changeMode(int mode) {
 		instructions.init();
 		break;
 	case 2:
+		state = GameState::SHORTCUTS;
+		shortcuts.init();
+		break;
+	case 3:
 		state = GameState::CREDITS;
 		credits.init();
 		break;
+	
 	default:
 		break;
 	}
