@@ -14,6 +14,7 @@ public:
 	SpriteSheet(char const& type);
 
 	void setType(char const& type);
+	void setType(SpriteType type);
 	void loadSprite();
 	int getWidth();
 	int getHeight();

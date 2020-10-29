@@ -81,6 +81,7 @@ void Ball::moveBall(int deltaTime)
                 nextPos_y = posBall.y;
                 nextPos_x = posBall.x;
             }
+            removeTile(tileCollided);
         }
         posBall.x = nextPos_x;
         posBall.y = nextPos_y;
@@ -223,3 +224,7 @@ string Ball::printTile(Tile* tile)
 	}
 }
 
+void Ball::removeTile(Tile* tile)
+{
+    map->removeTile(tile);    
+}
