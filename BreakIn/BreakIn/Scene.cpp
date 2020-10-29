@@ -107,18 +107,23 @@ void Scene::render()
 	texQuad[5]->render(texs[5]);
 
 
-	/*window_width = glutGet(GLUT_WINDOW_WIDTH);
-	window_height = glutGet(GLUT_WINDOW_HEIGHT);*/
+	window_width = glutGet(GLUT_WINDOW_WIDTH);
+	window_height = glutGet(GLUT_WINDOW_HEIGHT);
 	// Money
-	text.render("0000000", glm::vec2(460, 55), 25, glm::vec4(1, 1, 1, 1));
+	text.render("0000000", glm::vec2(window_width - 25*7*window_width/640, 60*window_height/480), 
+		25*window_width/640, glm::vec4(1, 1, 1, 1));
 	// Points
-	text.render("0000000", glm::vec2(460, 140), 25, glm::vec4(1, 1, 1, 1));
+	text.render("0000000", glm::vec2(window_width - 25 * 7 * window_width / 640, 145 * window_height / 480),
+		25 * window_width / 640, glm::vec4(1, 1, 1, 1));
 	// Lives
-	text.render("0" + to_string(currentLives), glm::vec2(565, 215), 25, glm::vec4(1, 1, 1, 1));
+	text.render("0" + to_string(currentLives), glm::vec2(window_width - 25 * 3 * window_width / 640, 
+		220 * window_height / 480), 25 * window_width / 640, glm::vec4(1, 1, 1, 1));
 	// Bank
-	text.render("0" + to_string(currentLevel), glm::vec2(565, 295), 25, glm::vec4(1, 1, 1, 1));
+	text.render("0" + to_string(currentLevel), glm::vec2(window_width - 25 * 3 * window_width / 640,
+		300 * window_height / 480), 25 * window_width / 640, glm::vec4(1, 1, 1, 1));
 	// Room
-	text.render("0" + to_string(currentRoom), glm::vec2(565, 440), 25, glm::vec4(1, 1, 1, 1));
+	text.render("0" + to_string(currentRoom), glm::vec2(window_width - 25 * 3 * window_width / 640, 
+		445 * window_height / 480), 25 * window_width / 640, glm::vec4(1, 1, 1, 1));
 }
 
 void Scene::loadLevel() {
