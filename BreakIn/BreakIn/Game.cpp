@@ -70,6 +70,15 @@ void Game::keyPressed(int key)
 			bPlay = false;
 		else
 			state = GameState::MENU;
+	if (key == 'f' || key == 'F') {
+		fullscreen = !fullscreen;
+		if (fullscreen)
+			glutFullScreen();
+		else {
+			glutPositionWindow(100, 100);
+			glutReshapeWindow(640, 480);
+		}
+	}
 	keys[key] = true;
 }
 

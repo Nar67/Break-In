@@ -1,6 +1,7 @@
 #include "ShortCuts.h"
 #include <iostream>
 #include <glm/gtc/matrix_transform.hpp>
+#include "Game.h"
 
 ShortCuts::ShortCuts() {
 
@@ -15,7 +16,7 @@ void ShortCuts::init() {
 
 	glm::vec2 geom[2] = { glm::vec2(0.f, 10.f), glm::vec2(CAMERA_WIDTH, CAMERA_HEIGHT) };
 	glm::vec2 texCoords[2] = { glm::vec2(0.f, 0.f), glm::vec2(1.f, 1.f) };
-	shortcutsImage.loadFromFile("images/shortcuts.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	shortcutsImage.loadFromFile("images/ShortCuts.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	shortcutsQuad = TexturedQuad::createTexturedQuad(geom, texCoords, texProgram);
 
 	projection = glm::ortho(0.f, float(CAMERA_WIDTH - 1), float(CAMERA_HEIGHT - 1), 0.f);
