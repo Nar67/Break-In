@@ -219,6 +219,11 @@ string Ball::printTile(Tile* tile)
 
 void Ball::removeTile(Tile* tile)
 {
+<<<<<<< HEAD
     map->removeTile(tile);
 }
 
+=======
+    map->removeTile(tile);    
+}
+>>>>>>> tiles not removing, sadly
