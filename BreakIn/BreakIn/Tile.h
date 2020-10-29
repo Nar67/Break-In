@@ -28,6 +28,7 @@ public:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 	glm::vec2 getIndex();
 	int decreaseHits();
 =======
@@ -45,6 +46,9 @@ private:
 =======
 	glm::vec2 getIndex();
 >>>>>>> free tiles
+=======
+	ShaderProgram* freeAndGetProgram();
+>>>>>>> tiles not removing, sadly
 
 private:
 	int xPos, yPos, room, offset, hits;
