@@ -91,4 +91,8 @@ int Tile::getBlockSize()
 	return blockSize;
 }
 
-
+ShaderProgram* Tile::freeAndGetProgram()
+{
+	this->free();
+	return &program;
+}
