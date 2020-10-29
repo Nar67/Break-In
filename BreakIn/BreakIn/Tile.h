@@ -25,6 +25,7 @@ public:
 	void changeRoom();
 	glm::vec2 getPosition();
 	int getBlockSize();
+<<<<<<< HEAD
 	glm::vec2 getIndex();
 	int decreaseHits();
 =======
@@ -34,6 +35,9 @@ public:
 
 private:
 	int setHits();
+=======
+	ShaderProgram* freeAndGetProgram();
+>>>>>>> tiles not removing, sadly
 
 private:
 	int xPos, yPos, room, offset, hits;
