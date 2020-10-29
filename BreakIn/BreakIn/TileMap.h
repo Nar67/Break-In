@@ -35,6 +35,13 @@ public:
 
 	int getBlockSize();
 
+	void removeTile(Tile* tile);
+
+	void printMap();
+
+
+
+
 private:
 	bool loadLevel(const string &levelFile, ShaderProgram& program);
 
@@ -47,7 +54,6 @@ private:
 	Texture tilesheet;
 	glm::vec2 tileTexSize;
 	vector<Tile*> map;
-	void printMap();
 
 };
 

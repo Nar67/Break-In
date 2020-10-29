@@ -23,6 +23,7 @@ public:
 	SpriteType getType();
 	glm::vec2 getPosition();
 	int getBlockSize();
+	ShaderProgram* freeAndGetProgram();
 
 private:
 	int xPos, yPos;

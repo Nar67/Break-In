@@ -20,6 +20,11 @@ void SpriteSheet::setType(char const& type) {
 		this->type = SpriteType::BLOCK;
 }
 
+void SpriteSheet::setType(SpriteType type)
+{
+	this->type = type;
+}
+
 void SpriteSheet::loadSprite() {
 	switch (type) {
 	case SpriteType::KEY:
