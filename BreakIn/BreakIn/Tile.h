@@ -24,6 +24,7 @@ public:
 	void changeRoom();
 	glm::vec2 getPosition();
 	int getBlockSize();
+	ShaderProgram* freeAndGetProgram();
 
 private:
 	int xPos, yPos, room, offset;

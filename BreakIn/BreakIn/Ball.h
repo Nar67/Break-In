@@ -42,6 +42,8 @@ private:
 	bool collidedFromTop(int next_x, int next_y, Tile* tile);
 
 
+	void removeTile(Tile* tile);
+
 	//debuging funcs
     void printBallTile();
 	string printTile(Tile* tile);

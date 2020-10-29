@@ -36,8 +36,7 @@ void TileMap::render() const
 		for (int i = 0; i < mapSize.x; i++)
 			map[j * mapSize.x + i]->render();
 	}
-	glDisable(GL_TEXTURE_2D);
-	
+	glDisable(GL_TEXTURE_2D);	
 }
 
 void TileMap::free()
@@ -101,6 +100,16 @@ bool TileMap::loadLevel(const string& levelFile, ShaderProgram& program)
 	file.close();
 
 	return true;
+}
+
+void TileMap::removeTile(Tile* tile)
+{
+	if(tile->getType() == SpriteType::BLOCK)
+    {
+        glm::ivec2 pos = tile->getPosition();
+        ShaderProgram* program = tile->freeAndGetProgram();
+        map[pos.y/2 * mapSize.x + pos.x] = new Tile(pos.x, pos.y, 'a', *program);
+    }
 }
 
 void TileMap::printMap()
