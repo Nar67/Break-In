@@ -21,10 +21,12 @@ public:
 	void sendVertices();
 	void calculateVertices();
 	SpriteType getType();
+	void changeRoom();
 
 private:
-	int xPos, yPos, offset;
+	int xPos, yPos, room, offset;
 	vector<float> vertices;
+	bool nextRoom;
 
 	GLuint vao, vbo;
 	GLuint posLocation, texCoordLocation;

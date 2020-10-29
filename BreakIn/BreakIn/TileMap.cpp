@@ -53,6 +53,14 @@ vector<Tile*> TileMap::getTiles() {
 	return map;
 }
 
+void TileMap::changeRoom() {
+	for (int j = 0; j < mapSize.y; j++)
+	{
+		for (int i = 0; i < mapSize.x; i++)
+			map[j * mapSize.x + i]->changeRoom();
+	}
+}
+
 bool TileMap::loadLevel(const string& levelFile, ShaderProgram& program)
 {
 	ifstream file;

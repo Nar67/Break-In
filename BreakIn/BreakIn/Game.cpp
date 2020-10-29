@@ -70,6 +70,7 @@ void Game::keyPressed(int key)
 			bPlay = false;
 		else
 			state = GameState::MENU;
+
 	if (key == 'f' || key == 'F') {
 		fullscreen = !fullscreen;
 		if (fullscreen)
@@ -79,6 +80,19 @@ void Game::keyPressed(int key)
 			glutReshapeWindow(640, 480);
 		}
 	}
+
+	if (key == 'n' || key == 'N') {
+		if (state == GameState::GAME) {
+			scene.nextRoom();
+		}
+	}
+
+	if (key == 'b' || key == 'B') {
+		if (state == GameState::GAME) {
+			scene.nextBank();
+		}
+	}
+
 	keys[key] = true;
 }
 

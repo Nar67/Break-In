@@ -5,6 +5,7 @@
 #include <GL/glut.h>
 #include "Scene.h"
 #include "SpriteManager.h"
+#include "Game.h"
 
 #define SCREEN_X 32
 #define SCREEN_Y 16
@@ -124,6 +125,22 @@ void Scene::render()
 	// Room
 	text.render("0" + to_string(currentRoom), glm::vec2(window_width - 25 * 3 * window_width / 640, 
 		445 * window_height / 480), 25 * window_width / 640, glm::vec4(1, 1, 1, 1));
+}
+
+void Scene::nextRoom() {
+	if (currentRoom < 3) {
+		map->changeRoom();
+		currentRoom++;
+	}
+		
+}
+
+void Scene::nextBank() {
+	if (currentLevel < 3) {
+		currentLevel++;
+		currentRoom = 1;
+		loadLevel();
+	}
 }
 
 void Scene::loadLevel() {
