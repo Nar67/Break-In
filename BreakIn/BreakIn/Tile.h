@@ -26,6 +26,7 @@ public:
 	glm::vec2 getPosition();
 	int getBlockSize();
 <<<<<<< HEAD
+<<<<<<< HEAD
 	glm::vec2 getIndex();
 	int decreaseHits();
 =======
@@ -38,6 +39,9 @@ private:
 =======
 	ShaderProgram* freeAndGetProgram();
 >>>>>>> tiles not removing, sadly
+=======
+	glm::vec2 getIndex();
+>>>>>>> free tiles
 
 private:
 	int xPos, yPos, room, offset, hits;
