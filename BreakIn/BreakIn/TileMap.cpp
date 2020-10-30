@@ -14,7 +14,8 @@ TileMap* TileMap::createTileMap(const string& levelFile, const glm::vec2& minCoo
 
 TileMap::TileMap(const string& levelFile, const glm::vec2& minCoords, ShaderProgram& program)
 {
-	loadLevel(levelFile, program);
+	this->program = program;
+	loadLevel(levelFile);
 }
 
 TileMap::~TileMap()
@@ -71,7 +72,7 @@ int TileMap::getBlockSize()
 }
 
 
-bool TileMap::loadLevel(const string& levelFile, ShaderProgram& program)
+bool TileMap::loadLevel(const string& levelFile)
 {
 	ifstream file;
 	char tile;
@@ -107,9 +108,10 @@ void TileMap::removeTile(Tile* tile)
 {
 	if(tile->getType() == SpriteType::BLOCK)
     {
-        glm::ivec2 pos = tile->getPosition();
-        ShaderProgram* program = tile->freeAndGetProgram();
-        map[pos.y/2 * mapSize.x + pos.x] = new Tile(pos.x, pos.y, 'a', *program);
+        glm::ivec2 pos = tile->getIndex();
+		map[pos.y * mapSize.x + pos.x]->free();
+        map[pos.y * mapSize.x + pos.x] = new Tile(pos.x, pos.y, 'a', program);
+		map[pos.y * mapSize.x + pos.x]->init();
     }
 }
 
