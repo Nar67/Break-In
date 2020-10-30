@@ -87,8 +87,12 @@ glm::vec2 Tile::getPosition()
 	return posTile;
 }
 
+glm::vec2 Tile::getIndex() {
+	glm::ivec2 pos = glm::vec2(xPos, yPos);
+	return pos;
+}
+
 int Tile::getBlockSize()
 {
 	return blockSize;
 }
-

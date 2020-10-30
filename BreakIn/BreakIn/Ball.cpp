@@ -65,7 +65,7 @@ void Ball::moveBall(int deltaTime)
 		Tile *tileWithOffsetYHalf = getBallTile(glm::vec2(nextPos_x, nextPos_y + BALL_SIZE_Y/2));
         Tile *tileWithOffsetXY = getBallTile(glm::vec2(nextPos_x + BALL_SIZE_X, nextPos_y + BALL_SIZE_Y));
 		Tile *tileWithOffsetXYHalf = getBallTile(glm::vec2(nextPos_x + BALL_SIZE_X, nextPos_y + BALL_SIZE_Y/2));
-		vector<Tile*> tiles {tile, tileWithOffsetX, tileWithOffsetY, tileWithOffsetXY, tileWithOffsetXYHalf, tileWithOffsetYHalf};
+        vector<Tile*> tiles {tile, tileWithOffsetX, tileWithOffsetY, tileWithOffsetXY, tileWithOffsetXYHalf, tileWithOffsetYHalf};
         if(colliding(tiles)) //chech if the ball is colliding with some bounceable object
         {
             Tile *tileCollided = getTileColliding(tiles); //get the tile that is colliding with something
