@@ -43,7 +43,7 @@ public:
 
 
 private:
-	bool loadLevel(const string &levelFile, ShaderProgram& program);
+	bool loadLevel(const string &levelFile);
 
 private:
 	GLuint vao;
@@ -54,7 +54,7 @@ private:
 	Texture tilesheet;
 	glm::vec2 tileTexSize;
 	vector<Tile*> map;
-
+	ShaderProgram program;
 };
 
 
