@@ -5,7 +5,7 @@
 #include <string>
 #include <glm/glm.hpp>
 
-enum class SpriteType { BLOCK, KEY, WALL, NOTHING, MONEY, ALARM };
+enum class SpriteType { BLOCK, KEY, WALL, NOTHING, MONEY, ALARM, ARROW };
 
 class SpriteSheet
 {

@@ -6,6 +6,7 @@
 #include "Texture.h"
 #include "TexturedQuad.h"
 #include <glm/glm.hpp>
+#include "SoundManager.h"
 
 #define CAMERA_WIDTH 640
 #define CAMERA_HEIGHT 480
@@ -29,6 +30,7 @@ private:
 	Text text;
 	Texture breakinImage;
 	TexturedQuad* breakinQuad;
+	SoundManager sound;
 
 	float currentTime;
 	int choice, window_width, window_height;

@@ -30,6 +30,7 @@
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShaderProgram.h" />
     <ClInclude Include="ShortCuts.h" />
+    <ClInclude Include="SoundManager.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="SpriteManager.h" />
     <ClInclude Include="SpriteSheet.h" />
@@ -51,6 +52,7 @@
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="ShaderProgram.cpp" />
     <ClCompile Include="ShortCuts.cpp" />
+    <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="SpriteManager.cpp" />
     <ClCompile Include="SpriteSheet.cpp" />
@@ -114,7 +116,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <LibraryPath>.\libs\freetype-2.3.5-1-bin;.\libs\Simple OpenGL Image Library;.\libs\freeglut;.\libs\glew-1.13.0;$(LibraryPath)</LibraryPath>
+    <LibraryPath>.\libs\irrKlang-1.6.0\bin\win32-visualStudio;.\libs\freetype-2.3.5-1-bin;.\libs\Simple OpenGL Image Library;.\libs\freeglut;.\libs\glew-1.13.0;$(LibraryPath)</LibraryPath>
     <ReferencePath>$(ReferencePath)</ReferencePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -134,14 +136,14 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>.\libs\Simple OpenGL Image Library\src;.\libs\glm;.\libs\glew-1.13.0\include;.\libs\freetype-2.3.5-1-bin\include\freetype2;.\libs\freetype-2.3.5-1-bin\include;.\libs\freeglut\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\libs\irrKlang-1.6.0\include;.\libs\Simple OpenGL Image Library\src;.\libs\glm;.\libs\glew-1.13.0\include;.\libs\freetype-2.3.5-1-bin\include\freetype2;.\libs\freetype-2.3.5-1-bin\include;.\libs\freeglut\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>.\libs\Simple OpenGL Image Library\projects\VC9\Debug;.\libs\freeglut\lib;.\libs\freetype-2.3.5-1-bin\lib;.\libs\glew-1.13.0\lib\Release\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>freeglut.lib;freetype.lib;SOIL.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>.\libs\irrKlang-1.6.0\lib\Win32-visualStudio;.\libs\Simple OpenGL Image Library\projects\VC9\Debug;.\libs\freeglut\lib;.\libs\freetype-2.3.5-1-bin\lib;.\libs\glew-1.13.0\lib\Release\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>irrKlang.lib;freeglut.lib;freetype.lib;SOIL.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

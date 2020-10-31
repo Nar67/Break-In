@@ -24,6 +24,8 @@ void Menu::init() {
 	projection = glm::ortho(0.f, float(CAMERA_WIDTH - 1), float(CAMERA_HEIGHT - 1), 0.f);
 	currentTime = 0.0f;
 
+	sound.playMenu();
+
 	if (!text.init("fonts/ArcadepixPlus.ttf"))
 		cout << "Could not load font!!!" << endl;
 }
@@ -33,16 +35,19 @@ void Menu::update(int deltaTime) {
 
 	if (Game::instance().getSpecialKey(GLUT_KEY_DOWN)) {
 		Game::instance().specialKeyReleased(GLUT_KEY_DOWN);
+		sound.playMenuMove();
 		++choice;
 		choice %= 4;
 	}
 	else if (Game::instance().getSpecialKey(GLUT_KEY_UP)) {
 		Game::instance().specialKeyReleased(GLUT_KEY_UP);
+		sound.playMenuMove();
 		choice += 3;
 		choice %= 4;
 	}
 
 	if (Game::instance().getKey(32)) {
+		sound.playMenuSelect();
 		Game::instance().changeMode(choice);
 	}
 }

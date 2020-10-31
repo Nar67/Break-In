@@ -8,6 +8,7 @@ void Game::init()
 	bPlay = true;
 	glClearColor(0.f, 0.f, 0.f, 1.0f);
 	state = GameState::MENU;
+	sound.init();
 	menu.init();
 }
 
@@ -47,6 +48,7 @@ void Game::render()
 		menu.render();
 		break;
 	case GameState::GAME:
+		
 		scene.render();
 		break;
 	case GameState::CREDITS:
@@ -138,6 +140,7 @@ void Game::changeMode(int mode) {
 	{
 	case 0:
 		state = GameState::GAME;
+		sound.stopMenu();
 		scene.init();
 		break;
 	case 1:

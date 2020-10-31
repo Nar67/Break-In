@@ -7,6 +7,7 @@
 #include "Instructions.h"
 #include "Credits.h"
 #include "ShortCuts.h"
+#include "SoundManager.h"
 
 
 // Game is a singleton (a class with a single instance) that represents our whole application
@@ -54,6 +55,7 @@ private:
 	Instructions instructions;
 	Credits credits;
 	ShortCuts shortcuts;
+	SoundManager sound;
 };
 
 
