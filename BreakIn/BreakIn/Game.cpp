@@ -95,6 +95,14 @@ void Game::keyPressed(int key)
 		}
 	}
 
+	if (key == 'r' || key == 'R') {
+		if (state == GameState::GAME) {
+			scene.restart();
+		}
+	}
+
+
+
 	keys[key] = true;
 }
 

@@ -127,6 +127,15 @@ void Scene::render()
 		445 * window_height / 480), 25 * window_width / 640, glm::vec4(1, 1, 1, 1));
 }
 
+void Scene::restart() {
+	currentRoom = 1;
+	currentLevel = 1;
+	currentLives = 4;
+	loadLevel();
+	loadPlayer();
+
+}
+
 void Scene::nextRoom() {
 	if (currentRoom < 3) {
 		map->changeRoom();
@@ -151,6 +160,8 @@ void Scene::loadLevel() {
 }
 
 void Scene::loadPlayer() {
+	if (player != NULL)
+		player = NULL;
 	player = new Player();
 	player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
 	player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * 28, INIT_PLAYER_Y_TILES * 28 / 2 + 894));

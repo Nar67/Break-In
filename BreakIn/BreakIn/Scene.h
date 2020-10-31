@@ -30,6 +30,7 @@ public:
 	void render();
 	void nextRoom();
 	void nextBank();
+	void restart();
 
 private:
 	void initShaders();
