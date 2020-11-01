@@ -5,13 +5,16 @@
 #include "Ball.h"
 #include "Game.h"
 
-const int BALL_SIZE_X = 20;
-const int BALL_SIZE_Y = 20;
-const float BALL_SPEED = 0.1;
-const int BALL_RADIUS = BALL_SIZE_X;
+#define MAP_OFFSET_Y 894
 
-const float SCREEN_SIZE_X = 448 - BALL_SIZE_X; //448 = blockSize*mapSize.x
-const float SCREEN_SIZE_Y = 476 - BALL_SIZE_Y; //476 = (blockSize/2)*mapSize.y
+#define BALL_SIZE_X 20
+#define BALL_SIZE_Y 20
+#define BALL_SPEED 0.1
+
+#define BALL_RADIUS BALL_SIZE_X
+
+#define SCREEN_SIZE_X 448 - BALL_SIZE_X //448 = blockSize*mapSize.x
+#define SCREEN_SIZE_Y 476 - BALL_SIZE_Y + MAP_OFFSET_Y //476 = (blockSize/2)*mapSize.y
 
 
 void Ball::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
@@ -26,7 +29,6 @@ void Ball::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 void Ball::update(int deltaTime)
 {
 	sprite->update(deltaTime);
-
     if(!stuck)
     {
         moveBall(deltaTime);
@@ -175,8 +177,7 @@ bool Ball::outOfScreen(int nextPos_x, int nextPos_y)
 void Ball::printBallTile()
 {
     Tile* currentTile = getBallTile(posBall);
-    SpriteType type = currentTile->getType();
-	switch (type) {
+    switch (currentTile->getType()) {
 	case SpriteType::KEY:
         cout << "KEY" << endl;
 		break;
@@ -185,6 +186,12 @@ void Ball::printBallTile()
 		break;
     case SpriteType::BLOCK:
         cout << "BLOCK" << endl;
+		break;
+    case SpriteType::MONEY:
+        cout << "MONEY" << endl;
+		break;
+    case SpriteType::ALARM:
+        cout << "ALARM" << endl;
 		break;
 	case SpriteType::NOTHING:
         cout << "NOTHING" << endl;
@@ -195,24 +202,29 @@ void Ball::printBallTile()
 	}
 }
 
-string Ball::printTile(Tile* tile)
+void Ball::printTile(Tile* tile)
 {
-    SpriteType type = tile->getType();
-	switch (type) {
+	switch (tile->getType()) {
 	case SpriteType::KEY:
-        return "KEY";
+        cout << "KEY" << endl;
 		break;
     case SpriteType::WALL:
-        return "WALL";
+        cout << "WALL" << endl;
 		break;
     case SpriteType::BLOCK:
-        return "BLOCK";
+        cout << "BLOCK" << endl;
+		break;
+    case SpriteType::MONEY:
+        cout << "MONEY" << endl;
+		break;
+    case SpriteType::ALARM:
+        cout << "ALARM" << endl;
 		break;
 	case SpriteType::NOTHING:
-        return "NOTHING";
+        cout << "NOTHING" << endl;
 		break;
     default:
-        return "mmmmmmmmmmmmmmmmmmmeh";
+        cout << "mmmmmmmmmmmmmmmmmmmeh" << endl;
         break;
 	}
 }

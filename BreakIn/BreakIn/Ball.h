@@ -46,20 +46,7 @@ private:
 
 	//debuging funcs
     void printBallTile();
-	string printTile(Tile* tile);
-    void printBallTile();
-	bool isOverlaping(Tile*);
-	bool outOfScreen(int nextPos_x, int nextPos_y);
-	Tile* getTileColliding(Tile* tile1, Tile* tile2, Tile* tile3, Tile* tile4);
-	bool colliding(SpriteType tile1, SpriteType tile2, SpriteType tile3, SpriteType tile4);
-	bool collidedFromLeft(int next_x, int next_y, Tile* tile);
-	bool collidedFromRight(int next_x, int next_y, Tile* tile);
-	bool collidedFromBottom(int next_x, int next_y, Tile* tile);
-	bool collidedFromTop(int next_x, int next_y, Tile* tile);
-
-	//debuging funcs
-    void printBallTile();
-	string printTile(Tile* tile);
+	void printTile(Tile* tile);
 
 };
 
