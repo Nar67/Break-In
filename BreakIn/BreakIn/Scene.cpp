@@ -16,6 +16,8 @@
 #define INIT_BALL_X_TILES 8
 #define INIT_BALL_Y_TILES 25
 
+#define MAP_OFFSET_Y 894
+
 Scene::Scene()
 {
 	map = NULL;
@@ -41,11 +43,8 @@ void Scene::init()
 	initSprites();
 	loadLevel();
 	loadPlayer();
-	
-	ball = new Ball();
-	ball->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-	ball->setPosition(glm::vec2(INIT_BALL_X_TILES * 28, INIT_BALL_Y_TILES * 28/2));
-	ball->setTileMap(map);
+	loadBall();
+
 
 	projection = glm::ortho(0.f, float(CAMERA_WIDTH - 1), float(CAMERA_HEIGHT - 1), 0.f);
 	projection = glm::translate(projection, glm::vec3(0.f, -894.f, 0.f));
@@ -164,8 +163,16 @@ void Scene::loadLevel() {
 void Scene::loadPlayer() {
 	player = new Player();
 	player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-	player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * 28, INIT_PLAYER_Y_TILES * 28 / 2 + 894));
+	player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * 28, INIT_PLAYER_Y_TILES * 28 / 2 + MAP_OFFSET_Y));
 	player->setTileMap(map);
+}
+
+void Scene::loadBall()
+{
+	ball = new Ball();
+	ball->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+	ball->setPosition(glm::vec2(INIT_BALL_X_TILES * 28, INIT_BALL_Y_TILES * 28/2 + MAP_OFFSET_Y));
+	ball->setTileMap(map);
 }
 
 void Scene::initText() {

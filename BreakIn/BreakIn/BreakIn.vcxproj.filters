@@ -57,6 +57,9 @@
     </ClCompile>
     <ClCompile Include="ShortCuts.cpp">
       <Filter>Source Files</Filter>
+    <ClCompile Include="Ball.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -115,6 +118,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ShortCuts.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Ball.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

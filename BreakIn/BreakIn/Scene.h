@@ -38,6 +38,7 @@ private:
 	void initSprites();
 	void loadLevel();
 	void loadPlayer();
+	void loadBall();
 
 private:
 	TileMap* map;

@@ -121,8 +121,7 @@ void TileMap::printMap()
 	{
 		for (int i = 0; i < mapSize.x; i++)
 		{
-			SpriteType type = map[j * mapSize.x + i]->getType();
-			switch (type) {
+			switch (map[j * mapSize.x + i]->getType()) {
 			case SpriteType::KEY:
     		    cout << "-KEY";
 				break;

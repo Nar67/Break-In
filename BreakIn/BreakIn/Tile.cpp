@@ -27,7 +27,7 @@ void Tile::free() {
 void Tile::calculateVertices() {
 	vertices.clear();
 	
-	glm::vec2 posTile = glm::vec2(xPos * blockSize,yPos * blockSize / 2 + offset);
+	posTile = glm::vec2(xPos * blockSize,yPos * blockSize / 2 + offset);
 
 	if (nextRoom) {
 		if (offset < room*447)

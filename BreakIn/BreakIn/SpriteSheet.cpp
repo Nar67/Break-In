@@ -14,10 +14,10 @@ void SpriteSheet::setType(char const& type) {
 		this->type = SpriteType::ALARM;
 	else if (type >= 'l' and type <= 'q')
 		this->type = SpriteType::MONEY;
-	else if (type >= '1' or type <= '8')
+	else if (type >= '1' and type <= '8')
 		this->type = SpriteType::WALL;
 	else if (type == 'a')
-		this->type == SpriteType::NOTHING;
+		this->type = SpriteType::NOTHING;
 	else
 		this->type = SpriteType::BLOCK;
 }
