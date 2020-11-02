@@ -47,6 +47,11 @@ void Ball::setTileMap(TileMap *tileMap)
 	map = tileMap;
 }
 
+void Ball::setPlayer(Player *play)
+{
+	player = play;
+}
+
 void Ball::setPosition(const glm::vec2 &pos)
 {
 	posBall = pos;
@@ -83,6 +88,12 @@ void Ball::moveBall(int deltaTime)
                 nextPos_x = posBall.x;
             }
             removeTile(tileCollided);
+        }
+        if(collidedWithPlayer(nextPos_x, nextPos_y))
+        {
+            speed.y *= -1;
+            nextPos_y = posBall.y;
+            nextPos_x = posBall.x;
         }
         posBall.x = nextPos_x;
         posBall.y = nextPos_y;
@@ -143,6 +154,14 @@ bool Ball::collidedFromTop(int next_x, int next_y, Tile* tile)
 {
     return posBall.y + BALL_SIZE_Y < tile->getPosition().y &&
             next_y + BALL_SIZE_Y >= tile->getPosition().y;
+}
+
+bool Ball::collidedWithPlayer(int next_x, int next_y)
+{
+    return posBall.y + BALL_SIZE_Y < player->getPosition().y &&
+            next_y + BALL_SIZE_Y >= player->getPosition().y &&
+            ((next_x > player->getPosition().x && next_x < player->getPosition().x + player->getPlayerXSize() 
+            or next_x + BALL_SIZE_X > player->getPosition().x && next_x + BALL_SIZE_X < player->getPosition().x + player->getPlayerXSize()));
 }
 
 bool Ball::outOfScreen(int nextPos_x, int nextPos_y)
