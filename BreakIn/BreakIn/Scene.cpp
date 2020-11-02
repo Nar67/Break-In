@@ -183,6 +183,7 @@ void Scene::loadBall()
 	ball->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
 	ball->setPosition(glm::vec2(INIT_BALL_X_TILES * 28, INIT_BALL_Y_TILES * 28/2 + MAP_OFFSET_Y));
 	ball->setTileMap(map);
+	ball->setPlayer(player);
 }
 
 void Scene::initText() {
