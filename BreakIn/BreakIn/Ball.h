@@ -25,7 +25,7 @@ public:
 	void setPlayer(Player* play);
 	
 private:
-    bool stuck;
+	bool stuck;
     glm::vec2 speed;
 	glm::ivec2 tileMap, posBall;
 	int jumpAngle, startY;

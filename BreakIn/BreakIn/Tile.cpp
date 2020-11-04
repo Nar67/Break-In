@@ -31,8 +31,8 @@ void Tile::calculateVertices() {
 	posTile = glm::vec2(xPos * blockSize,yPos * blockSize / 2 + offset);
 
 	if (nextRoom) {
-		if (offset < room*447)
-			offset += 2;
+		if (offset < room*446)
+			offset += 8;
 		else nextRoom = false;
 	}
 

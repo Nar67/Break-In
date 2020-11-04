@@ -166,6 +166,7 @@ void Scene::loadLevel() {
 		map->free();
 	string file = levels + to_string(currentLevel) + ".txt";
 	map = TileMap::createTileMap(file, glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
+	map->setRoom(currentRoom);
 }
 
 void Scene::loadPlayer() {
