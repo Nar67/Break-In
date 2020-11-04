@@ -15,7 +15,8 @@ TileMap* TileMap::createTileMap(const string& levelFile, const glm::vec2& minCoo
 TileMap::TileMap(const string& levelFile, const glm::vec2& minCoords, ShaderProgram& program)
 {
 	this->program = program;
-	loadLevel(levelFile);
+	this->levelFile = levelFile;
+	loadLevel();
 }
 
 TileMap::~TileMap()
@@ -72,7 +73,7 @@ int TileMap::getBlockSize()
 }
 
 
-bool TileMap::loadLevel(const string& levelFile)
+bool TileMap::loadLevel()
 {
 	ifstream file;
 	char tile;
@@ -116,6 +117,7 @@ void TileMap::removeTile(Tile* tile)
 			map[pos.y * mapSize.x + pos.x]->init();
 		}
     }
+
 	if (tile->getType() == SpriteType::KEY) {
 		glm::ivec2 pos = tile->getIndex();
 		map[pos.y * mapSize.x + pos.x]->free();
@@ -126,8 +128,39 @@ void TileMap::removeTile(Tile* tile)
 		map[newpos * mapSize.x + pos.x]->free();
 		map[newpos * mapSize.x + pos.x] = new Tile(pos.x, newpos,'a', program);
 		map[newpos * mapSize.x + pos.x]->init();
-
+		
+		openPath();
 	}
+}
+
+void TileMap::openPath() {
+	char c = levelFile[levelFile.length() - 5];
+	char tile;
+	switch (c)
+	{
+	case '2':
+		tile = 'y';
+		break;
+	case '3':
+		tile = 'z';
+		break;
+	default:
+		tile = 'x';
+		break;
+	}
+	int j = 64 - room*34;
+	for (int i = 5; i < 11; ++i) {
+		map[j * mapSize.x + i]->free();
+		map[j * mapSize.x + i] = new Tile(i, j, 'a', program);
+		map[j * mapSize.x + i]->init();
+		map[(j+1) * mapSize.x + i]->free();
+		map[(j+1) * mapSize.x + i] = new Tile(i, (j+1), tile, program);
+		map[(j+1) * mapSize.x + i]->init();
+	}
+}
+
+void TileMap::setRoom(int r) {
+	room = r-1;
 }
 
 void TileMap::printMap()
