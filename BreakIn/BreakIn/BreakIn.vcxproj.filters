@@ -55,9 +55,18 @@
     <ClCompile Include="SpriteManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="Ball.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+=======
+    <ClCompile Include="ShortCuts.cpp">
+      <Filter>Source Files</Filter>
+    <ClCompile Include="Ball.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    </ClCompile>
+>>>>>>> 2cf8e64978f02462ed17c8cf64a162424555ed9d
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AnimKeyframes.h">
@@ -114,6 +123,12 @@
     <ClInclude Include="SpriteManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+<<<<<<< HEAD
+=======
+    <ClInclude Include="ShortCuts.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+>>>>>>> 2cf8e64978f02462ed17c8cf64a162424555ed9d
     <ClInclude Include="Ball.h">
       <Filter>Header Files</Filter>
     </ClInclude>

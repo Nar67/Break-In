@@ -6,11 +6,12 @@
 #include "Menu.h"
 #include "Instructions.h"
 #include "Credits.h"
+#include "ShortCuts.h"
 
 
 // Game is a singleton (a class with a single instance) that represents our whole application
 
-enum class GameState { MENU, GAME, CREDITS, INSTRUCTIONS };
+enum class GameState { MENU, GAME, CREDITS, INSTRUCTIONS, SHORTCUTS};
 
 class Game
 {
@@ -44,7 +45,7 @@ public:
 	bool getSpecialKey(int key) const;
 
 private:
-	bool bPlay;                       // Continue to play game?
+	bool bPlay, fullscreen = false;                       // Continue to play game?
 	Scene scene;                      // Scene to render
 	bool keys[256], specialKeys[256]; // Store key states so that 
 	                                  // we can have access at any time
@@ -52,6 +53,7 @@ private:
 	Menu menu;
 	Instructions instructions;
 	Credits credits;
+	ShortCuts shortcuts;
 };
 
 

@@ -27,6 +27,9 @@ bool Game::update(int deltaTime)
 	case GameState::INSTRUCTIONS:
 		instructions.update(deltaTime);
 		break;
+	case GameState::SHORTCUTS:
+		shortcuts.update(deltaTime);
+		break;
 	default:
 		break;
 	}
@@ -52,6 +55,9 @@ void Game::render()
 	case GameState::INSTRUCTIONS:
 		instructions.render();
 		break;
+	case GameState::SHORTCUTS:
+		shortcuts.render();
+		break;
 	default:
 		break;
 	}
@@ -64,6 +70,29 @@ void Game::keyPressed(int key)
 			bPlay = false;
 		else
 			state = GameState::MENU;
+
+	if (key == 'f' || key == 'F') {
+		fullscreen = !fullscreen;
+		if (fullscreen)
+			glutFullScreen();
+		else {
+			glutPositionWindow(100, 100);
+			glutReshapeWindow(640, 480);
+		}
+	}
+
+	if (key == 'n' || key == 'N') {
+		if (state == GameState::GAME) {
+			scene.nextRoom();
+		}
+	}
+
+	if (key == 'b' || key == 'B') {
+		if (state == GameState::GAME) {
+			scene.nextBank();
+		}
+	}
+
 	keys[key] = true;
 }
 
@@ -116,9 +145,14 @@ void Game::changeMode(int mode) {
 		instructions.init();
 		break;
 	case 2:
+		state = GameState::SHORTCUTS;
+		shortcuts.init();
+		break;
+	case 3:
 		state = GameState::CREDITS;
 		credits.init();
 		break;
+	
 	default:
 		break;
 	}

@@ -9,6 +9,7 @@
 #include "TexturedQuad.h"
 #include "Text.h"
 #include "Menu.h"
+#include <string>
 #include "Ball.h"
 
 #define CAMERA_WIDTH 640
@@ -28,11 +29,16 @@ public:
 	void init();
 	void update(int deltaTime);
 	void render();
+	void nextRoom();
+	void nextBank();
 
 private:
 	void initShaders();
 	void initText();
 	void initSprites();
+	void loadLevel();
+	void loadPlayer();
+	void loadBall();
 
 private:
 	TileMap* map;
@@ -46,6 +52,9 @@ private:
 	TexturedQuad* texQuad[6];
 	Texture texs[6];
 	Text text;
+	int currentLevel = 1, currentRoom = 1, currentLives = 4;
+	const string levels = "levels/level0";
+	int window_width, window_height;
 };
 
 

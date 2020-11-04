@@ -1,38 +1,34 @@
-#ifndef _MENU_INCLUDE
-#define _MENU_INCLUDE
+#ifndef	_SHORT_CUTS_INCLUDE
+#define _SHORT_CUTS_INCLUDE
 
 #include "ShaderProgram.h"
-#include "Text.h"
 #include "Texture.h"
 #include "TexturedQuad.h"
-#include <glm/glm.hpp>
 
 #define CAMERA_WIDTH 640
 #define CAMERA_HEIGHT 480
 
-class Menu
+class ShortCuts
 {
-
 public:
-	Menu();
-	~Menu();
+	ShortCuts();
+	~ShortCuts();
 
 	void init();
 	void update(int deltaTime);
 	void render();
 
-private: 
+private:
 	void initShaders();
+
 private:
 	ShaderProgram texProgram;
 	glm::mat4 projection;
-	Text text;
-	Texture breakinImage;
-	TexturedQuad* breakinQuad;
+	Texture shortcutsImage;
+	TexturedQuad* shortcutsQuad;
 
 	float currentTime;
-	int choice, window_width, window_height;
-
 };
 
 #endif
+

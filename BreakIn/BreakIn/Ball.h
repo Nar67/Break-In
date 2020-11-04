@@ -5,6 +5,7 @@
 #include "Sprite.h"
 #include "SpriteSheet.h"
 #include "TileMap.h"
+#include "Player.h"
 
 
 // Player is basically a Sprite that represents the player. As such it has
@@ -21,6 +22,7 @@ public:
 	void moveBall(int deltaTime);
 	void setTileMap(TileMap *tileMap);
 	void setPosition(const glm::vec2 &pos);
+	void setPlayer(Player* play);
 	
 private:
     bool stuck;
@@ -30,6 +32,7 @@ private:
 	Texture spritesheet;
 	Sprite *sprite;
 	TileMap *map;
+	Player* player;
 
     Tile* getBallTile(glm::vec2 pos);
 	bool isOverlaping(Tile*);
@@ -40,13 +43,14 @@ private:
 	bool collidedFromRight(int next_x, int next_y, Tile* tile);
 	bool collidedFromBottom(int next_x, int next_y, Tile* tile);
 	bool collidedFromTop(int next_x, int next_y, Tile* tile);
+	bool collidedWithPlayer(int next_x, int next_y);
 
 
 	void removeTile(Tile* tile);
 
 	//debuging funcs
     void printBallTile();
-	string printTile(Tile* tile);
+	void printTile(Tile* tile);
 
 };
 

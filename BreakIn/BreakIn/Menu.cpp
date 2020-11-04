@@ -1,7 +1,6 @@
 #include "Menu.h"
 #include "Game.h"
 #include <GL/glut.h>
-#include <cmath>
 #include <glm/gtc/matrix_transform.hpp>
 #include <iostream>
 
@@ -35,12 +34,12 @@ void Menu::update(int deltaTime) {
 	if (Game::instance().getSpecialKey(GLUT_KEY_DOWN)) {
 		Game::instance().specialKeyReleased(GLUT_KEY_DOWN);
 		++choice;
-		choice %= 3;
+		choice %= 4;
 	}
 	else if (Game::instance().getSpecialKey(GLUT_KEY_UP)) {
 		Game::instance().specialKeyReleased(GLUT_KEY_UP);
-		choice += 2;
-		choice %= 3;
+		choice += 3;
+		choice %= 4;
 	}
 
 	if (Game::instance().getKey(32)) {
@@ -59,20 +58,32 @@ void Menu::render() {
 	texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
 	breakinQuad->render(breakinImage);
 
+	window_width = glutGet(GLUT_WINDOW_WIDTH);
+	window_height = glutGet(GLUT_WINDOW_HEIGHT);
+
 	if (choice == 0) {
-		text.render("PLAY", glm::vec2(260, 350), 30, glm::vec4(0.5, 0.4, 1, 1));
-		text.render("INSTRUCTIONS", glm::vec2(182, 400), 24, glm::vec4(1, 1, 1, 1));
-		text.render("CREDITS", glm::vec2(232, 450), 24, glm::vec4(1, 1, 1, 1));
+		text.render("PLAY", glm::vec2(window_width/2 - 30*2, window_height/1.45), 30, glm::vec4(0.5, 0.4, 1, 1));
+		text.render("INSTRUCTIONS", glm::vec2(window_width / 2 - 24 * 6, window_height/1.3), 24, glm::vec4(1, 1, 1, 1));
+		text.render("SHORTCUTS", glm::vec2(window_width / 2 - 24 * 4.5f, window_height / 1.178), 24, glm::vec4(1, 1, 1, 1));
+		text.render("CREDITS", glm::vec2(window_width/2 - 24*3.5f, window_height/1.08), 24, glm::vec4(1, 1, 1, 1));
 	}
 	else if (choice == 1) {
-		text.render("PLAY", glm::vec2(270, 350), 24, glm::vec4(1, 1, 1, 1));
-		text.render("INSTRUCTIONS", glm::vec2(150, 400), 30, glm::vec4(0.5, 0.4, 1, 1));
-		text.render("CREDITS", glm::vec2(232, 450), 24, glm::vec4(1, 1, 1, 1));
+		text.render("PLAY", glm::vec2(window_width / 2 - 24 * 2, window_height / 1.45), 24, glm::vec4(1, 1, 1, 1));
+		text.render("INSTRUCTIONS", glm::vec2(window_width / 2 - 30 * 6, window_height / 1.3), 30, glm::vec4(0.5, 0.4, 1, 1));
+		text.render("SHORTCUTS", glm::vec2(window_width / 2 - 24 * 4.5f, window_height / 1.178), 24, glm::vec4(1, 1, 1, 1));
+		text.render("CREDITS", glm::vec2(window_width / 2 - 24 * 3.5f, window_height / 1.08), 24, glm::vec4(1, 1, 1, 1));
+	}
+	else if (choice == 2) {
+		text.render("PLAY", glm::vec2(window_width / 2 - 24 * 2, window_height / 1.45), 24, glm::vec4(1, 1, 1, 1));
+		text.render("INSTRUCTIONS", glm::vec2(window_width / 2 - 24 * 6, window_height / 1.3), 24, glm::vec4(1,1, 1, 1));
+		text.render("SHORTCUTS", glm::vec2(window_width / 2 - 30 * 4.5f, window_height / 1.178), 30, glm::vec4(0.5, 0.4, 1, 1));
+		text.render("CREDITS", glm::vec2(window_width / 2 - 24 * 3.5f, window_height / 1.08), 24, glm::vec4(1, 1, 1, 1));
 	}
 	else {
-		text.render("PLAY", glm::vec2(270, 350), 24, glm::vec4(1, 1, 1, 1));
-		text.render("INSTRUCTIONS", glm::vec2(182, 400), 24, glm::vec4(1, 1, 1, 1));
-		text.render("CREDITS", glm::vec2(216, 450), 30, glm::vec4(0.5, 0.4, 1, 1));
+		text.render("PLAY", glm::vec2(window_width / 2 - 24 * 2, window_height / 1.45), 24, glm::vec4(1, 1, 1, 1));
+		text.render("INSTRUCTIONS", glm::vec2(window_width / 2 - 24 * 6, window_height / 1.3), 24, glm::vec4(1, 1, 1, 1));
+		text.render("SHORTCUTS", glm::vec2(window_width / 2 - 24 * 4.5f, window_height / 1.178), 24, glm::vec4(1, 1, 1, 1));
+		text.render("CREDITS", glm::vec2(window_width / 2 - 30 * 3.5f, window_height / 1.08), 30, glm::vec4(0.5, 0.4, 1, 1));
 	}
 
 }

@@ -1,8 +1,11 @@
 #include <iostream>
 #include <cmath>
 #include <glm/gtc/matrix_transform.hpp>
+#include <GL/glew.h>
+#include <GL/glut.h>
 #include "Scene.h"
 #include "SpriteManager.h"
+#include "Game.h"
 
 #define SCREEN_X 34
 #define SCREEN_Y 16
@@ -12,6 +15,8 @@
 
 #define INIT_BALL_X_TILES 8
 #define INIT_BALL_Y_TILES 25
+
+#define MAP_OFFSET_Y 894
 
 Scene::Scene()
 {
@@ -36,18 +41,12 @@ void Scene::init()
 	initShaders();
 	initText();
 	initSprites();
-	map = TileMap::createTileMap("levels/level01.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
-	player = new Player();
-	player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-	player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * 28, INIT_PLAYER_Y_TILES * 28/2));
-	player->setTileMap(map);
-
-	ball = new Ball();
-	ball->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-	ball->setPosition(glm::vec2(INIT_BALL_X_TILES * 28, INIT_BALL_Y_TILES * 28/2));
-	ball->setTileMap(map);
+	loadLevel();
+	loadPlayer();
+	loadBall();
 
 	projection = glm::ortho(0.f, float(CAMERA_WIDTH - 1), float(CAMERA_HEIGHT - 1), 0.f);
+	projection = glm::translate(projection, glm::vec3(0.f, -894.f, 0.f));
 	currentTime = 0.0f;
 
 	//Select font
@@ -76,53 +75,104 @@ void Scene::render()
 	ball->render();
 
 	// Money
-	modelview = glm::translate(modelview, glm::vec3(550.f, 15.f, 0.f));
+	modelview = glm::translate(modelview, glm::vec3(550.f, 909.f, 0.f));
 	modelview = glm::scale(modelview, glm::vec3(1.f, 0.25f, 0.f));
 	modelview = glm::translate(modelview, glm::vec3(-64.f, -64.f, 0.f));
 	texProgram.setUniformMatrix4f("modelview", modelview);
 	texQuad[0]->render(texs[0]);
 
 	// Points
-	modelview = glm::translate(glm::mat4(1.0f), glm::vec3(550.f, 95.f, 0.f));
+	modelview = glm::translate(glm::mat4(1.0f), glm::vec3(550.f, 989.f, 0.f));
 	modelview = glm::scale(modelview, glm::vec3(1.f, 0.3f, 0.f));
 	modelview = glm::translate(modelview, glm::vec3(-64.f, -64.f, 0.f));
 	texProgram.setUniformMatrix4f("modelview", modelview);
 	texQuad[1]->render(texs[1]);
-	
+
 	// Lives
-	modelview = glm::translate(glm::mat4(1.0f), glm::vec3(550.f, 175.f, 0.f));
+	modelview = glm::translate(glm::mat4(1.0f), glm::vec3(550.f, 1069.f, 0.f));
 	modelview = glm::scale(modelview, glm::vec3(1.f, 0.2f, 0.f));
 	modelview = glm::translate(modelview, glm::vec3(-64.f, -64.f, 0.f));
 	texProgram.setUniformMatrix4f("modelview", modelview);
 	texQuad[2]->render(texs[2]);
 
 	// Bank
-	modelview = glm::translate(glm::mat4(1.0f), glm::vec3(550.f, 255.f, 0.f));
+	modelview = glm::translate(glm::mat4(1.0f), glm::vec3(550.f, 1149.f, 0.f));
 	modelview = glm::scale(modelview, glm::vec3(1.f, 0.2f, 0.f));
 	modelview = glm::translate(modelview, glm::vec3(-64.f, -64.f, 0.f));
 	texProgram.setUniformMatrix4f("modelview", modelview);
 	texQuad[3]->render(texs[3]);
 
 	// Batmode
-	modelview = glm::translate(glm::mat4(1.0f), glm::vec3(550.f, 335.f, 0.f));
+	modelview = glm::translate(glm::mat4(1.0f), glm::vec3(550.f, 1229.f, 0.f));
 	modelview = glm::scale(modelview, glm::vec3(1.f, 0.3f, 0.f));
 	modelview = glm::translate(modelview, glm::vec3(-64.f, -64.f, 0.f));
 	texProgram.setUniformMatrix4f("modelview", modelview);
 	texQuad[4]->render(texs[4]);
-	
+
 	// Room
-	modelview = glm::translate(glm::mat4(1.0f), glm::vec3(550.f, 400.f, 0.f));
+	modelview = glm::translate(glm::mat4(1.0f), glm::vec3(550.f, 1294.f, 0.f));
 	modelview = glm::scale(modelview, glm::vec3(1.f, 0.2f, 0.f));
 	modelview = glm::translate(modelview, glm::vec3(-64.f, -64.f, 0.f));
 	texProgram.setUniformMatrix4f("modelview", modelview);
 	texQuad[5]->render(texs[5]);
 
-	
-	text.render("0000000", glm::vec2(460, 55), 25, glm::vec4(1, 1, 1, 1));
-	text.render("0000000", glm::vec2(460, 140), 25, glm::vec4(1, 1, 1, 1));
-	text.render("00", glm::vec2(565, 215), 25, glm::vec4(1, 1, 1, 1));
-	text.render("00", glm::vec2(565, 295), 25, glm::vec4(1, 1, 1, 1));
-	text.render("00", glm::vec2(565, 440), 25, glm::vec4(1, 1, 1, 1));
+
+	window_width = glutGet(GLUT_WINDOW_WIDTH);
+	window_height = glutGet(GLUT_WINDOW_HEIGHT);
+	// Money
+	text.render("0000000", glm::vec2(window_width - 25*7*window_width/640, 60*window_height/480), 
+		25*window_width/640, glm::vec4(1, 1, 1, 1));
+	// Points
+	text.render("0000000", glm::vec2(window_width - 25 * 7 * window_width / 640, 145 * window_height / 480),
+		25 * window_width / 640, glm::vec4(1, 1, 1, 1));
+	// Lives
+	text.render("0" + to_string(currentLives), glm::vec2(window_width - 25 * 3 * window_width / 640, 
+		220 * window_height / 480), 25 * window_width / 640, glm::vec4(1, 1, 1, 1));
+	// Bank
+	text.render("0" + to_string(currentLevel), glm::vec2(window_width - 25 * 3 * window_width / 640,
+		300 * window_height / 480), 25 * window_width / 640, glm::vec4(1, 1, 1, 1));
+	// Room
+	text.render("0" + to_string(currentRoom), glm::vec2(window_width - 25 * 3 * window_width / 640, 
+		445 * window_height / 480), 25 * window_width / 640, glm::vec4(1, 1, 1, 1));
+}
+
+void Scene::nextRoom() {
+	if (currentRoom < 3) {
+		map->changeRoom();
+		currentRoom++;
+	}
+		
+}
+
+void Scene::nextBank() {
+	if (currentLevel < 3) {
+		currentLevel++;
+		currentRoom = 1;
+		loadLevel();
+	}
+}
+
+void Scene::loadLevel() {
+	if (map != NULL)
+		map->free();
+	string file = levels + to_string(currentLevel) + ".txt";
+	map = TileMap::createTileMap(file, glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
+}
+
+void Scene::loadPlayer() {
+	player = new Player();
+	player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+	player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * 28, INIT_PLAYER_Y_TILES * 28 / 2 + MAP_OFFSET_Y));
+	player->setTileMap(map);
+}
+
+void Scene::loadBall()
+{
+	ball = new Ball();
+	ball->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+	ball->setPosition(glm::vec2(INIT_BALL_X_TILES * 28, INIT_BALL_Y_TILES * 28/2 + MAP_OFFSET_Y));
+	ball->setTileMap(map);
+	ball->setPlayer(player);
 }
 
 void Scene::initText() {

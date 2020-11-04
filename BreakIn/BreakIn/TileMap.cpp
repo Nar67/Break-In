@@ -53,6 +53,14 @@ vector<Tile*> TileMap::getTiles() {
 	return map;
 }
 
+void TileMap::changeRoom() {
+	for (int j = 0; j < mapSize.y; j++)
+	{
+		for (int i = 0; i < mapSize.x; i++)
+			map[j * mapSize.x + i]->changeRoom();
+	}
+}
+
 glm::ivec2 TileMap::getMapSize()
 {
 	return mapSize;
@@ -113,13 +121,9 @@ void TileMap::printMap()
 	{
 		for (int i = 0; i < mapSize.x; i++)
 		{
-			SpriteType type = map[j * mapSize.x + i]->getType();
-			switch (type) {
+			switch (map[j * mapSize.x + i]->getType()) {
 			case SpriteType::KEY:
     		    cout << "-KEY";
-				break;
-			case SpriteType::PLATFORM:
-    		    cout << "-PLATFORM";
 				break;
     		case SpriteType::WALL:
     		    cout << "-WALL";

@@ -29,6 +29,7 @@ public:
 
 	void render() const;
 	void free();
+	void changeRoom();
 	vector<Tile*> getTiles();
 
 	glm::ivec2 getMapSize();

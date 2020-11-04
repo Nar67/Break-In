@@ -8,6 +8,8 @@ Tile::Tile(int x, int y, char const& tileType, ShaderProgram& shprog) {
 	yPos = y;
 	sprite = SpriteManager::getSprite(tileType);
 	program = shprog;
+	room = offset = 0;
+	nextRoom = false;
 }
 
 void Tile::init() {
@@ -25,7 +27,13 @@ void Tile::free() {
 void Tile::calculateVertices() {
 	vertices.clear();
 	
-	posTile = glm::vec2(xPos * blockSize, yPos * blockSize / 2);
+	posTile = glm::vec2(xPos * blockSize,yPos * blockSize / 2 + offset);
+
+	if (nextRoom) {
+		if (offset < room*447)
+			offset += 2;
+		else nextRoom = false;
+	}
 
 	glm::vec2 texCoordTile[2];
 	texCoordTile[0] = sprite->getTexCoord0();
@@ -66,6 +74,13 @@ void Tile::render() {
 	glDrawArrays(GL_TRIANGLES, 0, 6);
 }
 
+void Tile::changeRoom() {
+	if (room < 2) {
+		room++;
+		nextRoom = true;
+	}
+}
+
 glm::vec2 Tile::getPosition()
 {
 	return posTile;
@@ -79,4 +94,5 @@ glm::vec2 Tile::getIndex() {
 int Tile::getBlockSize()
 {
 	return blockSize;
+
 }
