@@ -25,9 +25,13 @@ public:
 	glm::vec2 getPosition();
 	int getBlockSize();
 	glm::vec2 getIndex();
+	int decreaseHits();
 
 private:
-	int xPos, yPos, room, offset;
+	int setHits();
+
+private:
+	int xPos, yPos, room, offset, hits;
 	vector<float> vertices;
 	bool nextRoom;
 
