@@ -9,6 +9,7 @@ Tile::Tile(int x, int y, char const& tileType, ShaderProgram& shprog) {
 	sprite = SpriteManager::getSprite(tileType);
 	program = shprog;
 	room = offset = 0;
+	hits = setHits();
 	nextRoom = false;
 }
 
@@ -95,4 +96,13 @@ int Tile::getBlockSize()
 {
 	return blockSize;
 
+}
+
+int Tile::setHits() {
+	return sprite->getHits();
+}
+
+
+int Tile::decreaseHits() {
+	return --hits;
 }

@@ -111,7 +111,9 @@ Tile *Ball::getTileColliding(vector<Tile*> tiles)
 {
 	for(auto tile : tiles)
 	{
-		if(tile->getType() == SpriteType::WALL or tile->getType() == SpriteType::BLOCK)
+        SpriteType st = tile->getType();
+        if (st == SpriteType::WALL or st == SpriteType::BLOCK
+            or st == SpriteType::KEY)
     	{
         	return tile;
     	}
@@ -123,7 +125,9 @@ bool Ball::colliding(vector<Tile*> tiles)
 {
     for(auto tile : tiles)
 	{
-		if(tile->getType() == SpriteType::WALL or tile->getType() == SpriteType::BLOCK)
+        SpriteType st = tile->getType();
+		if(st == SpriteType::WALL or st == SpriteType::BLOCK
+            or st == SpriteType::KEY)
     	{
         	return true;
     	}

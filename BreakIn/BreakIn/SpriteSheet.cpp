@@ -96,21 +96,26 @@ void SpriteSheet::setCoords(char const& c) {
 		break;
 	case 'd': //vermell
 		texCoordTile[0] = glm::vec2(float(0) / width, float(1) / height);
+		hits = 5;
 		//texCoordTile[0] += halfTexel;
 		break;
 	case 'e'://blau
 		texCoordTile[0] = glm::vec2(float(2) / width, float(1) / height);
+		hits = 1;
 		//texCoordTile[0] += halfTexel;
 		break;
 	case 'f'://green
 		texCoordTile[0] = glm::vec2(float(3) / width, float(0) / height);
 		//texCoordTile[0] += halfTexel;
+		hits = 4;
 		break;
 	case 'g'://white
 		texCoordTile[0] = glm::vec2(float(1) / width, float(1) / height);
+		hits = 3;
 		break;
 	case 'h': //pink
 		texCoordTile[0] = glm::vec2(float(1) / width, float(0) / height);
+		hits = 2;
 		break;
 	case 'j'://key top
 		texCoordTile[0] = glm::vec2(float(0) / width, float(0) / height);
@@ -171,4 +176,8 @@ SpriteType SpriteSheet::getType() {
 
 char SpriteSheet::getId() {
 	return id;
+}
+
+int SpriteSheet::getHits() {
+	return hits;
 }
