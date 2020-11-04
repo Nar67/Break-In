@@ -32,6 +32,7 @@ public:
 <<<<<<< HEAD
 	glm::vec2 getIndex();
 	int decreaseHits();
+<<<<<<< HEAD
 =======
 	glm::vec2 getPosition();
 	int getBlockSize();
@@ -55,6 +56,13 @@ private:
 >>>>>>> free tiles
 
 private:
+=======
+
+private:
+	int setHits();
+
+private:
+>>>>>>> diferent amount of hits per tile + hit key
 	int xPos, yPos, room, offset, hits;
 	vector<float> vertices;
 	bool nextRoom;
