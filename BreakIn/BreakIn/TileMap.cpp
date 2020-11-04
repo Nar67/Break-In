@@ -117,6 +117,7 @@ void TileMap::removeTile(Tile* tile)
 			map[pos.y * mapSize.x + pos.x]->init();
 		}
     }
+
 	if (tile->getType() == SpriteType::KEY) {
 		glm::ivec2 pos = tile->getIndex();
 		map[pos.y * mapSize.x + pos.x]->free();
@@ -156,6 +157,10 @@ void TileMap::openPath() {
 		map[(j+1) * mapSize.x + i] = new Tile(i, (j+1), tile, program);
 		map[(j+1) * mapSize.x + i]->init();
 	}
+}
+
+void TileMap::setRoom(int r) {
+	room = r-1;
 }
 
 void TileMap::setRoom(int r) {
