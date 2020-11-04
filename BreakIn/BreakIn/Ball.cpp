@@ -74,17 +74,24 @@ void Ball::moveBall(int deltaTime)
         if(colliding(tiles)) //chech if the ball is colliding with some bounceable object
         {
             Tile *tileCollided = getTileColliding(tiles); //get the tile that is colliding with something
-            if(collidedFromRight(nextPos_x, nextPos_y, tileCollided) or collidedFromLeft(nextPos_x, nextPos_y, tileCollided))
-            {
-                speed.x *= -1;
-                nextPos_x = posBall.x;
-                nextPos_y = posBall.y;
+            SpriteType type = tileCollided->getType();
+            if (type == SpriteType::BLOCK or type == SpriteType::WALL) {
+                if (collidedFromRight(nextPos_x, nextPos_y, tileCollided) or collidedFromLeft(nextPos_x, nextPos_y, tileCollided))
+                {
+                    speed.x *= -1;
+                    nextPos_x = posBall.x;
+                    nextPos_y = posBall.y;
+                }
+                else if (collidedFromTop(nextPos_x, nextPos_y, tileCollided) or collidedFromBottom(nextPos_x, nextPos_y, tileCollided))
+                {
+                    speed.y *= -1;
+                    nextPos_y = posBall.y;
+                    nextPos_x = posBall.x;
+                }
             }
-			else if(collidedFromTop(nextPos_x, nextPos_y, tileCollided) or collidedFromBottom(nextPos_x, nextPos_y, tileCollided))
-            {
-                speed.y *= -1;
-                nextPos_y = posBall.y;
-                nextPos_x = posBall.x;
+            if (type == SpriteType::ARROW ) {
+                glm::vec2 pos = tileCollided->getPosition();
+                if (nextPos_y < pos.y) map->changeRoom();
             }
             removeTile(tileCollided);
         }
@@ -113,7 +120,7 @@ Tile *Ball::getTileColliding(vector<Tile*> tiles)
 	{
         SpriteType st = tile->getType();
         if (st == SpriteType::WALL or st == SpriteType::BLOCK
-            or st == SpriteType::KEY)
+            or st == SpriteType::KEY or st == SpriteType::ARROW)
     	{
         	return tile;
     	}
@@ -127,7 +134,7 @@ bool Ball::colliding(vector<Tile*> tiles)
 	{
         SpriteType st = tile->getType();
 		if(st == SpriteType::WALL or st == SpriteType::BLOCK
-            or st == SpriteType::KEY)
+            or st == SpriteType::KEY or st == SpriteType::ARROW)
     	{
         	return true;
     	}

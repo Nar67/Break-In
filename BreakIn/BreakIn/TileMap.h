@@ -40,11 +40,12 @@ public:
 
 	void printMap();
 
-
+	void setRoom(int r);
 
 
 private:
-	bool loadLevel(const string &levelFile);
+	bool loadLevel();
+	void openPath();
 
 private:
 	GLuint vao;
@@ -52,10 +53,12 @@ private:
 	GLint posLocation, texCoordLocation;
 	glm::ivec2 position, mapSize, tilesheetSize;
 	int tileSize, blockSize;
+	int room;
 	Texture tilesheet;
 	glm::vec2 tileTexSize;
 	vector<Tile*> map;
 	ShaderProgram program;
+	string levelFile;
 };
 
 

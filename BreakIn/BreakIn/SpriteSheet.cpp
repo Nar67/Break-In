@@ -14,6 +14,8 @@ void SpriteSheet::setType(char const& type) {
 		this->type = SpriteType::ALARM;
 	else if (type >= 'l' and type <= 'q')
 		this->type = SpriteType::MONEY;
+	else if (type >= 'x' and type <= 'z')
+		this->type = SpriteType::ARROW;
 	else if (type >= '1' and type <= '8')
 		this->type = SpriteType::WALL;
 	else if (type == 'a')
@@ -43,6 +45,11 @@ void SpriteSheet::loadSprite() {
 		tilesheet.loadFromFile("images/alarm.png", TEXTURE_PIXEL_FORMAT_RGBA);
 		width = 1;
 		height = 2;
+		break;
+	case SpriteType::ARROW:
+		tilesheet.loadFromFile("images/arrows.png", TEXTURE_PIXEL_FORMAT_RGBA);
+		width = 3;
+		height = 1;
 		break;
 	default:
 		tilesheet.loadFromFile("images/sprite-sheet.png", TEXTURE_PIXEL_FORMAT_RGBA);
@@ -140,6 +147,15 @@ void SpriteSheet::setCoords(char const& c) {
 		break;
 	case 'q'://calculator bottom
 		texCoordTile[0] = glm::vec2(float(2) / width, float(1) / height);
+		break;
+	case 'x': // pink arrow
+		texCoordTile[0] = glm::vec2(float(0) / width, float(0) / height);
+		break;
+	case 'y': // gray arrow
+		texCoordTile[0] = glm::vec2(float(1) / width, float(0) / height);
+		break;
+	case 'z': // blue arrow
+		texCoordTile[0] = glm::vec2(float(2) / width, float(0) / height);
 		break;
 	default:
 		break;
