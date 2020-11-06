@@ -6,6 +6,8 @@
 #include "Game.h"
 
 #define MAP_OFFSET_Y 894
+#define INIT_POS_X 8 * 28
+#define INIT_POS_Y 25 * 28/2 + MAP_OFFSET_Y
 
 #define BALL_SIZE_X 20
 #define BALL_SIZE_Y 20
@@ -135,6 +137,13 @@ void Ball::moveBall(int deltaTime)
             if (type == SpriteType::KEY) {
                 room = true;
             }
+            if (type == SpriteType::DEATH) {
+                stuck = true;
+                sound.playGameover();
+                nextPos_x = INIT_POS_X;
+                nextPos_y = INIT_POS_Y;
+                player->setInitPos();
+            }
             removeTile(tileCollided);
         }
         if(collidedWithPlayer(nextPos_x, nextPos_y))
@@ -143,6 +152,7 @@ void Ball::moveBall(int deltaTime)
             nextPos_y = posBall.y;
             nextPos_x = posBall.x;
             sound.playPlayer();
+            map->fallTooHard();
         }
         posBall.x = nextPos_x;
         posBall.y = nextPos_y;
@@ -164,7 +174,7 @@ Tile *Ball::getTileColliding(vector<Tile*> tiles)
         SpriteType st = tile->getType();
         if (st == SpriteType::WALL or st == SpriteType::BLOCK
             or st == SpriteType::KEY or st == SpriteType::ARROW
-            or st == SpriteType::MONEY)
+            or st == SpriteType::MONEY or st == SpriteType::DEATH)
     	{
         	return tile;
     	}
@@ -179,7 +189,7 @@ bool Ball::colliding(vector<Tile*> tiles)
         SpriteType st = tile->getType();
 		if(st == SpriteType::WALL or st == SpriteType::BLOCK
             or st == SpriteType::KEY or st == SpriteType::ARROW
-            or st == SpriteType::MONEY)
+            or st == SpriteType::MONEY or st == SpriteType::DEATH)
     	{
         	return true;
     	}

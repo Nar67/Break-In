@@ -7,6 +7,11 @@
 
 #define PLAYER_SIZE_X 34
 #define PLAYER_SIZE_Y 46
+
+#define MAP_OFFSET_Y 894
+#define INIT_POS_X 6.5 * 28
+#define INIT_POS_Y 25 * 28/2 + MAP_OFFSET_Y
+
 Player::Player()
 {
 }
@@ -72,7 +77,12 @@ void Player::setTileMap(TileMap *tileMap)
 void Player::setPosition(const glm::vec2 &pos)
 {
 	posPlayer = pos;
-	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
+	sprite->setPosition(glm::vec2(float(posPlayer.x), float(posPlayer.y)));
+}
+
+void Player::setInitPos() {
+	posPlayer.x = INIT_POS_X;
+	posPlayer.y = INIT_POS_Y;
 }
 
 glm::ivec2 Player::getPosition()

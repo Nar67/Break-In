@@ -14,14 +14,14 @@ void SpriteSheet::setType(char const& type) {
 		this->type = SpriteType::ALARM;
 	else if (type >= 'l' and type <= 'q')
 		this->type = SpriteType::MONEY;
-	else if (type >= 'x' and type <= 'z')
-		this->type = SpriteType::ARROW;
 	else if (type >= '1' and type <= '8')
 		this->type = SpriteType::WALL;
 	else if (type == 'a')
-		this->type == SpriteType::NOTHING;
+		this->type = SpriteType::NOTHING;
+	else if (type == 'i')
+		this->type = SpriteType::DEATH;
 	else if (type >= 'x' and type <= 'z')
-		this->type == SpriteType::ARROW;
+		this->type = SpriteType::ARROW;
 	else
 		this->type = SpriteType::BLOCK;
 }
@@ -130,6 +130,9 @@ void SpriteSheet::setCoords(char const& c) {
 		texCoordTile[0] = glm::vec2(float(1) / width, float(0) / height);
 		hits = 2;
 		points = 100;
+		break;
+	case 'i': //death
+		texCoordTile[0] = glm::vec2(float(10) / width, float(0) / height);
 		break;
 	case 'j'://key top
 		texCoordTile[0] = glm::vec2(float(0) / width, float(0) / height);
