@@ -105,26 +105,31 @@ void SpriteSheet::setCoords(char const& c) {
 		break;
 	case 'd': //vermell
 		texCoordTile[0] = glm::vec2(float(0) / width, float(1) / height);
-		hits = 3;
+		hits = 2;
+		points = 100;
 		//texCoordTile[0] += halfTexel;
 		break;
 	case 'e'://blau
 		texCoordTile[0] = glm::vec2(float(2) / width, float(1) / height);
 		hits = 1;
 		//texCoordTile[0] += halfTexel;
+		points = 100;
 		break;
 	case 'f'://green
 		texCoordTile[0] = glm::vec2(float(3) / width, float(0) / height);
 		//texCoordTile[0] += halfTexel;
 		hits = 1;
+		points = 100;
 		break;
 	case 'g'://white
 		texCoordTile[0] = glm::vec2(float(1) / width, float(1) / height);
 		hits = 2;
+		points = 100;
 		break;
 	case 'h': //pink
 		texCoordTile[0] = glm::vec2(float(1) / width, float(0) / height);
 		hits = 2;
+		points = 100;
 		break;
 	case 'j'://key top
 		texCoordTile[0] = glm::vec2(float(0) / width, float(0) / height);
@@ -134,15 +139,19 @@ void SpriteSheet::setCoords(char const& c) {
 		break;
 	case 'l'://pouch top
 		texCoordTile[0] = glm::vec2(float(0) / width, float(0) / height);
+		points = 200;
 		break;
 	case 'm'://pouch bottom
 		texCoordTile[0] = glm::vec2(float(0) / width, float(1) / height);
+		points = 200;
 		break;
 	case 'n'://coin top
 		texCoordTile[0] = glm::vec2(float(1) / width, float(0) / height);
+		points = 100;
 		break;
 	case 'o'://coin bottom
 		texCoordTile[0] = glm::vec2(float(1) / width, float(1) / height);
+		points = 100;
 		break;
 	case 'p'://calculator top
 		texCoordTile[0] = glm::vec2(float(2) / width, float(0) / height);
@@ -198,4 +207,8 @@ char SpriteSheet::getId() {
 
 int SpriteSheet::getHits() {
 	return hits;
+}
+
+int SpriteSheet::getPoints() {
+	return points;
 }

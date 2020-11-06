@@ -76,7 +76,7 @@ void Ball::moveBall(int deltaTime)
         {
             Tile *tileCollided = getTileColliding(tiles); //get the tile that is colliding with something
             SpriteType type = tileCollided->getType();
-            if (type == SpriteType::BLOCK or type == SpriteType::WALL) {
+            if (type == SpriteType::BLOCK or type == SpriteType::WALL or type == SpriteType::MONEY) {
                 if (collidedFromRight(nextPos_x, nextPos_y, tileCollided) or collidedFromLeft(nextPos_x, nextPos_y, tileCollided))
                 {
                     speed.x *= -1;
@@ -89,8 +89,17 @@ void Ball::moveBall(int deltaTime)
                     nextPos_y = posBall.y;
                     nextPos_x = posBall.x;
                 }
-                if (type == SpriteType::BLOCK) sound.playBrick();
-                else sound.playWall();
+                switch (type) {
+                    case SpriteType::WALL:
+                        sound.playWall();
+                        break;
+                    case SpriteType::MONEY:
+                        sound.playMoney();
+                        break;
+                    default:
+                        sound.playBrick();
+                        break;
+                }
             }
             if (type == SpriteType::ARROW ) {
                 if (nextPos_y < posBall.y) {
@@ -133,7 +142,8 @@ Tile *Ball::getTileColliding(vector<Tile*> tiles)
 	{
         SpriteType st = tile->getType();
         if (st == SpriteType::WALL or st == SpriteType::BLOCK
-            or st == SpriteType::KEY or st == SpriteType::ARROW)
+            or st == SpriteType::KEY or st == SpriteType::ARROW
+            or st == SpriteType::MONEY)
     	{
         	return tile;
     	}
@@ -147,7 +157,8 @@ bool Ball::colliding(vector<Tile*> tiles)
 	{
         SpriteType st = tile->getType();
 		if(st == SpriteType::WALL or st == SpriteType::BLOCK
-            or st == SpriteType::KEY or st == SpriteType::ARROW)
+            or st == SpriteType::KEY or st == SpriteType::ARROW
+            or st == SpriteType::MONEY)
     	{
         	return true;
     	}

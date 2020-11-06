@@ -112,6 +112,7 @@ void TileMap::removeTile(Tile* tile)
     {
 		int hits = tile->decreaseHits();
 		if (hits == 0) {
+			points += tile->getPoints();
 			glm::ivec2 pos = tile->getIndex();
 			map[pos.y * mapSize.x + pos.x]->free();
 			map[pos.y * mapSize.x + pos.x] = new Tile(pos.x, pos.y, 'a', program);
@@ -125,12 +126,25 @@ void TileMap::removeTile(Tile* tile)
 		map[pos.y * mapSize.x + pos.x] = new Tile(pos.x, pos.y, 'a', program);
 		map[pos.y * mapSize.x + pos.x]->init();
 		int newpos = pos.y + 1;
-		if (map[pos.y+1 * mapSize.x + pos.x]->getType() == SpriteType::KEY) newpos = pos.y - 1;
+		if (map[(pos.y-1) * mapSize.x + pos.x]->getType() == SpriteType::KEY) newpos = pos.y - 1;
 		map[newpos * mapSize.x + pos.x]->free();
 		map[newpos * mapSize.x + pos.x] = new Tile(pos.x, newpos,'a', program);
 		map[newpos * mapSize.x + pos.x]->init();
 		
 		openPath();
+	}
+
+	if (tile->getType() == SpriteType::MONEY) {
+		money += tile->getPoints();
+		glm::ivec2 pos = tile->getIndex();
+		map[pos.y * mapSize.x + pos.x]->free();
+		map[pos.y * mapSize.x + pos.x] = new Tile(pos.x, pos.y, 'a', program);
+		map[pos.y * mapSize.x + pos.x]->init();
+		int newpos = pos.y + 1;
+		if (map[(pos.y-1) * mapSize.x + pos.x]->getType() == SpriteType::MONEY) newpos = pos.y - 1;
+		map[newpos * mapSize.x + pos.x]->free();
+		map[newpos * mapSize.x + pos.x] = new Tile(pos.x, newpos,'a', program);
+		map[newpos * mapSize.x + pos.x]->init();
 	}
 }
 
@@ -162,6 +176,14 @@ void TileMap::openPath() {
 
 void TileMap::setRoom(int r) {
 	room = r-1;
+}
+
+int TileMap::getMoney() {
+	return money;
+}
+
+int TileMap::getPoints() {
+	return points;
 }
 
 void TileMap::printMap()

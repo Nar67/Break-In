@@ -119,24 +119,7 @@ void Scene::render()
 	texProgram.setUniformMatrix4f("modelview", modelview);
 	texQuad[5]->render(texs[5]);
 
-
-	window_width = glutGet(GLUT_WINDOW_WIDTH);
-	window_height = glutGet(GLUT_WINDOW_HEIGHT);
-	// Money
-	text.render("0000000", glm::vec2(window_width - 25*7*window_width/640, 60*window_height/480), 
-		25*window_width/640, glm::vec4(1, 1, 1, 1));
-	// Points
-	text.render("0000000", glm::vec2(window_width - 25 * 7 * window_width / 640, 145 * window_height / 480),
-		25 * window_width / 640, glm::vec4(1, 1, 1, 1));
-	// Lives
-	text.render("0" + to_string(currentLives), glm::vec2(window_width - 25 * 3 * window_width / 640, 
-		220 * window_height / 480), 25 * window_width / 640, glm::vec4(1, 1, 1, 1));
-	// Bank
-	text.render("0" + to_string(currentLevel), glm::vec2(window_width - 25 * 3 * window_width / 640,
-		300 * window_height / 480), 25 * window_width / 640, glm::vec4(1, 1, 1, 1));
-	// Room
-	text.render("0" + to_string(currentRoom), glm::vec2(window_width - 25 * 3 * window_width / 640, 
-		445 * window_height / 480), 25 * window_width / 640, glm::vec4(1, 1, 1, 1));
+	renderText();
 }
 
 void Scene::restart() {
@@ -247,5 +230,53 @@ void Scene::initShaders()
 	fShader.free();
 }
 
+void Scene::renderText() {
+	window_width = glutGet(GLUT_WINDOW_WIDTH);
+	window_height = glutGet(GLUT_WINDOW_HEIGHT);
+
+	money = map->getMoney();
+	string zeros;
+
+	if (money >= 100000)
+		zeros = "0";
+	else if (money >= 10000)
+		zeros = "00";
+	else if (money >= 1000)
+		zeros = "000";
+	else if (money >= 100)
+		zeros = "0000";
+	else
+		zeros = "000000";
+
+	// Money
+	text.render(zeros + to_string(money), glm::vec2(window_width - 25 * 7 * window_width / 640, 60 * window_height / 480),
+		25 * window_width / 640, glm::vec4(1, 1, 1, 1));
+
+	points = map->getPoints();
+
+	if (points >= 100000)
+		zeros = "0";
+	else if (points >= 10000)
+		zeros = "00";
+	else if (points >= 1000)
+		zeros = "000";
+	else if (points >= 100)
+		zeros = "0000";
+	else
+		zeros = "000000";
+
+	// Points
+	text.render(zeros + to_string(points), glm::vec2(window_width - 25 * 7 * window_width / 640, 145 * window_height / 480),
+		25 * window_width / 640, glm::vec4(1, 1, 1, 1));
+	// Lives
+	text.render("0" + to_string(currentLives), glm::vec2(window_width - 25 * 3 * window_width / 640,
+		220 * window_height / 480), 25 * window_width / 640, glm::vec4(1, 1, 1, 1));
+	// Bank
+	text.render("0" + to_string(currentLevel), glm::vec2(window_width - 25 * 3 * window_width / 640,
+		300 * window_height / 480), 25 * window_width / 640, glm::vec4(1, 1, 1, 1));
+	// Room
+	text.render("0" + to_string(currentRoom), glm::vec2(window_width - 25 * 3 * window_width / 640,
+		445 * window_height / 480), 25 * window_width / 640, glm::vec4(1, 1, 1, 1));
+}
 
 

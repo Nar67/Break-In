@@ -40,6 +40,7 @@ private:
 	void loadLevel();
 	void loadPlayer();
 	void loadBall();
+	void renderText();
 
 private:
 	TileMap* map;
@@ -53,7 +54,7 @@ private:
 	TexturedQuad* texQuad[6];
 	Texture texs[6];
 	Text text;
-	int currentLevel = 1, currentRoom = 1, currentLives = 4;
+	int currentLevel = 1, currentRoom = 1, currentLives = 4, money, points;
 	const string levels = "levels/level0";
 	int window_width, window_height;
 };
