@@ -80,7 +80,31 @@ void Tile::changeRoom() {
 		room++;
 		nextRoom = true;
 	}
-	
+}
+
+glm::vec2 Tile::getPosition()
+{
+	return posTile;
+}
+
+glm::vec2 Tile::getIndex() {
+	glm::ivec2 pos = glm::vec2(xPos, yPos);
+	return pos;
+}
+
+int Tile::getBlockSize()
+{
+	return blockSize;
+
+}
+
+int Tile::setHits() {
+	return sprite->getHits();
+}
+
+
+int Tile::decreaseHits() {
+	return --hits;
 }
 
 glm::vec2 Tile::getPosition()
