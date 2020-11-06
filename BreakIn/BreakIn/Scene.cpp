@@ -22,6 +22,7 @@ Scene::Scene()
 {
 	map = NULL;
 	player = NULL;
+	ball = NULL;
 }
 
 Scene::~Scene()
@@ -30,6 +31,8 @@ Scene::~Scene()
 		delete map;
 	if (player != NULL)
 		delete player;
+	if (ball != NULL)
+		delete ball;
 	for (int i = 0; i < 2; i++)
 		if (texQuad[i] != NULL)
 			delete texQuad[i];
@@ -147,7 +150,8 @@ void Scene::restart() {
 
 void Scene::nextRoom() {
 	if (currentRoom < 3) {
-		map->changeRoom();
+		ball->nextRoom();
+		map->nextRoom();
 		currentRoom++;
 	}
 		
@@ -167,6 +171,10 @@ void Scene::loadLevel() {
 	string file = levels + to_string(currentLevel) + ".txt";
 	map = TileMap::createTileMap(file, glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
 	map->setRoom(currentRoom);
+	if (ball != NULL) {
+		ball->setTileMap(map);
+		ball->firstRoom();
+	}
 }
 
 void Scene::loadPlayer() {

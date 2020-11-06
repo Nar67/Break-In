@@ -21,48 +21,16 @@ public:
 	void sendVertices();
 	void calculateVertices();
 	SpriteType getType();
-<<<<<<< HEAD
 	void changeRoom();
 	glm::vec2 getPosition();
 	int getBlockSize();
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 	glm::vec2 getIndex();
 	int decreaseHits();
-<<<<<<< HEAD
-=======
-	glm::vec2 getPosition();
-	int getBlockSize();
->>>>>>> redone collision detection
-=======
->>>>>>> redone collision detection
-
-private:
-	int setHits();
-=======
-	ShaderProgram* freeAndGetProgram();
->>>>>>> tiles not removing, sadly
-=======
-	glm::vec2 getIndex();
->>>>>>> free tiles
-=======
-	ShaderProgram* freeAndGetProgram();
->>>>>>> tiles not removing, sadly
-=======
-	glm::vec2 getIndex();
->>>>>>> free tiles
-
-private:
-=======
 
 private:
 	int setHits();
 
 private:
->>>>>>> diferent amount of hits per tile + hit key
 	int xPos, yPos, room, offset, hits;
 	vector<float> vertices;
 	bool nextRoom;
