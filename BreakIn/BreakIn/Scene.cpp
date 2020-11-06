@@ -10,7 +10,7 @@
 #define SCREEN_X 34
 #define SCREEN_Y 16
 
-#define INIT_PLAYER_X_TILES 8
+#define INIT_PLAYER_X_TILES 6.5
 #define INIT_PLAYER_Y_TILES 25
 
 #define INIT_BALL_X_TILES 8

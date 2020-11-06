@@ -63,6 +63,15 @@ void TileMap::nextRoom() {
 	}
 }
 
+void TileMap::previousRoom() {
+	room--;
+	for (int j = 0; j < mapSize.y; j++)
+	{
+		for (int i = 0; i < mapSize.x; i++)
+			map[j * mapSize.x + i]->previousRoom();
+	}
+}
+
 glm::ivec2 TileMap::getMapSize()
 {
 	return mapSize;

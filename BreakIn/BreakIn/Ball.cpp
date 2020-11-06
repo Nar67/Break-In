@@ -25,6 +25,7 @@ void Ball::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
     speed = glm::vec2(float(BALL_SPEED), float(BALL_SPEED));
     sprite->setPosition(glm::vec2(float(posBall.x), float(posBall.y)));
     room = false;
+    stuck = true;
 }
 
 void Ball::update(int deltaTime)
@@ -34,7 +35,16 @@ void Ball::update(int deltaTime)
     {
         moveBall(deltaTime);
     }
+    else {
+        if (Game::instance().getSpecialKey(GLUT_KEY_LEFT) || Game::instance().getSpecialKey(GLUT_KEY_RIGHT) ||
+            Game::instance().getSpecialKey(GLUT_KEY_UP) || Game::instance().getSpecialKey(GLUT_KEY_DOWN)) {
+
+            stuck = false;
+        }
+    }
+
 	sprite->setPosition(glm::vec2(float(posBall.x), float(posBall.y)));
+
 }
 
 void Ball::render()
@@ -109,6 +119,12 @@ void Ball::moveBall(int deltaTime)
                         nextPos_y += 400;
                         offsetRoom += 32;
                     }
+                }
+                else {
+                    map->previousRoom();
+                    room = !room;
+                    nextPos_y -= 400;
+                    offsetRoom -= 32;
                 }
             }
             if (type == SpriteType::KEY) {
