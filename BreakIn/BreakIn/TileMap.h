@@ -31,16 +31,13 @@ public:
 	void free();
 	void nextRoom();
 	vector<Tile*> getTiles();
-
 	glm::ivec2 getMapSize();
-
 	int getBlockSize();
-
 	void removeTile(Tile* tile);
-
 	void printMap();
-
 	void setRoom(int r);
+	int getMoney();
+	int getPoints();
 
 private:
 	bool loadLevel();
@@ -52,7 +49,7 @@ private:
 	GLint posLocation, texCoordLocation;
 	glm::ivec2 position, mapSize, tilesheetSize;
 	int tileSize, blockSize;
-	int room;
+	int room, points = 0, money = 0;
 	Texture tilesheet;
 	glm::vec2 tileTexSize;
 	vector<Tile*> map;

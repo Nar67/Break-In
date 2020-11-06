@@ -25,6 +25,7 @@ public:
 	SpriteType getType();
 	char getId();
 	int getHits();
+	int getPoints();
 
 
 private:
@@ -32,7 +33,7 @@ private:
 	char id;
 	Texture tilesheet;
 	int width, height;
-	int hits = 0;
+	int hits = 0, points = 0;
 	glm::vec2 texCoordTile[2];
 
 };

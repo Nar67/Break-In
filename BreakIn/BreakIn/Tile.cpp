@@ -11,6 +11,7 @@ Tile::Tile(int x, int y, char const& tileType, ShaderProgram& shprog) {
 	room = offset = 0;
 	hits = setHits();
 	nRoom = false;
+	points = setPoints();
 }
 
 void Tile::init() {
@@ -102,7 +103,14 @@ int Tile::setHits() {
 	return sprite->getHits();
 }
 
+int Tile::setPoints() {
+	return sprite->getPoints();
+}
 
 int Tile::decreaseHits() {
 	return --hits;
+}
+
+int Tile::getPoints() {
+	return points;
 }
