@@ -6,6 +6,7 @@
 #include "SpriteSheet.h"
 #include "TileMap.h"
 #include "Player.h"
+#include "SoundManager.h"
 
 
 // Player is basically a Sprite that represents the player. As such it has
@@ -23,16 +24,19 @@ public:
 	void setTileMap(TileMap *tileMap);
 	void setPosition(const glm::vec2 &pos);
 	void setPlayer(Player* play);
+	void nextRoom();
+	void firstRoom();
 	
 private:
-	bool stuck;
+	bool stuck, room;
+	int offsetRoom = 0;
     glm::vec2 speed;
 	glm::ivec2 tileMap, posBall;
-	int jumpAngle, startY;
 	Texture spritesheet;
 	Sprite *sprite;
 	TileMap *map;
 	Player* player;
+	SoundManager sound;
 
     Tile* getBallTile(glm::vec2 pos);
 	bool isOverlaping(Tile*);

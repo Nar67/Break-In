@@ -21,7 +21,7 @@ public:
 	void sendVertices();
 	void calculateVertices();
 	SpriteType getType();
-	void changeRoom();
+	void nextRoom();
 	glm::vec2 getPosition();
 	int getBlockSize();
 	glm::vec2 getIndex();
@@ -33,7 +33,7 @@ private:
 private:
 	int xPos, yPos, room, offset, hits;
 	vector<float> vertices;
-	bool nextRoom;
+	bool nRoom;
 
 	glm::vec2 posTile;
 	GLuint vao, vbo;

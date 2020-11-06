@@ -54,11 +54,12 @@ vector<Tile*> TileMap::getTiles() {
 	return map;
 }
 
-void TileMap::changeRoom() {
+void TileMap::nextRoom() {
+	room++;
 	for (int j = 0; j < mapSize.y; j++)
 	{
 		for (int i = 0; i < mapSize.x; i++)
-			map[j * mapSize.x + i]->changeRoom();
+			map[j * mapSize.x + i]->nextRoom();
 	}
 }
 
@@ -148,7 +149,7 @@ void TileMap::openPath() {
 		tile = 'x';
 		break;
 	}
-	int j = 64 - room*34;
+	int j = 64 - room*32;
 	for (int i = 5; i < 11; ++i) {
 		map[j * mapSize.x + i]->free();
 		map[j * mapSize.x + i] = new Tile(i, j, 'a', program);

@@ -105,7 +105,7 @@ void SpriteSheet::setCoords(char const& c) {
 		break;
 	case 'd': //vermell
 		texCoordTile[0] = glm::vec2(float(0) / width, float(1) / height);
-		hits = 5;
+		hits = 3;
 		//texCoordTile[0] += halfTexel;
 		break;
 	case 'e'://blau
@@ -116,11 +116,11 @@ void SpriteSheet::setCoords(char const& c) {
 	case 'f'://green
 		texCoordTile[0] = glm::vec2(float(3) / width, float(0) / height);
 		//texCoordTile[0] += halfTexel;
-		hits = 4;
+		hits = 1;
 		break;
 	case 'g'://white
 		texCoordTile[0] = glm::vec2(float(1) / width, float(1) / height);
-		hits = 3;
+		hits = 2;
 		break;
 	case 'h': //pink
 		texCoordTile[0] = glm::vec2(float(1) / width, float(0) / height);

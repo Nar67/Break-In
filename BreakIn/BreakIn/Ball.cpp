@@ -24,17 +24,16 @@ void Ball::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
     tileMap = tileMapPos;
     speed = glm::vec2(float(BALL_SPEED), float(BALL_SPEED));
     sprite->setPosition(glm::vec2(float(posBall.x), float(posBall.y)));
-
+    room = false;
 }
 
 void Ball::update(int deltaTime)
 {
 	sprite->update(deltaTime);
-    if(!stuck)
+    if (!stuck)
     {
         moveBall(deltaTime);
     }
-
 	sprite->setPosition(glm::vec2(float(posBall.x), float(posBall.y)));
 }
 
@@ -62,7 +61,7 @@ void Ball::setPosition(const glm::vec2 &pos)
 void Ball::moveBall(int deltaTime)
 {
     int nextPos_x = posBall.x + speed.x * deltaTime;
-    int nextPos_y = posBall.y + speed.y * deltaTime;
+    int nextPos_y = posBall.y + speed.y * -deltaTime;
     if(not outOfScreen(nextPos_x, nextPos_y)) //Ball is not out of screen
     {
         Tile *tile = getBallTile(glm::vec2(nextPos_x, nextPos_y)); //get the tile the ball is on
@@ -90,10 +89,21 @@ void Ball::moveBall(int deltaTime)
                     nextPos_y = posBall.y;
                     nextPos_x = posBall.x;
                 }
+                if (type == SpriteType::BLOCK) sound.playBrick();
+                else sound.playWall();
             }
             if (type == SpriteType::ARROW ) {
-                glm::vec2 pos = tileCollided->getPosition();
-                if (nextPos_y < pos.y) map->changeRoom();
+                if (nextPos_y < posBall.y) {
+                    if (room) {
+                        map->nextRoom();
+                        room = !room;
+                        nextPos_y += 400;
+                        offsetRoom += 32;
+                    }
+                }
+            }
+            if (type == SpriteType::KEY) {
+                room = true;
             }
             removeTile(tileCollided);
         }
@@ -102,6 +112,7 @@ void Ball::moveBall(int deltaTime)
             speed.y *= -1;
             nextPos_y = posBall.y;
             nextPos_x = posBall.x;
+            sound.playPlayer();
         }
         posBall.x = nextPos_x;
         posBall.y = nextPos_y;
@@ -112,7 +123,7 @@ void Ball::moveBall(int deltaTime)
 Tile *Ball::getBallTile(glm::vec2 pos)
 {
     int tilePos_x = pos.x / map->getBlockSize();
-    int tilePos_y = pos.y / (map->getBlockSize()/2);
+    int tilePos_y = pos.y / (map->getBlockSize()/2) - offsetRoom;
     return map->getTiles()[tilePos_y * map->getMapSize().x + tilePos_x];
 }
 
@@ -265,3 +276,10 @@ void Ball::removeTile(Tile* tile)
     map->removeTile(tile);
 }
 
+void Ball::nextRoom() {
+    offsetRoom+=32;
+}
+
+void Ball::firstRoom() {
+    offsetRoom = 0;
+}
