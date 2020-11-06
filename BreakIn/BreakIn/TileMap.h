@@ -30,6 +30,7 @@ public:
 	void render() const;
 	void free();
 	void nextRoom();
+	void previousRoom();
 	vector<Tile*> getTiles();
 	glm::ivec2 getMapSize();
 	int getBlockSize();

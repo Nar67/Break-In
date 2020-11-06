@@ -35,7 +35,7 @@ private:
 private:
 	int xPos, yPos, room, offset, hits, points;
 	vector<float> vertices;
-	bool nextRoom;
+	bool nRoom = false, pRoom = false;
 
 	glm::vec2 posTile;
 	GLuint vao, vbo;

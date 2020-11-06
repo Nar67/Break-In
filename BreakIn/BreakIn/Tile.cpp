@@ -10,7 +10,6 @@ Tile::Tile(int x, int y, char const& tileType, ShaderProgram& shprog) {
 	program = shprog;
 	room = offset = 0;
 	hits = setHits();
-	nRoom = false;
 	points = setPoints();
 }
 
@@ -34,7 +33,15 @@ void Tile::calculateVertices() {
 	if (nRoom) {
 		if (offset < room*446)
 			offset += 32;
-		else nRoom = false;
+		else 
+			nRoom = false;
+	}
+
+	if (pRoom) {
+		if (offset > -room * 446)
+			offset -= 32;
+		else
+			pRoom = false;
 	}
 
 	glm::vec2 texCoordTile[2];
@@ -83,6 +90,12 @@ void Tile::nextRoom() {
 	}
 	
 }
+
+void Tile::previousRoom() {
+	room--;
+	pRoom = true;
+}
+
 glm::vec2 Tile::getPosition()
 {
 	return posTile;
