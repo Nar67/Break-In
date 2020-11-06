@@ -34,7 +34,7 @@ void Ball::update(int deltaTime)
         moveBall(deltaTime);
     }
 
-	//sprite->setPosition(glm::vec2(float(posBall.x), float(posBall.y)));
+	sprite->setPosition(glm::vec2(float(posBall.x), float(posBall.y)));
 }
 
 void Ball::render()

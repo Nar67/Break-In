@@ -57,7 +57,6 @@ private:
 	glm::vec2 tileTexSize;
 	vector<Tile*> map;
 	ShaderProgram program;
-	void printMap();
 	string levelFile;
 };
 
