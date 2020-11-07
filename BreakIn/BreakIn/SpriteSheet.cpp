@@ -12,8 +12,10 @@ void SpriteSheet::setType(char const& type) {
 		this->type = SpriteType::KEY;
 	else if (type == 'b' or type == 'c')
 		this->type = SpriteType::ALARM;
-	else if (type >= 'l' and type <= 'q')
+	else if (type >= 'l' and type <= 'o')
 		this->type = SpriteType::MONEY;
+	else if (type == 'p' or type == 'q')
+		this->type = SpriteType::CALCULATOR;
 	else if (type >= '1' and type <= '8')
 		this->type = SpriteType::WALL;
 	else if (type == 'a')
@@ -39,6 +41,11 @@ void SpriteSheet::loadSprite() {
 		height = 2;
 		break;
 	case SpriteType::MONEY:
+		tilesheet.loadFromFile("images/finalStage.png", TEXTURE_PIXEL_FORMAT_RGBA);
+		width = 3;
+		height = 2;
+		break;
+	case SpriteType::CALCULATOR:
 		tilesheet.loadFromFile("images/finalStage.png", TEXTURE_PIXEL_FORMAT_RGBA);
 		width = 3;
 		height = 2;
