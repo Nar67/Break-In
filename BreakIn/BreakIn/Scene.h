@@ -19,6 +19,8 @@
 // Scene contains all the entities of our game.
 // It is responsible for updating and render them.
 
+enum class SceneState {GAME, LOSE, WIN, STAGE};
+
 class Scene
 {
 
@@ -40,14 +42,13 @@ private:
 	void loadLevel();
 	void loadPlayer();
 	void loadBall();
-	void renderText();
+	void renderGame();
 
 private:
 	TileMap* map;
 	Player* player;
 	Ball* ball;
-	//TileMap* key;
-	//vector<TileMap*> layers;
+
 	ShaderProgram texProgram;
 	float currentTime;
 	glm::mat4 projection;
@@ -57,6 +58,7 @@ private:
 	int currentLevel = 1, currentRoom = 1, currentLives = 4, money, points;
 	const string levels = "levels/level0";
 	int window_width, window_height;
+	SceneState state;
 };
 
 

@@ -126,3 +126,7 @@ int Tile::decreaseHits() {
 int Tile::getPoints() {
 	return points;
 }
+
+SpriteSheet* Tile::getSprite() {
+	return sprite;
+}

@@ -147,7 +147,7 @@ void Ball::moveBall(int deltaTime)
             nextPos_y = posBall.y;
             nextPos_x = posBall.x;
             sound.playPlayer();
-            map->fallTooHard();
+            //map->fallTooHard();
         }
         posBall.x = nextPos_x;
         posBall.y = nextPos_y;

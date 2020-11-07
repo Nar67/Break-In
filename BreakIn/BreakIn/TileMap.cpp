@@ -146,11 +146,29 @@ void TileMap::removeTile(Tile* tile)
 	if (tile->getType() == SpriteType::MONEY) {
 		money += tile->getPoints();
 		glm::ivec2 pos = tile->getIndex();
+		char c = tile->getSprite()->getId();
+		int newpos;
+		switch (c)
+		{
+		case 'l':
+			newpos = pos.y + 1;
+			break;
+		case 'm' :
+			newpos = pos.y - 1;
+			break;
+		case 'n':
+			newpos = pos.y + 1;
+			break;
+		case 'o':
+			newpos = pos.y - 1;
+			break;
+		default:
+			break;
+		}
 		map[pos.y * mapSize.x + pos.x]->free();
 		map[pos.y * mapSize.x + pos.x] = new Tile(pos.x, pos.y, 'a', program);
 		map[pos.y * mapSize.x + pos.x]->init();
-		int newpos = pos.y + 1;
-		if (map[(pos.y-1) * mapSize.x + pos.x]->getType() == SpriteType::MONEY) newpos = pos.y - 1;
+	
 		map[newpos * mapSize.x + pos.x]->free();
 		map[newpos * mapSize.x + pos.x] = new Tile(pos.x, newpos,'a', program);
 		map[newpos * mapSize.x + pos.x]->init();
