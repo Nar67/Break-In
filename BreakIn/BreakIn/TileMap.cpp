@@ -237,6 +237,18 @@ int TileMap::getPoints() {
 	return points;
 }
 
+void TileMap::deadInside() {
+	lives--;
+}
+
+void TileMap::setLives(int lives) {
+	this->lives = lives;
+}
+
+int TileMap::getLives() {
+	return lives;
+}
+
 void TileMap::printMap()
 {
 	for (int j = 0; j < mapSize.y; j++)

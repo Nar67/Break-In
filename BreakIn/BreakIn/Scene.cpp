@@ -65,13 +65,22 @@ void Scene::update(int deltaTime)
 	ball->update(deltaTime);
 	money = map->getMoney();
 	points = map->getPoints();
+	currentLives = map->getLives();
 
 	if (map->getMoneyTiles() == 0 and swapedPoints) {
-		currentLevel++;
-		loadLevel();
-		loadPlayer();
-		loadBall();
+		if (currentLevel < 3) {
+			currentLevel++;
+			loadLevel();
+			loadPlayer();
+			loadBall();
+		}
+		else
+			state = SceneState::WIN;
 	}
+	if (currentLives == 0)
+		state = SceneState::GAMEOVER;
+
+
 }
 
 void Scene::render()
@@ -82,6 +91,9 @@ void Scene::render()
 		if (map->getCalculator())
 			renderCalculator();
 	}
+	else if (state == SceneState::GAMEOVER) {
+		renderGameOver();
+	}
 		
 }
 
@@ -91,6 +103,7 @@ void Scene::restart() {
 	currentLives = 4;
 	loadLevel();
 	loadPlayer();
+	loadBall();
 }
 
 void Scene::nextRoom() {
@@ -118,6 +131,7 @@ void Scene::loadLevel() {
 	map->setRoom(currentRoom);
 	map->setMoney(money);
 	map->setPoints(points);
+	map->setLives(currentLives);
 	if (ball != NULL) {
 		ball->setTileMap(map);
 		ball->firstRoom();
@@ -152,6 +166,7 @@ void Scene::initTextQuads() {
 	texQuad[4] = TexturedQuad::createTexturedQuad(geom, texCoords, texProgram);
 	texQuad[5] = TexturedQuad::createTexturedQuad(geom, texCoords, texProgram);
 	texQuad[6] = TexturedQuad::createTexturedQuad(geom, texCoords, texProgram);
+	texQuad[7] = TexturedQuad::createTexturedQuad(geom, texCoords, texProgram);
 	// Load textures
 	texs[0].loadFromFile("images/money.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	texs[1].loadFromFile("images/points.png", TEXTURE_PIXEL_FORMAT_RGBA);
@@ -160,6 +175,7 @@ void Scene::initTextQuads() {
 	texs[4].loadFromFile("images/batmode.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	texs[5].loadFromFile("images/room.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	texs[6].loadFromFile("images/calculator.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	texs[7].loadFromFile("images/gameOver.png", TEXTURE_PIXEL_FORMAT_RGBA);
 }
 
 void Scene::initSprites() {
@@ -374,5 +390,21 @@ void Scene::renderCalculator() {
 		map->setCalculator();
 		ball->setStop(false);
 	}
+
+}
+
+void Scene::renderGameOver() {
+	glm::mat4 modelview = glm::mat4(1.0f);
+	texProgram.use();
+	texProgram.setUniformMatrix4f("projection", projection);
+	texProgram.setUniform4f("color", 1.0f, 1.0f, 1.0f, 1.0f);
+	texProgram.setUniformMatrix4f("modelview", modelview);
+	texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
+
+	modelview = glm::translate(glm::mat4(1.0f), glm::vec3(320.f, 1130.f, 0.f));
+	modelview = glm::scale(modelview, glm::vec3(4.f, 3.f, 0.f));
+	modelview = glm::translate(modelview, glm::vec3(-64.f, -64.f, 0.f));
+	texProgram.setUniformMatrix4f("modelview", modelview);
+	texQuad[7]->render(texs[7]);
 
 }

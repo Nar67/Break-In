@@ -118,7 +118,6 @@ void Ball::moveBall(int deltaTime)
                         break;
                     case SpriteType::KEY:
                         room = true;
-                        stop = true;
                         break;
                     case SpriteType::CALCULATOR:
                         sound.playCalculator();
@@ -149,6 +148,7 @@ void Ball::moveBall(int deltaTime)
             if (type == SpriteType::DEATH) {
                 stuck = true;
                 sound.playGameover();
+                map->deadInside();
                 nextPos_x = INIT_POS_X;
                 nextPos_y = INIT_POS_Y;
                 player->setInitPos();

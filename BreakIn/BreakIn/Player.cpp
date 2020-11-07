@@ -87,6 +87,7 @@ void Player::setInitPos() {
 	posPlayer.y = INIT_POS_Y;
 }
 
+
 glm::ivec2 Player::getPosition()
 {
 	return posPlayer + tileMapDispl;
