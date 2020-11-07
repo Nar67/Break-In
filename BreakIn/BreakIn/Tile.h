@@ -27,6 +27,7 @@ public:
 	glm::vec2 getIndex();
 	int decreaseHits();
 	int getPoints();
+	SpriteSheet* getSprite();
 
 private:
 	int setHits();
