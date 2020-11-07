@@ -20,6 +20,7 @@ public:
 	void playWall();
 	void playGameover();
 	void playPowerUp();
+	bool isCurrentlyPlaying(string song);
 
 private:
 	string WIN_SOUND = "sound/win.ogg";

@@ -33,20 +33,21 @@ void Ball::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 void Ball::update(int deltaTime)
 {
 	sprite->update(deltaTime);
-    if (!stuck)
-    {
-        moveBall(deltaTime);
-    }
-    else {
-        if (Game::instance().getSpecialKey(GLUT_KEY_LEFT) || Game::instance().getSpecialKey(GLUT_KEY_RIGHT) ||
-            Game::instance().getSpecialKey(GLUT_KEY_UP) || Game::instance().getSpecialKey(GLUT_KEY_DOWN)) {
-
-            stuck = false;
+    if (!stop) {
+        if (!stuck)
+        {
+            moveBall(deltaTime);
         }
+        else {
+            if (Game::instance().getSpecialKey(GLUT_KEY_LEFT) || Game::instance().getSpecialKey(GLUT_KEY_RIGHT) ||
+                Game::instance().getSpecialKey(GLUT_KEY_UP) || Game::instance().getSpecialKey(GLUT_KEY_DOWN)) {
+
+                stuck = false;
+            }
+        }
+
+        sprite->setPosition(glm::vec2(float(posBall.x), float(posBall.y)));
     }
-
-	sprite->setPosition(glm::vec2(float(posBall.x), float(posBall.y)));
-
 }
 
 void Ball::render()
@@ -88,7 +89,9 @@ void Ball::moveBall(int deltaTime)
         {
             Tile *tileCollided = getTileColliding(tiles); //get the tile that is colliding with something
             SpriteType type = tileCollided->getType();
-            if (type == SpriteType::BLOCK or type == SpriteType::WALL or type == SpriteType::MONEY) {
+            if (type == SpriteType::BLOCK or type == SpriteType::WALL 
+                or type == SpriteType::MONEY or type == SpriteType::KEY
+                or type == SpriteType::CALCULATOR) {
                 if (collidedFromRight(nextPos_x, nextPos_y, tileCollided) or collidedFromLeft(nextPos_x, nextPos_y, tileCollided))
                 {
                     speed.x *= -1;
@@ -107,6 +110,15 @@ void Ball::moveBall(int deltaTime)
                         break;
                     case SpriteType::MONEY:
                         sound.playMoney();
+                        break;
+                    case SpriteType::KEY:
+                        room = true;
+                        stop = true;
+                        break;
+                    case SpriteType::CALCULATOR:
+                        sound.playCalculator();
+                        stop = true;
+                        player->setStop(stop);
                         break;
                     default:
                         sound.playBrick();
@@ -128,9 +140,6 @@ void Ball::moveBall(int deltaTime)
                     nextPos_y -= 400;
                     offsetRoom -= 32;
                 }
-            }
-            if (type == SpriteType::KEY) {
-                room = true;
             }
             if (type == SpriteType::DEATH) {
                 stuck = true;
@@ -169,7 +178,8 @@ Tile *Ball::getTileColliding(vector<Tile*> tiles)
         SpriteType st = tile->getType();
         if (st == SpriteType::WALL or st == SpriteType::BLOCK
             or st == SpriteType::KEY or st == SpriteType::ARROW
-            or st == SpriteType::MONEY or st == SpriteType::DEATH)
+            or st == SpriteType::MONEY or st == SpriteType::DEATH
+            or st == SpriteType::CALCULATOR)
     	{
         	return tile;
     	}
@@ -184,7 +194,8 @@ bool Ball::colliding(vector<Tile*> tiles)
         SpriteType st = tile->getType();
 		if(st == SpriteType::WALL or st == SpriteType::BLOCK
             or st == SpriteType::KEY or st == SpriteType::ARROW
-            or st == SpriteType::MONEY or st == SpriteType::DEATH)
+            or st == SpriteType::MONEY or st == SpriteType::DEATH
+            or st == SpriteType::CALCULATOR)
     	{
         	return true;
     	}
@@ -319,4 +330,9 @@ void Ball::nextRoom() {
 
 void Ball::firstRoom() {
     offsetRoom = 0;
+}
+
+void Ball::setStop(bool stop) {
+    this->stop = stop;
+    player->setStop(stop);
 }

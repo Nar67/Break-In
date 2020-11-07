@@ -104,6 +104,8 @@ bool TileMap::loadLevel()
 			file >> tile;
 			map[j * mapSize.x + i] = new Tile(i, j, tile, program);
 			map[j * mapSize.x + i]->init();
+			if (tile >= 'l' and tile <= 'o')
+				moneyTiles++;
 		}
 #ifndef _WIN32
 		file.get(tile);
@@ -128,8 +130,7 @@ void TileMap::removeTile(Tile* tile)
 			map[pos.y * mapSize.x + pos.x]->init();
 		}
     }
-
-	if (tile->getType() == SpriteType::KEY) {
+	else if (tile->getType() == SpriteType::KEY) {
 		glm::ivec2 pos = tile->getIndex();
 		map[pos.y * mapSize.x + pos.x]->free();
 		map[pos.y * mapSize.x + pos.x] = new Tile(pos.x, pos.y, 'a', program);
@@ -142,29 +143,14 @@ void TileMap::removeTile(Tile* tile)
 		
 		openPath();
 	}
-
-	if (tile->getType() == SpriteType::MONEY) {
+	else if (tile->getType() == SpriteType::MONEY) {
 		money += tile->getPoints();
 		glm::ivec2 pos = tile->getIndex();
 		char c = tile->getSprite()->getId();
-		int newpos;
-		switch (c)
-		{
-		case 'l':
+		int newpos = pos.y - 1;
+		if (c == 'l' or c == 'n')
 			newpos = pos.y + 1;
-			break;
-		case 'm' :
-			newpos = pos.y - 1;
-			break;
-		case 'n':
-			newpos = pos.y + 1;
-			break;
-		case 'o':
-			newpos = pos.y - 1;
-			break;
-		default:
-			break;
-		}
+		
 		map[pos.y * mapSize.x + pos.x]->free();
 		map[pos.y * mapSize.x + pos.x] = new Tile(pos.x, pos.y, 'a', program);
 		map[pos.y * mapSize.x + pos.x]->init();
@@ -172,7 +158,28 @@ void TileMap::removeTile(Tile* tile)
 		map[newpos * mapSize.x + pos.x]->free();
 		map[newpos * mapSize.x + pos.x] = new Tile(pos.x, newpos,'a', program);
 		map[newpos * mapSize.x + pos.x]->init();
+		moneyTiles -= 2;
 	}
+	else if (tile->getType() == SpriteType::CALCULATOR) {
+		glm::ivec2 pos = tile->getIndex();
+		map[pos.y * mapSize.x + pos.x]->free();
+		map[pos.y * mapSize.x + pos.x] = new Tile(pos.x, pos.y, 'a', program);
+		map[pos.y * mapSize.x + pos.x]->init();
+		int newpos = pos.y + 1;
+		if (map[(pos.y - 1) * mapSize.x + pos.x]->getType() == SpriteType::CALCULATOR) newpos = pos.y - 1;
+		map[newpos * mapSize.x + pos.x]->free();
+		map[newpos * mapSize.x + pos.x] = new Tile(pos.x, newpos, 'a', program);
+		map[newpos * mapSize.x + pos.x]->init();
+		calculator = true;
+	}
+}
+
+bool TileMap::getCalculator() {
+	return calculator;
+}
+
+void TileMap::setCalculator() {
+	calculator = false;
 }
 
 void TileMap::openPath() {
@@ -205,8 +212,25 @@ void TileMap::setRoom(int r) {
 	room = r-1;
 }
 
+void TileMap::setMoney(int money) {
+	this->money = money;
+}
+
 int TileMap::getMoney() {
 	return money;
+}
+
+int TileMap::getMoneyTiles() {
+	return moneyTiles;
+}
+
+void TileMap::swapPoints() {
+	money++;
+	points--;
+}
+
+void TileMap::setPoints(int points) {
+	this->points = points;
 }
 
 int TileMap::getPoints() {

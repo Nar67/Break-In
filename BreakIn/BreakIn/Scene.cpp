@@ -33,7 +33,7 @@ Scene::~Scene()
 		delete player;
 	if (ball != NULL)
 		delete ball;
-	for (int i = 0; i < 2; i++)
+	for (int i = 0; i < 7; i++)
 		if (texQuad[i] != NULL)
 			delete texQuad[i];
 }
@@ -42,7 +42,7 @@ Scene::~Scene()
 void Scene::init()
 {
 	initShaders();
-	initText();
+	initTextQuads();
 	initSprites();
 	loadLevel();
 	loadPlayer();
@@ -63,12 +63,26 @@ void Scene::update(int deltaTime)
 	currentTime += deltaTime;
 	player->update(deltaTime);
 	ball->update(deltaTime);
+	money = map->getMoney();
+	points = map->getPoints();
+
+	if (map->getMoneyTiles() == 0 and swapedPoints) {
+		currentLevel++;
+		loadLevel();
+		loadPlayer();
+		loadBall();
+	}
 }
 
 void Scene::render()
 {
-	if (state == SceneState::GAME) 
+
+	if (state == SceneState::GAME) {
 		renderGame();
+		if (map->getCalculator())
+			renderCalculator();
+	}
+		
 }
 
 void Scene::restart() {
@@ -102,6 +116,8 @@ void Scene::loadLevel() {
 	string file = levels + to_string(currentLevel) + ".txt";
 	map = TileMap::createTileMap(file, glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
 	map->setRoom(currentRoom);
+	map->setMoney(money);
+	map->setPoints(points);
 	if (ball != NULL) {
 		ball->setTileMap(map);
 		ball->firstRoom();
@@ -126,7 +142,7 @@ void Scene::loadBall()
 	ball->setPlayer(player);
 }
 
-void Scene::initText() {
+void Scene::initTextQuads() {
 	glm::vec2 geom[2] = { glm::vec2 (0.f, 0.f), glm::vec2(128.f, 128.f) };
 	glm::vec2 texCoords[2] = { glm::vec2(0.f, 0.f), glm::vec2(1.f, 1.f) };
 	texQuad[0] = TexturedQuad::createTexturedQuad(geom, texCoords, texProgram);
@@ -135,6 +151,7 @@ void Scene::initText() {
 	texQuad[3] = TexturedQuad::createTexturedQuad(geom, texCoords, texProgram);
 	texQuad[4] = TexturedQuad::createTexturedQuad(geom, texCoords, texProgram);
 	texQuad[5] = TexturedQuad::createTexturedQuad(geom, texCoords, texProgram);
+	texQuad[6] = TexturedQuad::createTexturedQuad(geom, texCoords, texProgram);
 	// Load textures
 	texs[0].loadFromFile("images/money.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	texs[1].loadFromFile("images/points.png", TEXTURE_PIXEL_FORMAT_RGBA);
@@ -142,6 +159,7 @@ void Scene::initText() {
 	texs[3].loadFromFile("images/bank.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	texs[4].loadFromFile("images/batmode.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	texs[5].loadFromFile("images/room.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	texs[6].loadFromFile("images/calculator.png", TEXTURE_PIXEL_FORMAT_RGBA);
 }
 
 void Scene::initSprites() {
@@ -186,6 +204,7 @@ void Scene::renderGame() {
 	texProgram.setUniform4f("color", 1.0f, 1.0f, 1.0f, 1.0f);
 	texProgram.setUniformMatrix4f("modelview", modelview);
 	texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
+
 	map->render();
 	player->render();
 	ball->render();
@@ -232,39 +251,47 @@ void Scene::renderGame() {
 	texProgram.setUniformMatrix4f("modelview", modelview);
 	texQuad[5]->render(texs[5]);
 
+
 	window_width = glutGet(GLUT_WINDOW_WIDTH);
 	window_height = glutGet(GLUT_WINDOW_HEIGHT);
 
-	money = map->getMoney();
+	
 	string zeros;
 
-	if (money >= 100000)
-		zeros = "0";
-	else if (money >= 10000)
-		zeros = "00";
-	else if (money >= 1000)
-		zeros = "000";
-	else if (money >= 100)
-		zeros = "0000";
-	else
+	if (money < 10)
 		zeros = "000000";
+	else if (money < 100)
+		zeros = "00000";
+	else if (money < 1000)
+		zeros = "0000";
+	else if (money < 10000)
+		zeros = "000";
+	else if (money < 100000)
+		zeros = "00";
+	else if (money < 1000000)
+		zeros = "0";
+	else
+		zeros = "";
 
 	// Money
 	text.render(zeros + to_string(money), glm::vec2(window_width - 25 * 7 * window_width / 640, 60 * window_height / 480),
 		25 * window_width / 640, glm::vec4(1, 1, 1, 1));
 
-	points = map->getPoints();
-
-	if (points >= 100000)
-		zeros = "0";
-	else if (points >= 10000)
-		zeros = "00";
-	else if (points >= 1000)
-		zeros = "000";
-	else if (points >= 100)
-		zeros = "0000";
-	else
+	
+	if (points < 10)
 		zeros = "000000";
+	else if (points < 100)
+		zeros = "00000";
+	else if (points < 1000)
+		zeros = "0000";
+	else if (points < 10000)
+		zeros = "000";
+	else if (points < 100000)
+		zeros = "00";
+	else if (points < 1000000)
+		zeros = "0";
+	else
+		zeros = "";
 
 	// Points
 	text.render(zeros + to_string(points), glm::vec2(window_width - 25 * 7 * window_width / 640, 145 * window_height / 480),
@@ -278,6 +305,74 @@ void Scene::renderGame() {
 	// Room
 	text.render("0" + to_string(currentRoom), glm::vec2(window_width - 25 * 3 * window_width / 640,
 		445 * window_height / 480), 25 * window_width / 640, glm::vec4(1, 1, 1, 1));
+
 }
 
+void Scene::renderCalculator() {
+	glm::mat4 modelview = glm::mat4(1.0f);
+	texProgram.use();
+	texProgram.setUniformMatrix4f("projection", projection);
+	texProgram.setUniform4f("color", 1.0f, 1.0f, 1.0f, 1.0f);
+	texProgram.setUniformMatrix4f("modelview", modelview);
+	texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
 
+	modelview = glm::translate(glm::mat4(1.0f), glm::vec3(224.f, 1134.f, 0.f));
+	modelview = glm::scale(modelview, glm::vec3(2.625f, 1.6f, 0.f));
+	modelview = glm::translate(modelview, glm::vec3(-64.f, -64.f, 0.f));
+	texProgram.setUniformMatrix4f("modelview", modelview);
+	texQuad[6]->render(texs[6]);
+
+	window_width = glutGet(GLUT_WINDOW_WIDTH);
+	window_height = glutGet(GLUT_WINDOW_HEIGHT);
+
+	string zeros;
+
+	if (points < 10)
+		zeros = "000000";
+	else if (points < 100)
+		zeros = "00000";
+	else if (points < 1000)
+		zeros = "0000";
+	else if (points < 10000)
+		zeros = "000";
+	else if (points < 100000)
+		zeros = "00";
+	else if (points < 1000000)
+		zeros = "0";
+	else 
+		zeros = "";
+
+	text.render(zeros + to_string(points), glm::vec2(window_width - 480 * window_width / 640, 262 * window_height / 480),
+		20 * window_width / 640, glm::vec4(1, 1, 1, 1));
+
+	if (money < 10)
+		zeros = "000000";
+	else if (money < 100)
+		zeros = "00000";
+	else if (money < 1000)
+		zeros = "0000";
+	else if (money < 10000)
+		zeros = "000";
+	else if (money < 100000)
+		zeros = "00";
+	else if (money < 1000000)
+		zeros = "0";
+	else
+		zeros = "";
+
+	text.render(zeros + to_string(money), glm::vec2(window_width - 480 * window_width / 640, 315 * window_height / 480),
+		20 * window_width / 640, glm::vec4(1, 1, 1, 1));
+	
+	if (!sound.isCurrentlyPlaying("sound/calculator.ogg")) {
+		sound.playCalculator();
+	}
+
+	if (points > 0)
+		map->swapPoints();
+	else {
+		swapedPoints = true;
+		map->setCalculator();
+		ball->setStop(false);
+	}
+
+}

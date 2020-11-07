@@ -32,36 +32,38 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 
 void Player::update(int deltaTime)
 {
+	if (!stop) {
 
-	if(Game::instance().getSpecialKey(GLUT_KEY_LEFT))
-	{
-		posPlayer.x -= 2;
-		if (posPlayer.x < -4)
-			posPlayer.x += 2;
-
-	}
-	else if(Game::instance().getSpecialKey(GLUT_KEY_RIGHT))
-	{
-		posPlayer.x += 2;
-		if (posPlayer.x > 13 * 28 - 10)
+		if (Game::instance().getSpecialKey(GLUT_KEY_LEFT))
+		{
 			posPlayer.x -= 2;
-	}
+			if (posPlayer.x < -4)
+				posPlayer.x += 2;
 
-	if (Game::instance().getSpecialKey(GLUT_KEY_UP))
-	{
-		posPlayer.y -= 2;
-		if (posPlayer.y < 16 + 894)
-			posPlayer.y += 2;
+		}
+		else if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT))
+		{
+			posPlayer.x += 2;
+			if (posPlayer.x > 13 * 28 - 10)
+				posPlayer.x -= 2;
+		}
 
-	}
-	else if (Game::instance().getSpecialKey(GLUT_KEY_DOWN))
-	{
-		posPlayer.y += 2;
-		if (posPlayer.y > 27 * 16 - 14 + 894)
+		if (Game::instance().getSpecialKey(GLUT_KEY_UP))
+		{
 			posPlayer.y -= 2;
+			if (posPlayer.y < 16 + 894)
+				posPlayer.y += 2;
+
+		}
+		else if (Game::instance().getSpecialKey(GLUT_KEY_DOWN))
+		{
+			posPlayer.y += 2;
+			if (posPlayer.y > 27 * 16 - 14 + 894)
+				posPlayer.y -= 2;
+		}
+
+		sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
 	}
-		
-	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
 }
 
 void Player::render()
@@ -93,6 +95,10 @@ glm::ivec2 Player::getPosition()
 int Player::getPlayerXSize()
 {
 	return PLAYER_SIZE_X;
+}
+
+void Player::setStop(bool stop) {
+	this->stop = stop;
 }
 
 

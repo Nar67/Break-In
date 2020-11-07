@@ -39,6 +39,12 @@ public:
 	void setRoom(int r);
 	int getMoney();
 	int getPoints();
+	void setCalculator();
+	bool getCalculator();
+	void swapPoints();
+	void setMoney(int money);
+	void setPoints(int points);
+	int getMoneyTiles();
 
 private:
 	bool loadLevel();
@@ -50,12 +56,13 @@ private:
 	GLint posLocation, texCoordLocation;
 	glm::ivec2 position, mapSize, tilesheetSize;
 	int tileSize, blockSize;
-	int room, points = 0, money = 0;
+	int room, points, money, moneyTiles = 0;
 	Texture tilesheet;
 	glm::vec2 tileTexSize;
 	vector<Tile*> map;
 	ShaderProgram program;
 	string levelFile;
+	bool calculator = false;
 };
 
 

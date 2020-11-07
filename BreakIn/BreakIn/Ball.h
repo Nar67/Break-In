@@ -26,9 +26,10 @@ public:
 	void setPlayer(Player* play);
 	void nextRoom();
 	void firstRoom();
+	void setStop(bool stop);
 	
 private:
-	bool stuck, room;
+	bool stuck, room, stop = false;
 	int offsetRoom = 0;
     glm::vec2 speed;
 	glm::ivec2 tileMap, posBall;

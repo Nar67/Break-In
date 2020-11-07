@@ -27,9 +27,10 @@ public:
 	glm::ivec2 getPosition();
 
 	int getPlayerXSize();
+	void setStop(bool stop);
 	
 private:
-	bool bJumping;
+	bool stop = false;
 	glm::ivec2 tileMapDispl, posPlayer;
 	int jumpAngle, startY;
 	Texture spritesheet;
