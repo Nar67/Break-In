@@ -19,7 +19,7 @@
 // Scene contains all the entities of our game.
 // It is responsible for updating and render them.
 
-enum class SceneState {GAME, LOSE, WIN, NEXTBANK};
+enum class SceneState {GAME, GAMEOVER, WIN, NEXTBANK};
 
 class Scene
 {
@@ -43,8 +43,8 @@ private:
 	void loadPlayer();
 	void loadBall();
 	void renderGame();
-	void checkState();
 	void renderCalculator();
+	void renderGameOver();
 
 private:
 	TileMap* map;
@@ -54,8 +54,8 @@ private:
 	ShaderProgram texProgram;
 	float currentTime;
 	glm::mat4 projection;
-	TexturedQuad* texQuad[7];
-	Texture texs[7];
+	TexturedQuad* texQuad[8];
+	Texture texs[8];
 	Text text;
 	int currentLevel = 1, currentRoom = 1, currentLives = 4, money = 0, points = 0;
 	bool swapedPoints = false;

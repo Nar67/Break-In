@@ -45,6 +45,9 @@ public:
 	void setMoney(int money);
 	void setPoints(int points);
 	int getMoneyTiles();
+	void deadInside();
+	void setLives(int lives);
+	int getLives();
 
 private:
 	bool loadLevel();
@@ -56,7 +59,7 @@ private:
 	GLint posLocation, texCoordLocation;
 	glm::ivec2 position, mapSize, tilesheetSize;
 	int tileSize, blockSize;
-	int room, points, money, moneyTiles = 0;
+	int room, lives, points, money, moneyTiles = 0;
 	Texture tilesheet;
 	glm::vec2 tileTexSize;
 	vector<Tile*> map;
