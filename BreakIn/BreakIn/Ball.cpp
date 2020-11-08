@@ -117,6 +117,7 @@ void Ball::moveBall(int deltaTime)
                         sound.playMoney();
                         break;
                     case SpriteType::KEY:
+                        sound.playKey();
                         room = true;
                         break;
                     case SpriteType::CALCULATOR:
@@ -134,9 +135,10 @@ void Ball::moveBall(int deltaTime)
                     if (room) {
                         map->nextRoom();
                         room = !room;
-                        nextPos_y += 400;
+                        //nextPos_y += 400;
                         offsetRoom += 32;
                     }
+                    nextPos_y += 400;
                 }
                 else {
                     map->previousRoom();

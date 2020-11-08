@@ -225,8 +225,8 @@ int TileMap::getMoneyTiles() {
 }
 
 void TileMap::swapPoints() {
-	money++;
-	points--;
+	money += 15;
+	points -= 15;
 }
 
 void TileMap::setPoints(int points) {
