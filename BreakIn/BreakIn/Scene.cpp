@@ -74,12 +74,16 @@ void Scene::update(int deltaTime)
 			loadPlayer();
 			loadBall();
 		}
-		else
+		else {
 			state = SceneState::WIN;
+			ball->setStop(true);
+		}
+			
 	}
-	if (currentLives == 0)
+	if (currentLives == 0) {
 		state = SceneState::GAMEOVER;
-
+		ball->setStop(true);
+	}
 
 }
 

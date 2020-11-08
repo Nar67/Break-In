@@ -10,6 +10,7 @@ void Game::init()
 	state = GameState::MENU;
 	sound.init();
 	menu.init();
+	scene.init();
 }
 
 bool Game::update(int deltaTime)
@@ -68,10 +69,15 @@ void Game::render()
 void Game::keyPressed(int key)
 {
 	if (key == 27) // Escape code
-		if (state == GameState::MENU)
+		if (state == GameState::MENU) {
 			bPlay = false;
-		else
+		}
+		else {
 			state = GameState::MENU;
+			if (!sound.isCurrentlyPlaying("sound/menu.ogg"))
+				sound.playMenu();
+		}
+			
 
 	if (key == 'f' || key == 'F') {
 		fullscreen = !fullscreen;
@@ -149,6 +155,7 @@ void Game::changeMode(int mode) {
 	case 0:
 		state = GameState::GAME;
 		sound.stopMenu();
+		scene.restart();
 		scene.init();
 		break;
 	case 1:

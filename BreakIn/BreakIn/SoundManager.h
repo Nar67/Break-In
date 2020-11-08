@@ -20,6 +20,7 @@ public:
 	void playWall();
 	void playGameover();
 	void playPowerUp();
+	void playKey();
 	bool isCurrentlyPlaying(string song);
 
 private:
@@ -34,6 +35,7 @@ private:
 	string MONEY_SOUND = "sound/money.ogg";
 	string PLAYER_SOUND = "sound/player.ogg";
 	string POWERUP_SOUND = "sound/powerup.ogg";
+	string KEY_SOUND = "sound/key.ogg";
 
 
 

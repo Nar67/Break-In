@@ -59,6 +59,10 @@ void SoundManager::playWin() {
 	if (engine)engine->play2D(WIN_SOUND.c_str(), false);
 }
 
+void SoundManager::playKey() {
+	if (engine)engine->play2D(KEY_SOUND.c_str(), false);
+}
+
 bool SoundManager::isCurrentlyPlaying(string song) {
 	if (engine) return engine->isCurrentlyPlaying(song.c_str());
 }
