@@ -94,6 +94,9 @@ void Scene::render()
 	else if (state == SceneState::GAMEOVER) {
 		renderGameOver();
 	}
+	else if (state == SceneState::WIN) {
+		renderWin();
+	}
 		
 }
 
@@ -167,6 +170,7 @@ void Scene::initTextQuads() {
 	texQuad[5] = TexturedQuad::createTexturedQuad(geom, texCoords, texProgram);
 	texQuad[6] = TexturedQuad::createTexturedQuad(geom, texCoords, texProgram);
 	texQuad[7] = TexturedQuad::createTexturedQuad(geom, texCoords, texProgram);
+	texQuad[8] = TexturedQuad::createTexturedQuad(geom, texCoords, texProgram);
 	// Load textures
 	texs[0].loadFromFile("images/money.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	texs[1].loadFromFile("images/points.png", TEXTURE_PIXEL_FORMAT_RGBA);
@@ -176,6 +180,7 @@ void Scene::initTextQuads() {
 	texs[5].loadFromFile("images/room.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	texs[6].loadFromFile("images/calculator.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	texs[7].loadFromFile("images/gameOver.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	texs[8].loadFromFile("images/win.png", TEXTURE_PIXEL_FORMAT_RGBA);
 }
 
 void Scene::initSprites() {
@@ -391,6 +396,21 @@ void Scene::renderCalculator() {
 		ball->setStop(false);
 	}
 
+}
+
+void Scene::renderWin() {
+	glm::mat4 modelview = glm::mat4(1.0f);
+	texProgram.use();
+	texProgram.setUniformMatrix4f("projection", projection);
+	texProgram.setUniform4f("color", 1.0f, 1.0f, 1.0f, 1.0f);
+	texProgram.setUniformMatrix4f("modelview", modelview);
+	texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
+
+	modelview = glm::translate(glm::mat4(1.0f), glm::vec3(320.f, 1130.f, 0.f));
+	modelview = glm::scale(modelview, glm::vec3(5.f, 4.f, 0.f));
+	modelview = glm::translate(modelview, glm::vec3(-64.f, -64.f, 0.f));
+	texProgram.setUniformMatrix4f("modelview", modelview);
+	texQuad[8]->render(texs[8]);
 }
 
 void Scene::renderGameOver() {

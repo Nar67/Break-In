@@ -45,6 +45,7 @@ private:
 	void renderGame();
 	void renderCalculator();
 	void renderGameOver();
+	void renderWin();
 
 private:
 	TileMap* map;
@@ -54,8 +55,8 @@ private:
 	ShaderProgram texProgram;
 	float currentTime;
 	glm::mat4 projection;
-	TexturedQuad* texQuad[8];
-	Texture texs[8];
+	TexturedQuad* texQuad[9];
+	Texture texs[9];
 	Text text;
 	int currentLevel = 1, currentRoom = 1, currentLives = 4, money = 0, points = 0;
 	bool swapedPoints = false;
