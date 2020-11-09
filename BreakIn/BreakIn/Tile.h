@@ -29,6 +29,8 @@ public:
 	int getPoints();
 	SpriteSheet* getSprite();
 
+	void breakTile();
+
 private:
 	int setHits();
 	int setPoints();

@@ -36,7 +36,7 @@ Sprite::Sprite(const glm::vec2 &quadSize, const glm::vec2 &sizeInSpritesheet, Te
 
 void Sprite::update(int deltaTime)
 {
-	/*if(currentAnimation >= 0)
+	if(currentAnimation >= 0)
 	{
 		timeAnimation += deltaTime;
 		while(timeAnimation > animations[currentAnimation].millisecsPerKeyframe)
@@ -45,7 +45,7 @@ void Sprite::update(int deltaTime)
 			currentKeyframe = (currentKeyframe + 1) % animations[currentAnimation].keyframeDispl.size();
 		}
 		texCoordDispl = animations[currentAnimation].keyframeDispl[currentKeyframe];
-	}*/
+	}
 }
 
 void Sprite::render() const
@@ -82,7 +82,9 @@ void Sprite::setAnimationSpeed(int animId, int keyframesPerSec)
 void Sprite::addKeyframe(int animId, const glm::vec2 &displacement)
 {
 	if(animId < int(animations.size()))
+	{
 		animations[animId].keyframeDispl.push_back(displacement);
+	}
 }
 
 void Sprite::changeAnimation(int animId)
@@ -105,6 +107,3 @@ void Sprite::setPosition(const glm::vec2 &pos)
 {
 	position = pos;
 }
-
-
-
