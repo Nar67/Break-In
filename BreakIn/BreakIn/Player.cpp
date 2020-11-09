@@ -12,6 +12,10 @@
 #define INIT_POS_X 6.5 * 28
 #define INIT_POS_Y 25 * 28/2 + MAP_OFFSET_Y
 
+enum playerAnims {
+	UP, UPRIGHT, RIGHT, DOWNRIGHT, DOWN, DOWNLEFT, LEFT, UPLEFT, IDLE, DEAD
+};
+
 Player::Player()
 {
 }
@@ -23,10 +27,50 @@ Player::~Player()
 
 void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 {
-	spritesheet.loadFromFile("images/player2.png", TEXTURE_PIXEL_FORMAT_RGBA);
-	sprite = Sprite::createSprite(glm::ivec2(PLAYER_SIZE_X, PLAYER_SIZE_Y), glm::vec2(1, 1), &spritesheet, &shaderProgram);
+	spritesheet.loadFromFile("images/playerSprite.jpg", TEXTURE_PIXEL_FORMAT_RGBA);
 	tileMapDispl = tileMapPos;
+	
+	sprite = Sprite::createSprite(glm::ivec2(PLAYER_SIZE_X, PLAYER_SIZE_Y), glm::vec2(0.25, 0.25), &spritesheet, &shaderProgram);
+
+	sprite->setNumberAnimations(10);
+	
+	sprite->setAnimationSpeed(IDLE, 8);
+	sprite->addKeyframe(IDLE, glm::vec2(0.25f, 0.f));
+
+	sprite->setAnimationSpeed(UP, 8);
+	sprite->addKeyframe(UP, glm::vec2(0.f, 0.2f));
+
+	sprite->setAnimationSpeed(UPRIGHT, 8);
+	sprite->addKeyframe(UPRIGHT, glm::vec2(0.2f, 0.2f));
+
+	sprite->setAnimationSpeed(RIGHT, 8);
+	sprite->addKeyframe(RIGHT, glm::vec2(0.4f, 0.f));
+
+	sprite->setAnimationSpeed(DOWNRIGHT, 8);
+	sprite->addKeyframe(DOWNRIGHT, glm::vec2(0.4f, 0.2f));
+
+	sprite->setAnimationSpeed(DOWN, 8);
+	sprite->addKeyframe(DOWN, glm::vec2(0.f, 0.f));
+
+	sprite->setAnimationSpeed(DOWNLEFT, 8);
+	sprite->addKeyframe(DOWNLEFT, glm::vec2(0.6f, 0.2f));
+
+	sprite->setAnimationSpeed(LEFT, 8);
+	sprite->addKeyframe(LEFT, glm::vec2(0.6f, 0.f));
+
+	sprite->setAnimationSpeed(UPLEFT, 8);
+	sprite->addKeyframe(UPLEFT, glm::vec2(0.f, 0.4f));
+
+	sprite->setAnimationSpeed(DEAD, 2);
+	sprite->addKeyframe(DEAD, glm::vec2(0.2f, 0.4f));
+	sprite->addKeyframe(DEAD, glm::vec2(0.4f, 0.4f));
+	sprite->addKeyframe(DEAD, glm::vec2(0.6f, 0.4f));
+	sprite->addKeyframe(DEAD, glm::vec2(0.6f, 0.f));
+
+	sprite->changeAnimation(IDLE);
+
 	sprite->setPosition(glm::vec2(float(posPlayer.x), float(posPlayer.y)));
+
 }
 
 
@@ -38,8 +82,11 @@ void Player::update(int deltaTime)
 		if (Game::instance().getSpecialKey(GLUT_KEY_LEFT))
 		{
 			posPlayer.x -= 3;
-			if (posPlayer.x < -4)
-				posPlayer.x += 3;
+			if (posPlayer.x < -4) posPlayer.x += 3;
+			if(sprite->animation() != DEAD)
+			{
+				sprite->changeAnimation(DEAD);
+			}
 
 		}
 		else if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT))
