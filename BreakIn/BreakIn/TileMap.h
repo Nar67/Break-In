@@ -9,6 +9,7 @@
 #include <vector>
 #include "ShaderProgram.h"
 #include "Tile.h"
+#include "SoundManager.h"
 
 
 // Class Tilemap is capable of loading a tile map from a text file in a very
@@ -48,10 +49,11 @@ public:
 	void deadInside();
 	void setLives(int lives);
 	int getLives();
+	void setAlarm();
+	void openPath();
 
 private:
 	bool loadLevel();
-	void openPath();
 
 private:
 	GLuint vao;
@@ -65,7 +67,9 @@ private:
 	vector<Tile*> map;
 	ShaderProgram program;
 	string levelFile;
-	bool calculator = false;
+	SoundManager sound;
+	bool calculator = false, alarm = false;
+	int alarmRoom;
 };
 
 

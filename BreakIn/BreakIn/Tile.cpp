@@ -38,7 +38,7 @@ void Tile::calculateVertices() {
 	}
 
 	if (pRoom) {
-		if (offset > -room * 446)
+		if (offset > room * 450)
 			offset -= 32;
 		else
 			pRoom = false;
@@ -84,11 +84,8 @@ void Tile::render() {
 }
 
 void Tile::nextRoom() {
-	if (room < 2) {
-		room++;
-		nRoom = true;
-	}
-	
+	room++;
+	nRoom = true;
 }
 
 void Tile::previousRoom() {

@@ -38,7 +38,7 @@ void TileMap::render() const
 		for (int i = 0; i < mapSize.x; i++)
 			map[j * mapSize.x + i]->render();
 	}
-	glDisable(GL_TEXTURE_2D);	
+	glDisable(GL_TEXTURE_2D);
 }
 
 void TileMap::free()
@@ -61,6 +61,12 @@ void TileMap::nextRoom() {
 		for (int i = 0; i < mapSize.x; i++)
 			map[j * mapSize.x + i]->nextRoom();
 	}
+	if (alarm) {
+		if (room == alarm)
+			sound.playAlarm();
+		else
+			sound.stopSound("sound/alarm.ogg");
+	}
 }
 
 void TileMap::previousRoom() {
@@ -70,6 +76,13 @@ void TileMap::previousRoom() {
 		for (int i = 0; i < mapSize.x; i++)
 			map[j * mapSize.x + i]->previousRoom();
 	}
+	if (alarm) {
+		if (room == alarmRoom)
+			sound.playAlarm();
+		else
+			sound.stopSound("sound/alarm.ogg");
+	}
+
 }
 
 glm::ivec2 TileMap::getMapSize()
@@ -94,7 +107,7 @@ bool TileMap::loadLevel()
 	if (!file.is_open())
 		return false;
 	file >> mapSize.x >> mapSize.y;
-	
+
 	map.resize(mapSize.x * mapSize.y);
 
 	for (int j = 0; j < mapSize.y; j++)
@@ -119,8 +132,8 @@ bool TileMap::loadLevel()
 
 void TileMap::removeTile(Tile* tile)
 {
-	if(tile->getType() == SpriteType::BLOCK)
-    {
+	if (tile->getType() == SpriteType::BLOCK)
+	{
 		int hits = tile->decreaseHits();
 		if (hits == 0) {
 			points += tile->getPoints();
@@ -129,18 +142,18 @@ void TileMap::removeTile(Tile* tile)
 			map[pos.y * mapSize.x + pos.x] = new Tile(pos.x, pos.y, 'a', program);
 			map[pos.y * mapSize.x + pos.x]->init();
 		}
-    }
+	}
 	else if (tile->getType() == SpriteType::KEY) {
 		glm::ivec2 pos = tile->getIndex();
 		map[pos.y * mapSize.x + pos.x]->free();
 		map[pos.y * mapSize.x + pos.x] = new Tile(pos.x, pos.y, 'a', program);
 		map[pos.y * mapSize.x + pos.x]->init();
 		int newpos = pos.y + 1;
-		if (map[(pos.y-1) * mapSize.x + pos.x]->getType() == SpriteType::KEY) newpos = pos.y - 1;
+		if (map[(pos.y - 1) * mapSize.x + pos.x]->getType() == SpriteType::KEY) newpos = pos.y - 1;
 		map[newpos * mapSize.x + pos.x]->free();
-		map[newpos * mapSize.x + pos.x] = new Tile(pos.x, newpos,'a', program);
+		map[newpos * mapSize.x + pos.x] = new Tile(pos.x, newpos, 'a', program);
 		map[newpos * mapSize.x + pos.x]->init();
-		
+
 		openPath();
 	}
 	else if (tile->getType() == SpriteType::MONEY) {
@@ -150,13 +163,13 @@ void TileMap::removeTile(Tile* tile)
 		int newpos = pos.y - 1;
 		if (c == 'l' or c == 'n')
 			newpos = pos.y + 1;
-		
+
 		map[pos.y * mapSize.x + pos.x]->free();
 		map[pos.y * mapSize.x + pos.x] = new Tile(pos.x, pos.y, 'a', program);
 		map[pos.y * mapSize.x + pos.x]->init();
-	
+
 		map[newpos * mapSize.x + pos.x]->free();
-		map[newpos * mapSize.x + pos.x] = new Tile(pos.x, newpos,'a', program);
+		map[newpos * mapSize.x + pos.x] = new Tile(pos.x, newpos, 'a', program);
 		map[newpos * mapSize.x + pos.x]->init();
 		moneyTiles -= 2;
 	}
@@ -197,19 +210,25 @@ void TileMap::openPath() {
 		tile = 'x';
 		break;
 	}
-	int j = 64 - room*32;
+	int k = 64 - room * 32;
+	int j = 64;
+
+	//int j = 32;
 	for (int i = 5; i < 11; ++i) {
-		map[j * mapSize.x + i]->free();
-		map[j * mapSize.x + i] = new Tile(i, j, 'a', program);
-		map[j * mapSize.x + i]->init();
-		map[(j+1) * mapSize.x + i]->free();
-		map[(j+1) * mapSize.x + i] = new Tile(i, (j+1), tile, program);
-		map[(j+1) * mapSize.x + i]->init();
+		map[k * mapSize.x + i]->free();
+		map[k * mapSize.x + i] = new Tile(i, k, 'a', program);
+		map[k * mapSize.x + i]->init();
+		map[(k + 1) * mapSize.x + i]->free();
+		map[(k + 1) * mapSize.x + i] = new Tile(i, (k + 1), 'a', program);
+		map[(k + 1) * mapSize.x + i]->init();
+		map[(j + 1) * mapSize.x + i]->free();
+		map[(j + 1) * mapSize.x + i] = new Tile(i, (j + 1), tile, program);
+		map[(j + 1) * mapSize.x + i]->init();
 	}
 }
 
 void TileMap::setRoom(int r) {
-	room = r-1;
+	room = r - 1;
 }
 
 void TileMap::setMoney(int money) {
@@ -249,6 +268,14 @@ int TileMap::getLives() {
 	return lives;
 }
 
+void TileMap::setAlarm() {
+	if (!alarm) {
+		alarm = true;
+		alarmRoom = room;
+		sound.playAlarm();
+	}
+}
+
 void TileMap::printMap()
 {
 	for (int j = 0; j < mapSize.y; j++)
@@ -257,16 +284,16 @@ void TileMap::printMap()
 		{
 			switch (map[j * mapSize.x + i]->getType()) {
 			case SpriteType::KEY:
-    		    cout << "-KEY";
+				cout << "-KEY";
 				break;
-    		case SpriteType::WALL:
-    		    cout << "-WALL";
+			case SpriteType::WALL:
+				cout << "-WALL";
 				break;
 			case SpriteType::BLOCK:
 				cout << "-BLOCK";
 				break;
 			default:
-    		    cout << "-ELSE";
+				cout << "-ELSE";
 				break;
 			}
 		}

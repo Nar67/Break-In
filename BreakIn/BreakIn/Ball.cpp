@@ -96,7 +96,7 @@ void Ball::moveBall(int deltaTime)
             SpriteType type = tileCollided->getType();
             if (type == SpriteType::BLOCK or type == SpriteType::WALL 
                 or type == SpriteType::MONEY or type == SpriteType::KEY
-                or type == SpriteType::CALCULATOR) {
+                or type == SpriteType::CALCULATOR or type == SpriteType::ALARM) {
                 if (collidedFromRight(nextPos_x, nextPos_y, tileCollided) or collidedFromLeft(nextPos_x, nextPos_y, tileCollided))
                 {
                     speed.x *= -1;
@@ -115,6 +115,9 @@ void Ball::moveBall(int deltaTime)
                         break;
                     case SpriteType::MONEY:
                         sound.playMoney();
+                        break;
+                    case SpriteType::ALARM:
+                        map->setAlarm();
                         break;
                     case SpriteType::KEY:
                         sound.playKey();
@@ -163,7 +166,6 @@ void Ball::moveBall(int deltaTime)
             nextPos_y = posBall.y;
             nextPos_x = posBall.x;
             sound.playPlayer();
-            //map->fallTooHard();
         }
         posBall.x = nextPos_x;
         posBall.y = nextPos_y;
@@ -186,7 +188,7 @@ Tile *Ball::getTileColliding(vector<Tile*> tiles)
         if (st == SpriteType::WALL or st == SpriteType::BLOCK
             or st == SpriteType::KEY or st == SpriteType::ARROW
             or st == SpriteType::MONEY or st == SpriteType::DEATH
-            or st == SpriteType::CALCULATOR)
+            or st == SpriteType::CALCULATOR or st == SpriteType::ALARM)
     	{
         	return tile;
     	}
@@ -202,7 +204,7 @@ bool Ball::colliding(vector<Tile*> tiles)
 		if(st == SpriteType::WALL or st == SpriteType::BLOCK
             or st == SpriteType::KEY or st == SpriteType::ARROW
             or st == SpriteType::MONEY or st == SpriteType::DEATH
-            or st == SpriteType::CALCULATOR)
+            or st == SpriteType::CALCULATOR or st == SpriteType::ALARM)
     	{
         	return true;
     	}

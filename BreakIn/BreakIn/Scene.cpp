@@ -116,6 +116,7 @@ void Scene::restart() {
 void Scene::nextRoom() {
 	if (currentRoom < 3) {
 		ball->nextRoom();
+		map->openPath();
 		map->nextRoom();
 		currentRoom++;
 	}
@@ -387,10 +388,6 @@ void Scene::renderCalculator() {
 
 	text.render(zeros + to_string(money), glm::vec2(window_width - 480 * window_width / 640, 315 * window_height / 480),
 		20 * window_width / 640, glm::vec4(1, 1, 1, 1));
-	
-	if (!sound.isCurrentlyPlaying("sound/calculator.ogg")) {
-		sound.playCalculator();
-	}
 
 	if (points > 0)
 		map->swapPoints();
@@ -398,6 +395,7 @@ void Scene::renderCalculator() {
 		swapedPoints = true;
 		map->setCalculator();
 		ball->setStop(false);
+		sound.stopSound("sound/calculator.ogg");
 	}
 
 }
