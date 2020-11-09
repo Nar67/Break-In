@@ -25,6 +25,7 @@ public:
 	void setInitPos();
 	
 	glm::ivec2 getPosition();
+	glm::ivec2 getPos();
 
 	int getPlayerXSize();
 	void setStop(bool stop);

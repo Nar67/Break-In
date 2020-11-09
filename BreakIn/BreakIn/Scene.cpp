@@ -16,6 +16,9 @@
 #define INIT_BALL_X_TILES 8
 #define INIT_BALL_Y_TILES 25
 
+#define INIT_VIGILANT_X_TILES 5
+#define INIT_VIGILANT_Y_TILES 20
+
 #define MAP_OFFSET_Y 894
 
 Scene::Scene()
@@ -23,6 +26,7 @@ Scene::Scene()
 	map = NULL;
 	player = NULL;
 	ball = NULL;
+	vigilant = NULL;
 }
 
 Scene::~Scene()
@@ -33,6 +37,8 @@ Scene::~Scene()
 		delete player;
 	if (ball != NULL)
 		delete ball;
+	if (vigilant != NULL)
+		delete vigilant;
 	for (int i = 0; i < 7; i++)
 		if (texQuad[i] != NULL)
 			delete texQuad[i];
@@ -47,6 +53,7 @@ void Scene::init()
 	loadLevel();
 	loadPlayer();
 	loadBall();
+	loadVigilant();
 	state = SceneState::GAME;
 
 	projection = glm::ortho(0.f, float(CAMERA_WIDTH - 1), float(CAMERA_HEIGHT - 1), 0.f);
@@ -63,9 +70,13 @@ void Scene::update(int deltaTime)
 	currentTime += deltaTime;
 	player->update(deltaTime);
 	ball->update(deltaTime);
+	if (vigilant != NULL)
+		vigilant->update(deltaTime);
 	money = map->getMoney();
 	points = map->getPoints();
 	currentLives = map->getLives();
+	currentRoom = map->getCurrentRoom();
+	alarm = map->getAlarm();
 
 	if (map->getMoneyTiles() == 0 and swapedPoints) {
 		if (currentLevel < 3) {
@@ -73,16 +84,32 @@ void Scene::update(int deltaTime)
 			loadLevel();
 			loadPlayer();
 			loadBall();
+			loadVigilant();
 		}
 		else {
 			state = SceneState::WIN;
 			ball->setStop(true);
+			if(vigilant != NULL)
+				vigilant->setStop(true);
 		}
 			
 	}
 	if (currentLives == 0) {
 		state = SceneState::GAMEOVER;
 		ball->setStop(true);
+		if (vigilant != NULL)
+			vigilant->setStop(true);
+	}
+	if (alarm) {
+		if (currentRoom == map->getAlarmRoom()) {
+			vigilant->setStop(false);
+			renderVigilant = true;
+		}
+		else {
+			renderVigilant = false;
+			vigilant->setStop(true);
+		}
+			
 	}
 
 }
@@ -164,6 +191,15 @@ void Scene::loadBall()
 	ball->setPlayer(player);
 }
 
+void Scene::loadVigilant()
+{
+	vigilant = new Vigilant();
+	vigilant->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+	vigilant->setPosition(glm::vec2(INIT_VIGILANT_X_TILES * 28, INIT_VIGILANT_Y_TILES * 28/2 + MAP_OFFSET_Y));
+	vigilant->setTileMap(map);
+	vigilant->setPlayer(player);
+}
+
 void Scene::initTextQuads() {
 	glm::vec2 geom[2] = { glm::vec2 (0.f, 0.f), glm::vec2(128.f, 128.f) };
 	glm::vec2 texCoords[2] = { glm::vec2(0.f, 0.f), glm::vec2(1.f, 1.f) };
@@ -234,6 +270,8 @@ void Scene::renderGame() {
 	map->render();
 	player->render();
 	ball->render();
+	if (renderVigilant)
+		vigilant->render();
 
 	// Money
 	modelview = glm::translate(glm::mat4(1.0f), glm::vec3(550.f, 909.f, 0.f));

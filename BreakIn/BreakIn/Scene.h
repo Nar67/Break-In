@@ -11,6 +11,7 @@
 #include "Menu.h"
 #include <string>
 #include "Ball.h"
+#include "Vigilant.h"
 
 #define CAMERA_WIDTH 640
 #define CAMERA_HEIGHT 480
@@ -42,6 +43,7 @@ private:
 	void loadLevel();
 	void loadPlayer();
 	void loadBall();
+	void loadVigilant();
 	void renderGame();
 	void renderCalculator();
 	void renderGameOver();
@@ -51,6 +53,7 @@ private:
 	TileMap* map;
 	Player* player;
 	Ball* ball;
+	Vigilant* vigilant;
 
 	ShaderProgram texProgram;
 	float currentTime;
@@ -59,7 +62,7 @@ private:
 	Texture texs[9];
 	Text text;
 	int currentLevel = 1, currentRoom = 1, currentLives = 4, money = 0, points = 0;
-	bool swapedPoints = false;
+	bool swapedPoints = false, alarm = false, renderVigilant= false;
 	const string levels = "levels/level0";
 	int window_width, window_height;
 	SceneState state;
