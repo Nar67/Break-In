@@ -154,7 +154,7 @@ void Game::changeMode(int mode) {
 	{
 	case 0:
 		state = GameState::GAME;
-		sound.stopMenu();
+		sound.stopSound("sound/menu.ogg");
 		scene.restart();
 		scene.init();
 		break;

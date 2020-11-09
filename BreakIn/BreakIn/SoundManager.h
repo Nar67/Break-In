@@ -10,7 +10,7 @@ public:
 	void init();
 	void playWin();
 	void playMenu();
-	void stopMenu();
+	void stopSound(string song);
 	void playMenuMove();
 	void playMenuSelect();
 	void playBrick();
@@ -21,6 +21,7 @@ public:
 	void playGameover();
 	void playPowerUp();
 	void playKey();
+	void playAlarm();
 	bool isCurrentlyPlaying(string song);
 
 private:
@@ -36,7 +37,7 @@ private:
 	string PLAYER_SOUND = "sound/player.ogg";
 	string POWERUP_SOUND = "sound/powerup.ogg";
 	string KEY_SOUND = "sound/key.ogg";
-
+	string ALARM_SOUND = "sound/alarm.ogg";
 
 
 	static irrklang::ISoundEngine* engine;

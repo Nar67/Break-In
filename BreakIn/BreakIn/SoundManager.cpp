@@ -13,8 +13,8 @@ void SoundManager::playMenu() {
 	if (engine) engine->play2D(MENU_SOUND.c_str(), true);
 }
 
-void SoundManager::stopMenu() {
-	if (engine)engine->removeSoundSource(MENU_SOUND.c_str());
+void SoundManager::stopSound(string song) {
+	if (engine)engine->removeSoundSource(song.c_str());
 }
 
 void SoundManager::playMenuMove() {
@@ -32,7 +32,7 @@ void SoundManager::playBrick() {
 }
 
 void SoundManager::playCalculator() {
-	if (engine)engine->play2D(CALCULATOR_SOUND.c_str(), false);
+	if (engine)engine->play2D(CALCULATOR_SOUND.c_str(), true);
 }
 
 void SoundManager::playWall() {
@@ -61,6 +61,10 @@ void SoundManager::playWin() {
 
 void SoundManager::playKey() {
 	if (engine)engine->play2D(KEY_SOUND.c_str(), false);
+}
+
+void SoundManager::playAlarm() {
+	if (engine)engine->play2D(ALARM_SOUND.c_str(), true);
 }
 
 bool SoundManager::isCurrentlyPlaying(string song) {
