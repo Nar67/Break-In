@@ -128,3 +128,8 @@ int Tile::getPoints() {
 SpriteSheet* Tile::getSprite() {
 	return sprite;
 }
+
+void Tile::breakTile()
+{
+	sprite = SpriteManager::getSprite('r');
+}

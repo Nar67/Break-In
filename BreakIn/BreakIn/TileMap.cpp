@@ -142,7 +142,12 @@ void TileMap::removeTile(Tile* tile)
 			map[pos.y * mapSize.x + pos.x] = new Tile(pos.x, pos.y, 'a', program);
 			map[pos.y * mapSize.x + pos.x]->init();
 		}
-	}
+		else
+		{
+			tile->breakTile();
+		}
+		
+    }
 	else if (tile->getType() == SpriteType::KEY) {
 		glm::ivec2 pos = tile->getIndex();
 		map[pos.y * mapSize.x + pos.x]->free();

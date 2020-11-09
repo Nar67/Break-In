@@ -169,6 +169,21 @@ void SpriteSheet::setCoords(char const& c) {
 	case 'q'://calculator bottom
 		texCoordTile[0] = glm::vec2(float(2) / width, float(1) / height);
 		break;
+	case 'r'://broken tile red (todo: create tile sprite)
+		texCoordTile[0] = glm::vec2(float(4) / width, float(1) / height);
+		points = 100;
+		hits = 1;
+		break;
+	case 's'://broken tile white (todo: create tile sprite)
+		texCoordTile[0] = glm::vec2(float(5) / width, float(1) / height);
+		points = 100;
+		hits = 1;
+		break;
+	case 't'://broken tile pink (todo: create tile sprite)
+		texCoordTile[0] = glm::vec2(float(5) / width, float(0) / height);
+		points = 100;
+		hits = 1;
+		break;
 	case 'x': // pink arrow
 		texCoordTile[0] = glm::vec2(float(0) / width, float(0) / height);
 		break;
