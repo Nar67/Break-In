@@ -253,7 +253,7 @@ int TileMap::getPoints() {
 }
 
 void TileMap::deadInside() {
-	lives--;
+	lives -= 1;;
 }
 
 void TileMap::setLives(int lives) {

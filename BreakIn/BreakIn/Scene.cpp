@@ -16,8 +16,8 @@
 #define INIT_BALL_X_TILES 8
 #define INIT_BALL_Y_TILES 25
 
-#define INIT_VIGILANT_X_TILES 5
-#define INIT_VIGILANT_Y_TILES 20
+#define INIT_VIGILANT_X_TILES 1
+#define INIT_VIGILANT_Y_TILES 17
 
 #define MAP_OFFSET_Y 894
 
@@ -72,44 +72,50 @@ void Scene::update(int deltaTime)
 	ball->update(deltaTime);
 	if (vigilant != NULL)
 		vigilant->update(deltaTime);
+
 	money = map->getMoney();
 	points = map->getPoints();
 	currentLives = map->getLives();
 	currentRoom = map->getCurrentRoom();
 	alarm = map->getAlarm();
 
-	if (map->getMoneyTiles() == 0 and swapedPoints) {
-		if (currentLevel < 3) {
-			currentLevel++;
-			loadLevel();
-			loadPlayer();
-			loadBall();
-			loadVigilant();
+	if (state == SceneState::GAME) {
+
+		if (map->getMoneyTiles() == 0 and swapedPoints) {
+			if (currentLevel < 3) {
+				currentLevel++;
+				loadLevel();
+				loadPlayer();
+				loadBall();
+				loadVigilant();
+			}
+			else {
+				state = SceneState::WIN;
+				ball->setStop(true);
+				if (vigilant != NULL)
+					vigilant->setStop(true);
+			}
+
 		}
-		else {
-			state = SceneState::WIN;
-			ball->setStop(true);
-			if(vigilant != NULL)
+		if (alarm) {
+			if (currentRoom == map->getAlarmRoom()) {
+				vigilant->setStop(false);
+				renderVigilant = true;
+			}
+			else {
+				renderVigilant = false;
 				vigilant->setStop(true);
+			}
+
 		}
-			
-	}
-	if (currentLives == 0) {
-		state = SceneState::GAMEOVER;
-		ball->setStop(true);
-		if (vigilant != NULL)
-			vigilant->setStop(true);
-	}
-	if (alarm) {
-		if (currentRoom == map->getAlarmRoom()) {
-			vigilant->setStop(false);
-			renderVigilant = true;
+		if (currentLives == 0) {
+			state = SceneState::GAMEOVER;
+			ball->setStop(true);
+			if (vigilant != NULL)
+				vigilant->setStop(true);
+			if (sound.isCurrentlyPlaying("sound/gameover.ogg"))
+				sound.stopSound("sound/gameover.ogg");
 		}
-		else {
-			renderVigilant = false;
-			vigilant->setStop(true);
-		}
-			
 	}
 
 }
