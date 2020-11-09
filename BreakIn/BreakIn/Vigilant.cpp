@@ -50,8 +50,7 @@ void Vigilant::update(int deltaTime)
 
 		sprite->setPosition(glm::vec2(float(tileMapDispl.x + posVigilant.x), float(tileMapDispl.y + posVigilant.y)));
 	
-	}
-
+	} 
 }
 
 
