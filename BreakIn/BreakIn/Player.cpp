@@ -27,7 +27,7 @@ Player::~Player()
 
 void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 {
-	spritesheet.loadFromFile("images/playerSprite.jpg", TEXTURE_PIXEL_FORMAT_RGBA);
+	spritesheet.loadFromFile("images/playerAnimations.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	tileMapDispl = tileMapPos;
 	
 	sprite = Sprite::createSprite(glm::ivec2(PLAYER_SIZE_X, PLAYER_SIZE_Y), glm::vec2(0.25, 0.25), &spritesheet, &shaderProgram);
@@ -35,37 +35,38 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 	sprite->setNumberAnimations(10);
 	
 	sprite->setAnimationSpeed(IDLE, 8);
-	sprite->addKeyframe(IDLE, glm::vec2(0.25f, 0.f));
+	sprite->addKeyframe(IDLE, glm::vec2(0.f, 0.5f));
 
 	sprite->setAnimationSpeed(UP, 8);
-	sprite->addKeyframe(UP, glm::vec2(0.f, 0.2f));
+	sprite->addKeyframe(UP, glm::vec2(0.f, 0.f));
 
 	sprite->setAnimationSpeed(UPRIGHT, 8);
-	sprite->addKeyframe(UPRIGHT, glm::vec2(0.2f, 0.2f));
+	sprite->addKeyframe(UPRIGHT, glm::vec2(0.25f, 0.f));
 
 	sprite->setAnimationSpeed(RIGHT, 8);
-	sprite->addKeyframe(RIGHT, glm::vec2(0.4f, 0.f));
+	sprite->addKeyframe(RIGHT, glm::vec2(0.5f, 0.f));
 
 	sprite->setAnimationSpeed(DOWNRIGHT, 8);
-	sprite->addKeyframe(DOWNRIGHT, glm::vec2(0.4f, 0.2f));
+	sprite->addKeyframe(DOWNRIGHT, glm::vec2(0.75f, 0.f));
 
 	sprite->setAnimationSpeed(DOWN, 8);
-	sprite->addKeyframe(DOWN, glm::vec2(0.f, 0.f));
+	sprite->addKeyframe(DOWN, glm::vec2(0.f, 0.25f));
 
 	sprite->setAnimationSpeed(DOWNLEFT, 8);
-	sprite->addKeyframe(DOWNLEFT, glm::vec2(0.6f, 0.2f));
+	sprite->addKeyframe(DOWNLEFT, glm::vec2(0.25f, 0.25f));
 
 	sprite->setAnimationSpeed(LEFT, 8);
-	sprite->addKeyframe(LEFT, glm::vec2(0.6f, 0.f));
+	sprite->addKeyframe(LEFT, glm::vec2(0.5f, 0.25f));
 
 	sprite->setAnimationSpeed(UPLEFT, 8);
-	sprite->addKeyframe(UPLEFT, glm::vec2(0.f, 0.4f));
+	sprite->addKeyframe(UPLEFT, glm::vec2(0.75f, 0.25f));
 
-	sprite->setAnimationSpeed(DEAD, 2);
-	sprite->addKeyframe(DEAD, glm::vec2(0.2f, 0.4f));
-	sprite->addKeyframe(DEAD, glm::vec2(0.4f, 0.4f));
-	sprite->addKeyframe(DEAD, glm::vec2(0.6f, 0.4f));
-	sprite->addKeyframe(DEAD, glm::vec2(0.6f, 0.f));
+	sprite->setAnimationSpeed(DEAD, 4);
+	sprite->addKeyframe(DEAD, glm::vec2(0.25f, 0.5f));
+	sprite->addKeyframe(DEAD, glm::vec2(0.5f, 0.5f));
+	sprite->addKeyframe(DEAD, glm::vec2(0.75f, 0.5f));
+	sprite->addKeyframe(DEAD, glm::vec2(0.f, 0.75f));
+	sprite->addKeyframe(DEAD, glm::vec2(0.25f, 0.75f));
 
 	sprite->changeAnimation(IDLE);
 
