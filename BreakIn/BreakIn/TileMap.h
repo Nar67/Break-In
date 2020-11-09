@@ -49,8 +49,11 @@ public:
 	void deadInside();
 	void setLives(int lives);
 	int getLives();
+	int getCurrentRoom();
 	void setAlarm();
 	void openPath();
+	bool getAlarm();
+	int getAlarmRoom();
 
 private:
 	bool loadLevel();

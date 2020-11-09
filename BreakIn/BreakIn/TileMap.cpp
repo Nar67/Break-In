@@ -62,7 +62,7 @@ void TileMap::nextRoom() {
 			map[j * mapSize.x + i]->nextRoom();
 	}
 	if (alarm) {
-		if (room == alarm)
+		if (room == alarmRoom)
 			sound.playAlarm();
 		else
 			sound.stopSound("sound/alarm.ogg");
@@ -210,17 +210,13 @@ void TileMap::openPath() {
 		tile = 'x';
 		break;
 	}
-	int k = 64 - room * 32;
-	int j = 64;
+	int j = 64 - room * 32;
 
 	//int j = 32;
 	for (int i = 5; i < 11; ++i) {
-		map[k * mapSize.x + i]->free();
-		map[k * mapSize.x + i] = new Tile(i, k, 'a', program);
-		map[k * mapSize.x + i]->init();
-		map[(k + 1) * mapSize.x + i]->free();
-		map[(k + 1) * mapSize.x + i] = new Tile(i, (k + 1), 'a', program);
-		map[(k + 1) * mapSize.x + i]->init();
+		map[j * mapSize.x + i]->free();
+		map[j * mapSize.x + i] = new Tile(i, j, 'a', program);
+		map[j * mapSize.x + i]->init();
 		map[(j + 1) * mapSize.x + i]->free();
 		map[(j + 1) * mapSize.x + i] = new Tile(i, (j + 1), tile, program);
 		map[(j + 1) * mapSize.x + i]->init();
@@ -268,12 +264,24 @@ int TileMap::getLives() {
 	return lives;
 }
 
+int TileMap::getCurrentRoom() {
+	return room + 1;
+}
+
 void TileMap::setAlarm() {
 	if (!alarm) {
 		alarm = true;
 		alarmRoom = room;
 		sound.playAlarm();
 	}
+}
+
+bool TileMap::getAlarm() {
+	return alarm;
+}
+
+int TileMap::getAlarmRoom() {
+	return alarmRoom +1;
 }
 
 void TileMap::printMap()

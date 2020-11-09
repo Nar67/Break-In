@@ -76,6 +76,8 @@ void Game::keyPressed(int key)
 			state = GameState::MENU;
 			if (!sound.isCurrentlyPlaying("sound/menu.ogg"))
 				sound.playMenu();
+			if (sound.isCurrentlyPlaying("sound/alarm.ogg"))
+				sound.stopSound("sound/alarm.ogg");
 		}
 			
 

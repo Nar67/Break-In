@@ -32,34 +32,35 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 
 void Player::update(int deltaTime)
 {
+	sprite->update(deltaTime);
 	if (!stop) {
 
 		if (Game::instance().getSpecialKey(GLUT_KEY_LEFT))
 		{
-			posPlayer.x -= 2;
+			posPlayer.x -= 3;
 			if (posPlayer.x < -4)
-				posPlayer.x += 2;
+				posPlayer.x += 3;
 
 		}
 		else if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT))
 		{
-			posPlayer.x += 2;
+			posPlayer.x += 3;
 			if (posPlayer.x > 13 * 28 - 10)
-				posPlayer.x -= 2;
+				posPlayer.x -= 3;
 		}
 
 		if (Game::instance().getSpecialKey(GLUT_KEY_UP))
 		{
-			posPlayer.y -= 2;
+			posPlayer.y -= 3;
 			if (posPlayer.y < 16 + 894)
-				posPlayer.y += 2;
+				posPlayer.y += 3;
 
 		}
 		else if (Game::instance().getSpecialKey(GLUT_KEY_DOWN))
 		{
-			posPlayer.y += 2;
+			posPlayer.y += 3;
 			if (posPlayer.y > 27 * 16 - 14 + 894)
-				posPlayer.y -= 2;
+				posPlayer.y -= 3;
 		}
 
 		sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
@@ -91,6 +92,9 @@ void Player::setInitPos() {
 glm::ivec2 Player::getPosition()
 {
 	return posPlayer + tileMapDispl;
+}
+glm::ivec2 Player::getPos() {
+	return posPlayer;
 }
 
 int Player::getPlayerXSize()

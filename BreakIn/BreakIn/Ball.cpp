@@ -233,10 +233,26 @@ bool Ball::collidedFromTop(int next_x, int next_y, Tile* tile)
 
 bool Ball::collidedWithPlayer(int next_x, int next_y)
 {
+    /*glm::vec2 posPlayer = player->getPosition();
+    int minX, maxX, maxY, nextX, nextY;
+    int bbminX, bbmaxX, bbminY, bbmaxY;
+    //espai que ocupa la ball
+    minX = next_x;
+    maxX = next_x + BALL_SIZE_X;
+    maxY = next_y + BALL_SIZE_Y;
+    //espai que ocupa el player
+    bbminX = posPlayer.x;
+    bbmaxX = posPlayer.x + 34;
+    bbminY = posPlayer.y;
+    bbmaxY = posPlayer.y + 20;*/
+
+    /*return ((maxX > bbminX) && (minX < bbmaxX ) && 
+        (bbmaxY > maxY) && (maxY > bbminY));*/
     return posBall.y + BALL_SIZE_Y < player->getPosition().y &&
             next_y + BALL_SIZE_Y >= player->getPosition().y &&
             ((next_x > player->getPosition().x && next_x < player->getPosition().x + player->getPlayerXSize() 
             or next_x + BALL_SIZE_X > player->getPosition().x && next_x + BALL_SIZE_X < player->getPosition().x + player->getPlayerXSize()));
+     
 }
 
 bool Ball::outOfScreen(int nextPos_x, int nextPos_y)
