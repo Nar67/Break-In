@@ -155,7 +155,6 @@ void Scene::nextRoom() {
 		ball->nextRoom();
 		map->openPath();
 		map->nextRoom();
-		currentRoom++;
 	}
 		
 }

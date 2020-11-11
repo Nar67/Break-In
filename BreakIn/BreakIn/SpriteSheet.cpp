@@ -117,30 +117,22 @@ void SpriteSheet::setCoords(char const& c) {
 		break;
 	case 'd': //vermell
 		texCoordTile[0] = glm::vec2(float(0) / width, float(1) / height);
-		hits = 2;
 		points = 100;
-		//texCoordTile[0] += halfTexel;
 		break;
 	case 'e'://blau
 		texCoordTile[0] = glm::vec2(float(2) / width, float(0) / height);
-		hits = 1;
-		//texCoordTile[0] += halfTexel;
 		points = 100;
 		break;
 	case 'f'://green
 		texCoordTile[0] = glm::vec2(float(2) / width, float(1) / height);
-		//texCoordTile[0] += halfTexel;
-		hits = 1;
 		points = 100;
 		break;
 	case 'g'://white
 		texCoordTile[0] = glm::vec2(float(0) / width, float(0) / height);
-		hits = 2;
 		points = 100;
 		break;
 	case 'h': //pink
 		texCoordTile[0] = glm::vec2(float(0) / width, float(2) / height);
-		hits = 2;
 		points = 100;
 		break;
 	case 'i': //death
@@ -175,19 +167,20 @@ void SpriteSheet::setCoords(char const& c) {
 		texCoordTile[0] = glm::vec2(float(2) / width, float(1) / height);
 		break;
 	case 'r'://broken tile red (todo: create tile sprite)
-		texCoordTile[0] = glm::vec2(float(4) / width, float(1) / height);
+		texCoordTile[0] = glm::vec2(float(1) / width, float(1) / height);
 		points = 100;
-		hits = 1;
 		break;
 	case 's'://broken tile white (todo: create tile sprite)
-		texCoordTile[0] = glm::vec2(float(5) / width, float(1) / height);
+		texCoordTile[0] = glm::vec2(float(1) / width, float(0) / height);
 		points = 100;
-		hits = 1;
 		break;
 	case 't'://broken tile pink (todo: create tile sprite)
-		texCoordTile[0] = glm::vec2(float(5) / width, float(0) / height);
+		texCoordTile[0] = glm::vec2(float(1) / width, float(2) / height);
 		points = 100;
-		hits = 1;
+		break;
+	case 'u'://broken tile pink2 (todo: create tile sprite)
+		texCoordTile[0] = glm::vec2(float(2) / width, float(2) / height);
+		points = 100;
 		break;
 	case 'x': // pink arrow
 		texCoordTile[0] = glm::vec2(float(0) / width, float(0) / height);
@@ -233,10 +226,6 @@ SpriteType SpriteSheet::getType() {
 
 char SpriteSheet::getId() {
 	return id;
-}
-
-int SpriteSheet::getHits() {
-	return hits;
 }
 
 int SpriteSheet::getPoints() {

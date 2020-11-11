@@ -8,8 +8,6 @@ Tile::Tile(int x, int y, char const& tileType, ShaderProgram& shprog) {
 	yPos = y;
 	sprite = SpriteManager::getSprite(tileType);
 	program = shprog;
-	room = offset = 0;
-	hits = setHits();
 	points = setPoints();
 }
 
@@ -109,16 +107,26 @@ int Tile::getBlockSize()
 
 }
 
-int Tile::setHits() {
-	return sprite->getHits();
-}
 
 int Tile::setPoints() {
 	return sprite->getPoints();
 }
 
-int Tile::decreaseHits() {
-	return --hits;
+
+int Tile::getOffset() {
+	return offset;
+}
+
+void Tile::setOffset(int off) {
+	offset = off;
+}
+
+int Tile::getRoom() {
+	return room;
+}
+
+void Tile::setRoom(int r) {
+	room = r;
 }
 
 int Tile::getPoints() {
@@ -127,9 +135,4 @@ int Tile::getPoints() {
 
 SpriteSheet* Tile::getSprite() {
 	return sprite;
-}
-
-void Tile::breakTile()
-{
-	sprite = SpriteManager::getSprite('r');
 }

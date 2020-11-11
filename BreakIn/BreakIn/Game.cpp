@@ -8,7 +8,7 @@ void Game::init()
 	bPlay = true;
 	glClearColor(0.f, 0.f, 0.f, 1.0f);
 	state = GameState::MENU;
-	//sound.init();
+	sound.init();
 	menu.init();
 	scene.init();
 }

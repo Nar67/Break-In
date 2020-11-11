@@ -134,29 +134,58 @@ void TileMap::removeTile(Tile* tile)
 {
 	if (tile->getType() == SpriteType::BLOCK)
 	{
-		int hits = tile->decreaseHits();
-		if (hits == 0) {
-			points += tile->getPoints();
-			glm::ivec2 pos = tile->getIndex();
-			map[pos.y * mapSize.x + pos.x]->free();
-			map[pos.y * mapSize.x + pos.x] = new Tile(pos.x, pos.y, 'a', program);
-			map[pos.y * mapSize.x + pos.x]->init();
-		}
-		else
+		char c = tile->getSprite()->getId();
+		points += tile->getPoints();
+		glm::ivec2 pos = tile->getIndex();
+				
+		char t;
+		switch (c)
 		{
-			tile->breakTile();
+		case 'd':
+			t = 'r';
+			break;
+		case 'g':
+			t = 's';
+			break;
+		case 'h':
+			t = 't';
+			break;
+		case 't':
+			t = 'u';
+			break;
+		default:
+			t = 'a';
+			break;
 		}
+
+		int offset = tile->getOffset();
+		int room = tile->getRoom();
+		map[pos.y * mapSize.x + pos.x]->free();
+		map[pos.y * mapSize.x + pos.x] = new Tile(pos.x, pos.y, t, program);
+		map[pos.y * mapSize.x + pos.x]->setOffset(offset);
+		map[pos.y * mapSize.x + pos.x]->setRoom(room);
+		map[pos.y * mapSize.x + pos.x]->init();
+		
 		
     }
 	else if (tile->getType() == SpriteType::KEY) {
 		glm::ivec2 pos = tile->getIndex();
+		int offset = tile->getOffset();
+		int room = tile->getRoom();
 		map[pos.y * mapSize.x + pos.x]->free();
 		map[pos.y * mapSize.x + pos.x] = new Tile(pos.x, pos.y, 'a', program);
+		map[pos.y * mapSize.x + pos.x]->setOffset(offset);
+		map[pos.y * mapSize.x + pos.x]->setRoom(room);
 		map[pos.y * mapSize.x + pos.x]->init();
+
 		int newpos = pos.y + 1;
 		if (map[(pos.y - 1) * mapSize.x + pos.x]->getType() == SpriteType::KEY) newpos = pos.y - 1;
+		offset = map[newpos * mapSize.x + pos.x]->getOffset();
+		room = tile->getRoom();
 		map[newpos * mapSize.x + pos.x]->free();
 		map[newpos * mapSize.x + pos.x] = new Tile(pos.x, newpos, 'a', program);
+		map[newpos * mapSize.x + pos.x]->setOffset(offset);
+		map[newpos * mapSize.x + pos.x]->setRoom(room);
 		map[newpos * mapSize.x + pos.x]->init();
 
 		openPath();
@@ -169,24 +198,41 @@ void TileMap::removeTile(Tile* tile)
 		if (c == 'l' or c == 'n')
 			newpos = pos.y + 1;
 
+		int offset = map[pos.y * mapSize.x + pos.x]->getOffset();
+		int room = map[pos.y * mapSize.x + pos.x]->getRoom();
 		map[pos.y * mapSize.x + pos.x]->free();
 		map[pos.y * mapSize.x + pos.x] = new Tile(pos.x, pos.y, 'a', program);
+		map[pos.y * mapSize.x + pos.x]->setOffset(offset);
+		map[pos.y * mapSize.x + pos.x]->setRoom(room);
 		map[pos.y * mapSize.x + pos.x]->init();
 
+		offset = map[newpos * mapSize.x + pos.x]->getOffset();
+		room = map[newpos * mapSize.x + pos.x]->getRoom();
 		map[newpos * mapSize.x + pos.x]->free();
 		map[newpos * mapSize.x + pos.x] = new Tile(pos.x, newpos, 'a', program);
+		map[newpos * mapSize.x + pos.x]->setOffset(offset);
+		map[newpos * mapSize.x + pos.x]->setRoom(room);
 		map[newpos * mapSize.x + pos.x]->init();
 		moneyTiles -= 2;
 	}
 	else if (tile->getType() == SpriteType::CALCULATOR) {
 		glm::ivec2 pos = tile->getIndex();
+		int offset = map[pos.y * mapSize.x + pos.x]->getOffset();
+		int room = map[pos.y * mapSize.x + pos.x]->getRoom();
 		map[pos.y * mapSize.x + pos.x]->free();
 		map[pos.y * mapSize.x + pos.x] = new Tile(pos.x, pos.y, 'a', program);
+		map[pos.y * mapSize.x + pos.x]->setOffset(offset);
+		map[pos.y * mapSize.x + pos.x]->setRoom(room);
 		map[pos.y * mapSize.x + pos.x]->init();
+
 		int newpos = pos.y + 1;
 		if (map[(pos.y - 1) * mapSize.x + pos.x]->getType() == SpriteType::CALCULATOR) newpos = pos.y - 1;
+		offset = map[newpos * mapSize.x + pos.x]->getOffset();
+		room = map[newpos * mapSize.x + pos.x]->getRoom();
 		map[newpos * mapSize.x + pos.x]->free();
 		map[newpos * mapSize.x + pos.x] = new Tile(pos.x, newpos, 'a', program);
+		map[newpos * mapSize.x + pos.x]->setOffset(offset);
+		map[newpos * mapSize.x + pos.x]->setRoom(room);
 		map[newpos * mapSize.x + pos.x]->init();
 		calculator = true;
 	}
@@ -216,14 +262,21 @@ void TileMap::openPath() {
 		break;
 	}
 	int j = 64 - room * 32;
-
-	//int j = 32;
+	int offset, room;
 	for (int i = 5; i < 11; ++i) {
+		offset = map[j * mapSize.x + i]->getOffset();
+		room = map[j * mapSize.x + i]->getRoom();
 		map[j * mapSize.x + i]->free();
 		map[j * mapSize.x + i] = new Tile(i, j, 'a', program);
+		map[j * mapSize.x + i]->setOffset(offset);
+		map[j * mapSize.x + i]->setRoom(room);
 		map[j * mapSize.x + i]->init();
+		offset = map[(j + 1) * mapSize.x + i]->getOffset();
+		room = map[(j + 1) * mapSize.x + i]->getRoom();
 		map[(j + 1) * mapSize.x + i]->free();
 		map[(j + 1) * mapSize.x + i] = new Tile(i, (j + 1), tile, program);
+		map[(j + 1) * mapSize.x + i]->setOffset(offset);
+		map[(j + 1) * mapSize.x + i]->setRoom(room);
 		map[(j + 1) * mapSize.x + i]->init();
 	}
 }

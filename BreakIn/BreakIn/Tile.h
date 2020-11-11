@@ -30,14 +30,18 @@ public:
 	int getPoints();
 	SpriteSheet* getSprite();
 
-	void breakTile();
+	int getOffset();
+	void setOffset(int off);
+	int getRoom();
+	void setRoom(int r);
 
 private:
 	int setHits();
 	int setPoints();
 
 private:
-	int xPos, yPos, room, offset, hits, points;
+	int xPos, yPos, points;
+	int room = 0, offset = 0;
 	vector<float> vertices;
 	bool nRoom = false, pRoom = false;
 
