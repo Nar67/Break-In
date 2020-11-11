@@ -21,7 +21,8 @@ public:
 	void sendVertices();
 	void calculateVertices();
 	SpriteType getType();
-	void changeRoom();
+	void nextRoom();
+	void previousRoom();
 	glm::vec2 getPosition();
 	int getBlockSize();
 	glm::vec2 getIndex();

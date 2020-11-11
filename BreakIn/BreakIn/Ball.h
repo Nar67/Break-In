@@ -56,20 +56,6 @@ private:
 	//debuging funcs
     void printBallTile();
 	void printTile(Tile* tile);
-
-    Tile* getBallTile(glm::vec2 pos);
-	bool isOverlaping(Tile*);
-	bool outOfScreen(int nextPos_x, int nextPos_y);
-	Tile* getTileColliding(vector<Tile*> tiles);
-	bool colliding(vector<Tile*> types);
-	bool collidedFromLeft(int next_x, int next_y, Tile* tile);
-	bool collidedFromRight(int next_x, int next_y, Tile* tile);
-	bool collidedFromBottom(int next_x, int next_y, Tile* tile);
-	bool collidedFromTop(int next_x, int next_y, Tile* tile);
-
-
-	//debuging funcs
-    void printBallTile();
 };
 
 
