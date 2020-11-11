@@ -79,6 +79,7 @@ void Scene::update(int deltaTime)
 	currentLives = map->getLives();
 	currentRoom = map->getCurrentRoom();
 	alarm = map->getAlarm();
+	caught = map->getCaught();
 	
 	if (state == SceneState::GAME) {
 
@@ -116,6 +117,12 @@ void Scene::update(int deltaTime)
 				vigilant->setStop(true);
 			}
 
+		} 
+		if (caught) {
+			vigilant->setStop(true);
+			renderVigilant = false;
+			ball->setVigilant();
+			player->deadAnimation();
 		}
 		if (currentLives == 0) {
 			state = SceneState::GAMEOVER;

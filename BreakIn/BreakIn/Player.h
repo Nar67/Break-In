@@ -30,9 +30,12 @@ public:
 	int getPlayerXSize();
 	void setStop(bool stop);
 	void updateAnimation(const glm::vec2 &posBall);
-	
+	void deadAnimation();
+
+
 private:
-	bool stop = false;
+	bool stop = false, dead = false, t = false;
+	int time;
 	glm::ivec2 tileMapDispl, posPlayer;
 	int jumpAngle, startY;
 	Texture spritesheet;

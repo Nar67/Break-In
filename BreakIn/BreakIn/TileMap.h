@@ -54,6 +54,8 @@ public:
 	void openPath();
 	bool getAlarm();
 	int getAlarmRoom();
+	void setCaught();
+	bool getCaught();
 
 private:
 	bool loadLevel();
@@ -71,7 +73,7 @@ private:
 	ShaderProgram program;
 	string levelFile;
 	SoundManager sound;
-	bool calculator = false, alarm = false;
+	bool calculator = false, alarm = false, caught = false;
 	int alarmRoom;
 };
 

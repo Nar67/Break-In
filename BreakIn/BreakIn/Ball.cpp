@@ -53,7 +53,8 @@ void Ball::update(int deltaTime)
         }
 
         sprite->setPosition(glm::vec2(float(posBall.x), float(posBall.y)));
-    }
+    } 
+  
 }
 
 void Ball::render()
@@ -154,7 +155,8 @@ void Ball::moveBall(int deltaTime)
                 map->deadInside();
                 nextPos_x = INIT_POS_X;
                 nextPos_y = INIT_POS_Y;
-                player->setInitPos();
+                speed = glm::vec2(float(BALL_SPEED), float(BALL_SPEED));
+                player->deadAnimation();
             }
             removeTile(tileCollided);
         }
@@ -358,4 +360,10 @@ void Ball::firstRoom() {
 void Ball::setStop(bool stop) {
     this->stop = stop;
     player->setStop(stop);
+}
+
+void Ball::setVigilant() {
+    posBall.x = INIT_POS_X;
+    posBall.y = INIT_POS_Y;
+    stuck = true;
 }

@@ -332,7 +332,18 @@ void TileMap::setAlarm(bool a) {
 		sound.playAlarm();
 	}
 	alarm = a;
-	
+}
+
+void TileMap::setCaught() {
+	alarm = false;
+	caught = true;
+	sound.stopSound("sound/alarm.ogg");
+}
+
+bool TileMap::getCaught() {
+	bool b = caught;
+	caught = false;
+	return b;
 }
 
 bool TileMap::getAlarm() {

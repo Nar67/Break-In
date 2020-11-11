@@ -61,8 +61,8 @@ private:
 	TexturedQuad* texQuad[9];
 	Texture texs[9];
 	Text text;
-	int currentLevel = 1, currentRoom = 1, currentLives = 4, money = 0, points = 0;
-	bool swapedPoints = false, alarm = false, renderVigilant= false;
+	int currentLevel = 1, currentRoom = 1, currentLives = 1, money = 0, points = 0;
+	bool swapedPoints = false, alarm = false, renderVigilant= false, caught = false;
 	const string levels = "levels/level0";
 	int window_width, window_height;
 	SceneState state;

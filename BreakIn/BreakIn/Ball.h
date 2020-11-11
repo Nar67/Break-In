@@ -27,6 +27,7 @@ public:
 	void nextRoom();
 	void firstRoom();
 	void setStop(bool stop);
+	void setVigilant();
 	
 private:
 	bool stuck, stop = false, arrow = false;

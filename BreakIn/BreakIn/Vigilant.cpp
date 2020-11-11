@@ -59,6 +59,7 @@ void Vigilant::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 
 	sprite->setAnimationSpeed(UPLEFT, 8);
 	sprite->addKeyframe(UPLEFT, glm::vec2(0.75f, 0.5f));
+
 }
 
 void Vigilant::update(int deltaTime)
@@ -80,7 +81,8 @@ void Vigilant::update(int deltaTime)
 		if (collidedWithPlayer()) {
 			sound.playGameover();
 			map->deadInside();
-			player->setInitPos();
+			map->setCaught();
+			player->deadAnimation();
 			posVigilant.x = INIT_POS_X;
 			posVigilant.y = INIT_POS_Y;
 		}

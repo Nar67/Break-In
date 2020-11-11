@@ -75,14 +75,27 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 
 	sprite->setPosition(glm::vec2(float(posPlayer.x), float(posPlayer.y)));
 
+	time = 0;
 }
 
 
 void Player::update(int deltaTime)
 {
 	sprite->update(deltaTime);
+	time += deltaTime;
+	if (dead) {
+		dead = !dead;
+		t = true;
+		sprite->changeAnimation(DEAD);
+	}
+	if (t && time > 1100) {
+		t = !t;
+		setInitPos();
+		sprite->changeAnimation(IDLE);
+		stop = false;
+	}
 	if (!stop) {
-
+		
 		if (Game::instance().getSpecialKey(GLUT_KEY_LEFT))
 		{
 			posPlayer.x -= 3;
@@ -110,6 +123,7 @@ void Player::update(int deltaTime)
 		}
 		sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
 	}
+	
 }
 
 void Player::updateAnimation(const glm::vec2 &posBall)
@@ -158,6 +172,10 @@ void Player::setInitPos() {
 	posPlayer.y = INIT_POS_Y;
 }
 
+void Player::deadAnimation() {
+	dead = true;
+	time = 0;
+}
 
 glm::ivec2 Player::getPosition()
 {
@@ -175,6 +193,7 @@ int Player::getPlayerXSize()
 void Player::setStop(bool stop) {
 	this->stop = stop;
 }
+
 
 
 
