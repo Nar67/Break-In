@@ -31,6 +31,8 @@ private:
 	TileMap* map;
 	Player* player;
 	SoundManager sound;
+
+	void updateAnimation(const glm::vec2 &posPlayer);
 };
 
 #endif // !_VIGILANT_INCLUDE
