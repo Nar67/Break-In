@@ -22,7 +22,11 @@ public:
 	void playPowerUp();
 	void playKey();
 	void playAlarm();
+	void playDeath();
 	bool isCurrentlyPlaying(string song);
+
+	void playBackground();
+	void stopBackground();
 
 private:
 	string WIN_SOUND = "sound/win.ogg";
@@ -38,6 +42,8 @@ private:
 	string POWERUP_SOUND = "sound/powerup.ogg";
 	string KEY_SOUND = "sound/key.ogg";
 	string ALARM_SOUND = "sound/alarm.ogg";
+	string DEATH_SOUND = "sound/death.ogg";
+	string BACKGROUND_SOUND = "sound/background.ogg";
 
 
 	static irrklang::ISoundEngine* engine;

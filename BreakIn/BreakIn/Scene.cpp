@@ -96,6 +96,13 @@ void Scene::update(int deltaTime)
 				ball->setStop(true);
 				if (vigilant != NULL)
 					vigilant->setStop(true);
+				if (sound.isCurrentlyPlaying("sound/gameover.ogg"))
+					sound.stopSound("sound/gameover.ogg");
+				if (sound.isCurrentlyPlaying("sound/alarm.ogg"))
+					sound.stopSound("sound/alarm.ogg");
+				if (sound.isCurrentlyPlaying("sound/background.ogg"))
+					sound.stopBackground();
+				sound.playWin();
 			}
 
 		}
@@ -119,6 +126,9 @@ void Scene::update(int deltaTime)
 				sound.stopSound("sound/gameover.ogg");
 			if (sound.isCurrentlyPlaying("sound/alarm.ogg"))
 				sound.stopSound("sound/alarm.ogg");
+			if (sound.isCurrentlyPlaying("sound/background.ogg"))
+				sound.stopBackground();
+			sound.playDeath();
 		}
 	}
 

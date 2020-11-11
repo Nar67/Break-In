@@ -78,6 +78,8 @@ void Game::keyPressed(int key)
 				sound.playMenu();
 			if (sound.isCurrentlyPlaying("sound/alarm.ogg"))
 				sound.stopSound("sound/alarm.ogg");
+			if (sound.isCurrentlyPlaying("sound/background.ogg"))
+				sound.stopBackground();
 		}
 			
 
@@ -159,6 +161,7 @@ void Game::changeMode(int mode) {
 		sound.stopSound("sound/menu.ogg");
 		scene.restart();
 		scene.init();
+		sound.playBackground();
 		break;
 	case 1:
 		state = GameState::INSTRUCTIONS;

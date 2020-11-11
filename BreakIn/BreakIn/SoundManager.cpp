@@ -10,7 +10,9 @@ void SoundManager::init() {
 }
 
 void SoundManager::playMenu() {
-	if (engine) engine->play2D(MENU_SOUND.c_str(), true);
+	if (engine) {
+		engine->play2D(MENU_SOUND.c_str(), true);
+	}
 }
 
 void SoundManager::stopSound(string song) {
@@ -67,6 +69,24 @@ void SoundManager::playAlarm() {
 	if (engine)engine->play2D(ALARM_SOUND.c_str(), true);
 }
 
+void SoundManager::playDeath() {
+	if (engine)engine->play2D(DEATH_SOUND.c_str(), false);
+}
+
 bool SoundManager::isCurrentlyPlaying(string song) {
 	if (engine) return engine->isCurrentlyPlaying(song.c_str());
+}
+
+void SoundManager::playBackground() {
+	if (engine) {
+		backgroundMusic = engine->play2D(BACKGROUND_SOUND.c_str(), true, false, true);
+		backgroundMusic->setVolume(0.06);
+	}
+}
+
+void SoundManager::stopBackground() {
+	if (backgroundMusic) {
+		backgroundMusic->stop();
+		backgroundMusic->drop();
+	}
 }
