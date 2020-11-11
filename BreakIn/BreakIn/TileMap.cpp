@@ -245,8 +245,8 @@ int TileMap::getMoneyTiles() {
 }
 
 void TileMap::swapPoints() {
-	money += 15;
-	points -= 15;
+	money += 10;
+	points -= 10;
 }
 
 void TileMap::setPoints(int points) {
@@ -258,7 +258,7 @@ int TileMap::getPoints() {
 }
 
 void TileMap::deadInside() {
-	lives -= 1;;
+	lives--;
 }
 
 void TileMap::setLives(int lives) {
@@ -273,12 +273,13 @@ int TileMap::getCurrentRoom() {
 	return room + 1;
 }
 
-void TileMap::setAlarm() {
-	if (!alarm) {
-		alarm = true;
+void TileMap::setAlarm(bool a) {
+	if (a && !alarm) {
 		alarmRoom = room;
 		sound.playAlarm();
 	}
+	alarm = a;
+	
 }
 
 bool TileMap::getAlarm() {

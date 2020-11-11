@@ -6,8 +6,8 @@
 #define VIGILANT_SIZE_Y 28/2
 
 #define MAP_OFFSET_Y 894
-#define INIT_POS_X 6.5 * 28
-#define INIT_POS_Y 25 * 28/2 + MAP_OFFSET_Y
+#define INIT_POS_X 1 * 28
+#define INIT_POS_Y 17 * 28/2 + MAP_OFFSET_Y
 
 Vigilant::Vigilant()
 {
@@ -32,11 +32,6 @@ void Vigilant::update(int deltaTime)
 	sprite->update(deltaTime);
 
 	if (!stop) {
-		if (collidedWithPlayer()) {
-			sound.playGameover();
-			map->deadInside();
-			player->setInitPos();
-		}
 
 		glm::vec2 posPlayer = player->getPos();
 		if (posVigilant.x < posPlayer.x)
@@ -47,6 +42,14 @@ void Vigilant::update(int deltaTime)
 			posVigilant.y += 1;
 		else
 			posVigilant.y -= 1;
+
+		if (collidedWithPlayer()) {
+			sound.playGameover();
+			map->deadInside();
+			player->setInitPos();
+			posVigilant.x = INIT_POS_X;
+			posVigilant.y = INIT_POS_Y;
+		}
 
 		sprite->setPosition(glm::vec2(float(tileMapDispl.x + posVigilant.x), float(tileMapDispl.y + posVigilant.y)));
 	

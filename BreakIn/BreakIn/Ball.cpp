@@ -26,7 +26,6 @@ void Ball::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
     tileMap = tileMapPos;
     speed = glm::vec2(float(BALL_SPEED), float(BALL_SPEED));
     sprite->setPosition(glm::vec2(float(posBall.x), float(posBall.y)));
-    room = false;
     stuck = true;
 }
 
@@ -58,6 +57,8 @@ void Ball::render()
 
 void Ball::setTileMap(TileMap *tileMap)
 {
+    if (map != NULL)
+        map = NULL;
 	map = tileMap;
 }
 
@@ -113,11 +114,10 @@ void Ball::moveBall(int deltaTime)
                         sound.playMoney();
                         break;
                     case SpriteType::ALARM:
-                        map->setAlarm();
+                        map->setAlarm(true);
                         break;
                     case SpriteType::KEY:
                         sound.playKey();
-                        room = true;
                         break;
                     case SpriteType::CALCULATOR:
                         sound.playCalculator();
@@ -128,20 +128,17 @@ void Ball::moveBall(int deltaTime)
                         sound.playBrick();
                         break;
                 }
+                arrow = false;
             }
             if (type == SpriteType::ARROW ) {
+                arrow = true;
                 if (nextPos_y < posBall.y) {
-                    if (room) {
-                        map->nextRoom();
-                        room = !room;
-                        //nextPos_y += 400;
-                        offsetRoom += 32;
-                    }
+                    map->nextRoom();
+                    offsetRoom += 32;
                     nextPos_y += 400;
                 }
                 else {
                     map->previousRoom();
-                    room = !room;
                     nextPos_y -= 400;
                     offsetRoom -= 32;
                 }
@@ -156,7 +153,7 @@ void Ball::moveBall(int deltaTime)
             }
             removeTile(tileCollided);
         }
-        if(collidedWithPlayer(nextPos_x, nextPos_y))
+        if(!arrow && collidedWithPlayer(nextPos_x, nextPos_y))
         {
             speed.y *= -1;
             nextPos_y = posBall.y;

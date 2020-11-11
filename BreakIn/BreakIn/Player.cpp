@@ -142,6 +142,8 @@ void Player::render()
 
 void Player::setTileMap(TileMap *tileMap)
 {
+	if (map != NULL)
+		map = NULL;
 	map = tileMap;
 }
 

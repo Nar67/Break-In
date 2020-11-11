@@ -60,6 +60,11 @@ void SpriteSheet::loadSprite() {
 		width = 3;
 		height = 1;
 		break;
+	case SpriteType::BLOCK:
+		tilesheet.loadFromFile("images/crackedBricks.png", TEXTURE_PIXEL_FORMAT_RGBA);
+		width = 3;
+		height = 3;
+		break;
 	default:
 		tilesheet.loadFromFile("images/sprite-sheet.png", TEXTURE_PIXEL_FORMAT_RGBA);
 		width = 12;
@@ -117,24 +122,24 @@ void SpriteSheet::setCoords(char const& c) {
 		//texCoordTile[0] += halfTexel;
 		break;
 	case 'e'://blau
-		texCoordTile[0] = glm::vec2(float(2) / width, float(1) / height);
+		texCoordTile[0] = glm::vec2(float(2) / width, float(0) / height);
 		hits = 1;
 		//texCoordTile[0] += halfTexel;
 		points = 100;
 		break;
 	case 'f'://green
-		texCoordTile[0] = glm::vec2(float(3) / width, float(0) / height);
+		texCoordTile[0] = glm::vec2(float(2) / width, float(1) / height);
 		//texCoordTile[0] += halfTexel;
 		hits = 1;
 		points = 100;
 		break;
 	case 'g'://white
-		texCoordTile[0] = glm::vec2(float(1) / width, float(1) / height);
+		texCoordTile[0] = glm::vec2(float(0) / width, float(0) / height);
 		hits = 2;
 		points = 100;
 		break;
 	case 'h': //pink
-		texCoordTile[0] = glm::vec2(float(1) / width, float(0) / height);
+		texCoordTile[0] = glm::vec2(float(0) / width, float(2) / height);
 		hits = 2;
 		points = 100;
 		break;

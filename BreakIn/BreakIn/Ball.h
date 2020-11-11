@@ -29,7 +29,7 @@ public:
 	void setStop(bool stop);
 	
 private:
-	bool stuck, room, stop = false;
+	bool stuck, stop = false, arrow = false;
 	int offsetRoom = 0;
     glm::vec2 speed;
 	glm::ivec2 tileMap, posBall;

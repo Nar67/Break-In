@@ -50,7 +50,7 @@ public:
 	void setLives(int lives);
 	int getLives();
 	int getCurrentRoom();
-	void setAlarm();
+	void setAlarm(bool alarm);
 	void openPath();
 	bool getAlarm();
 	int getAlarmRoom();

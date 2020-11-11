@@ -78,12 +78,13 @@ void Scene::update(int deltaTime)
 	currentLives = map->getLives();
 	currentRoom = map->getCurrentRoom();
 	alarm = map->getAlarm();
-
+	
 	if (state == SceneState::GAME) {
 
 		if (map->getMoneyTiles() == 0 and swapedPoints) {
 			if (currentLevel < 3) {
 				currentLevel++;
+				currentRoom = 1;
 				loadLevel();
 				loadPlayer();
 				loadBall();
@@ -115,6 +116,8 @@ void Scene::update(int deltaTime)
 				vigilant->setStop(true);
 			if (sound.isCurrentlyPlaying("sound/gameover.ogg"))
 				sound.stopSound("sound/gameover.ogg");
+			if (sound.isCurrentlyPlaying("sound/alarm.ogg"))
+				sound.stopSound("sound/alarm.ogg");
 		}
 	}
 
@@ -161,6 +164,15 @@ void Scene::nextBank() {
 		currentLevel++;
 		currentRoom = 1;
 		loadLevel();
+		map->setAlarm(false);
+		renderVigilant = false;
+		vigilant->setStop(true);
+		if (sound.isCurrentlyPlaying("sound/alarm.ogg"))
+			sound.stopSound("sound/alarm.ogg");
+		loadBall();
+		player->setTileMap(map);
+		player->setInitPos();
+		loadVigilant();
 	}
 }
 
@@ -173,10 +185,6 @@ void Scene::loadLevel() {
 	map->setMoney(money);
 	map->setPoints(points);
 	map->setLives(currentLives);
-	if (ball != NULL) {
-		ball->setTileMap(map);
-		ball->firstRoom();
-	}
 }
 
 void Scene::loadPlayer() {
@@ -190,6 +198,8 @@ void Scene::loadPlayer() {
 
 void Scene::loadBall()
 {
+	if (ball != NULL)
+		ball = NULL;
 	ball = new Ball();
 	ball->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
 	ball->setPosition(glm::vec2(INIT_BALL_X_TILES * 28, INIT_BALL_Y_TILES * 28/2 + MAP_OFFSET_Y));
