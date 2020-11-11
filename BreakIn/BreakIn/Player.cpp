@@ -83,6 +83,7 @@ void Player::update(int deltaTime)
 {
 	sprite->update(deltaTime);
 	time += deltaTime;
+	play = false;
 	if (dead) {
 		dead = !dead;
 		t = true;
@@ -93,6 +94,7 @@ void Player::update(int deltaTime)
 		setInitPos();
 		sprite->changeAnimation(IDLE);
 		stop = false;
+		play = true;
 	}
 	if (!stop) {
 		
@@ -192,6 +194,10 @@ int Player::getPlayerXSize()
 
 void Player::setStop(bool stop) {
 	this->stop = stop;
+}
+
+bool Player::getPlay() {
+	return play;
 }
 
 

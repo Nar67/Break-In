@@ -121,7 +121,7 @@ void Scene::update(int deltaTime)
 		if (caught) {
 			vigilant->setStop(true);
 			renderVigilant = false;
-			ball->setVigilant();
+			ball->setStop(true);
 			player->deadAnimation();
 		}
 		if (currentLives == 0) {

@@ -31,10 +31,11 @@ public:
 	void setStop(bool stop);
 	void updateAnimation(const glm::vec2 &posBall);
 	void deadAnimation();
+	bool getPlay();
 
 
 private:
-	bool stop = false, dead = false, t = false;
+	bool stop = false, dead = false, t = false, play = false;
 	int time;
 	glm::ivec2 tileMapDispl, posPlayer;
 	int jumpAngle, startY;

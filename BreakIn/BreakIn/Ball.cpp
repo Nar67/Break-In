@@ -38,6 +38,7 @@ void Ball::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 void Ball::update(int deltaTime)
 {
 	sprite->update(deltaTime);
+
     if (!stop) {
         if (!stuck)
         {
@@ -54,7 +55,13 @@ void Ball::update(int deltaTime)
 
         sprite->setPosition(glm::vec2(float(posBall.x), float(posBall.y)));
     } 
-  
+    if (player->getPlay()) {
+        stop = false;
+        posBall.x = INIT_POS_X;
+        posBall.y = INIT_POS_Y;
+        stuck = true;
+        speed = glm::vec2(float(BALL_SPEED), float(BALL_SPEED));
+    }
 }
 
 void Ball::render()
@@ -153,6 +160,7 @@ void Ball::moveBall(int deltaTime)
                 stuck = true;
                 sound.playGameover();
                 map->deadInside();
+                setStop(true);
                 nextPos_x = INIT_POS_X;
                 nextPos_y = INIT_POS_Y;
                 speed = glm::vec2(float(BALL_SPEED), float(BALL_SPEED));
@@ -360,10 +368,4 @@ void Ball::firstRoom() {
 void Ball::setStop(bool stop) {
     this->stop = stop;
     player->setStop(stop);
-}
-
-void Ball::setVigilant() {
-    posBall.x = INIT_POS_X;
-    posBall.y = INIT_POS_Y;
-    stuck = true;
 }
