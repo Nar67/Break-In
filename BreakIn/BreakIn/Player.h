@@ -29,6 +29,7 @@ public:
 
 	int getPlayerXSize();
 	void setStop(bool stop);
+	void updateAnimation(const glm::vec2 &posBall);
 	
 private:
 	bool stop = false;

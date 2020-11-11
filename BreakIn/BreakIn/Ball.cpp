@@ -37,6 +37,7 @@ void Ball::update(int deltaTime)
         if (!stuck)
         {
             moveBall(deltaTime);
+            player->updateAnimation(posBall);
         }
         else {
             if (Game::instance().getSpecialKey(GLUT_KEY_LEFT) || Game::instance().getSpecialKey(GLUT_KEY_RIGHT) ||

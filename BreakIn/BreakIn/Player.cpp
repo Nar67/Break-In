@@ -12,6 +12,9 @@
 #define INIT_POS_X 6.5 * 28
 #define INIT_POS_Y 25 * 28/2 + MAP_OFFSET_Y
 
+#define EYE_OFFSET_X 20
+#define EYE_OFFSET_Y 30
+
 enum playerAnims {
 	UP, UPRIGHT, RIGHT, DOWNRIGHT, DOWN, DOWNLEFT, LEFT, UPLEFT, IDLE, DEAD
 };
@@ -84,11 +87,6 @@ void Player::update(int deltaTime)
 		{
 			posPlayer.x -= 3;
 			if (posPlayer.x < -4) posPlayer.x += 3;
-			if(sprite->animation() != DEAD)
-			{
-				sprite->changeAnimation(DEAD);
-			}
-
 		}
 		else if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT))
 		{
@@ -110,8 +108,30 @@ void Player::update(int deltaTime)
 			if (posPlayer.y > 27 * 16 - 14 + 894)
 				posPlayer.y -= 3;
 		}
-
 		sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
+	}
+}
+
+void Player::updateAnimation(const glm::vec2 &posBall)
+{
+	if(posBall.x < posPlayer.x - EYE_OFFSET_X)
+	{
+		if(posBall.y > posPlayer.y + EYE_OFFSET_Y) sprite->changeAnimation(DOWNLEFT);
+		else if (posBall.y < posPlayer.y - EYE_OFFSET_Y) sprite->changeAnimation(UPLEFT);
+		else sprite->changeAnimation(LEFT);
+	}
+	else if(posBall.x > posPlayer.x + EYE_OFFSET_X) 
+	{
+		if(posBall.y > posPlayer.y + EYE_OFFSET_Y) sprite->changeAnimation(DOWNRIGHT);
+		else if(posBall.y < posPlayer.y - EYE_OFFSET_Y) sprite->changeAnimation(UPRIGHT);
+		else sprite->changeAnimation(RIGHT);
+	}
+
+	else 
+	{
+		if(posBall.y > posPlayer.y + EYE_OFFSET_Y) sprite->changeAnimation(DOWN);
+		else if(posBall.y < posPlayer.y - EYE_OFFSET_Y*2) sprite->changeAnimation(UP);
+		else sprite->changeAnimation(IDLE);
 	}
 }
 
@@ -153,7 +173,6 @@ int Player::getPlayerXSize()
 void Player::setStop(bool stop) {
 	this->stop = stop;
 }
-
 
 
 
