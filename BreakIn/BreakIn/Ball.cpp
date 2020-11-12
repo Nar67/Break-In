@@ -91,6 +91,10 @@ void Ball::setPosition(const glm::vec2 &pos)
 
 void Ball::moveBall(int deltaTime)
 {
+    if(Game::instance().getKey('g') or Game::instance().getKey('G'))
+    {
+        godMode = !godMode;
+    }
     playerCollisionCooldown += deltaTime;
     int nextPos_x = posBall.x + speed.x * deltaTime;
     int nextPos_y = posBall.y + speed.y * -deltaTime;
@@ -103,12 +107,17 @@ void Ball::moveBall(int deltaTime)
             float dist = (posBall.x + BALL_RADIUS) - centerPlayer;
             float percent = dist / (player->getPlayerXSize()/2);
             float strength = 1.0f;
+            if(godMode)
+            {
+                strength = 0.f;
+            }
             glm::vec2 oldSpeed = speed;
             speed.x = BALL_SPEED * percent * strength;
             speed.y *= -1;
             speed = normalize(speed) * glm::length(oldSpeed);
             nextPos_y = posBall.y + speed.y;
             nextPos_x = posBall.x + speed.x;
+
             sound.playPlayer();
         }
         Tile *tile = getBallTile(glm::vec2(nextPos_x, nextPos_y)); //get the tile the ball is on

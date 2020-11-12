@@ -29,7 +29,7 @@ public:
 	void setStop(bool stop);
 	
 private:
-	bool stuck, stop = false, arrow = false;
+	bool stuck, stop = false, arrow = false, godMode = false;
 	int playerCollisionCooldown = 0, offsetRoom = 0;
     glm::vec2 speed;
 	glm::ivec2 tileMap, posBall;
