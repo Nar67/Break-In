@@ -5,8 +5,10 @@
 #include "Player.h"
 #include "Game.h"
 
-#define PLAYER_SIZE_X 34
-#define PLAYER_SIZE_Y 46
+#define PLAYER_SIZE_X 48
+#define PLAYER_SIZE_Y 54
+
+#define PLAYER_SPEED 5
 
 #define MAP_OFFSET_Y 894
 #define INIT_POS_X 6.5 * 28
@@ -98,30 +100,23 @@ void Player::update(int deltaTime)
 	}
 	if (!stop) {
 		
-		if (Game::instance().getSpecialKey(GLUT_KEY_LEFT))
+		if (Game::instance().getSpecialKey(GLUT_KEY_LEFT) && posPlayer.x >= -4)
 		{
-			posPlayer.x -= 3;
-			if (posPlayer.x < -4) posPlayer.x += 3;
+			posPlayer.x -= PLAYER_SPEED;
 		}
-		else if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT))
+		else if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT) && posPlayer.x <= 13 * 28 - 10)
 		{
-			posPlayer.x += 3;
-			if (posPlayer.x > 13 * 28 - 10)
-				posPlayer.x -= 3;
+			posPlayer.x += PLAYER_SPEED;
 		}
 
-		if (Game::instance().getSpecialKey(GLUT_KEY_UP))
+		if (Game::instance().getSpecialKey(GLUT_KEY_UP) && posPlayer.y >= 16 + 894)
 		{
-			posPlayer.y -= 3;
-			if (posPlayer.y < 16 + 894)
-				posPlayer.y += 3;
+			posPlayer.y -= PLAYER_SPEED;
 
 		}
-		else if (Game::instance().getSpecialKey(GLUT_KEY_DOWN))
+		else if (Game::instance().getSpecialKey(GLUT_KEY_DOWN) && posPlayer.y <= 27 * 16 - 14 + 894)
 		{
-			posPlayer.y += 3;
-			if (posPlayer.y > 27 * 16 - 14 + 894)
-				posPlayer.y -= 3;
+			posPlayer.y += PLAYER_SPEED;
 		}
 		sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
 	}

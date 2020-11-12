@@ -11,7 +11,7 @@
 
 #define BALL_SIZE_X 20
 #define BALL_SIZE_Y 20
-#define BALL_SPEED 0.1
+#define BALL_SPEED 0.2
 
 #define BALL_RADIUS BALL_SIZE_X
 
@@ -19,7 +19,7 @@
 #define SCREEN_SIZE_Y 476 - BALL_SIZE_Y + MAP_OFFSET_Y //476 = (blockSize/2)*mapSize.y
 
 
-#define BALL_RADIUS BALL_SIZE_X
+#define BALL_RADIUS BALL_SIZE_X/2
 
 #define SCREEN_SIZE_X 448 - BALL_SIZE_X //448 = blockSize*mapSize.x
 #define SCREEN_SIZE_Y 476 - BALL_SIZE_Y + MAP_OFFSET_Y //476 = (blockSize/2)*mapSize.y
@@ -31,7 +31,7 @@ void Ball::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
     sprite = Sprite::createSprite(glm::ivec2(BALL_SIZE_X, BALL_SIZE_Y), glm::vec2(1, 1), &spritesheet, &shaderProgram);
     tileMap = tileMapPos;
     speed = glm::vec2(float(BALL_SPEED), float(BALL_SPEED));
-    sprite->setPosition(glm::vec2(float(posBall.x), float(posBall.y)));
+    setPosition(glm::vec2((player->getPosition().x + player->getPlayerXSize()/2) - BALL_RADIUS, player->getPosition().y - BALL_SIZE_Y));  
     stuck = true;
 }
 
@@ -72,7 +72,9 @@ void Ball::render()
 void Ball::setTileMap(TileMap *tileMap)
 {
     if (map != NULL)
+    {
         map = NULL;
+    }
 	map = tileMap;
 }
 
@@ -89,10 +91,26 @@ void Ball::setPosition(const glm::vec2 &pos)
 
 void Ball::moveBall(int deltaTime)
 {
+    playerCollisionCooldown += deltaTime;
     int nextPos_x = posBall.x + speed.x * deltaTime;
     int nextPos_y = posBall.y + speed.y * -deltaTime;
     if(not outOfScreen(nextPos_x, nextPos_y)) //Ball is not out of screen
     {
+        if(playerCollisionCooldown > 200 && !arrow && collidedWithPlayer(nextPos_x, nextPos_y))
+        {
+            playerCollisionCooldown = 0;
+            float centerPlayer = player->getPosition().x + player->getPlayerXSize()/2;
+            float dist = (posBall.x + BALL_RADIUS) - centerPlayer;
+            float percent = dist / (player->getPlayerXSize()/2);
+            float strength = 1.0f;
+            glm::vec2 oldSpeed = speed;
+            speed.x = BALL_SPEED * percent * strength;
+            speed.y *= -1;
+            speed = normalize(speed) * glm::length(oldSpeed);
+            nextPos_y = posBall.y + speed.y;
+            nextPos_x = posBall.x + speed.x;
+            sound.playPlayer();
+        }
         Tile *tile = getBallTile(glm::vec2(nextPos_x, nextPos_y)); //get the tile the ball is on
 		Tile *tileWithOffsetX = getBallTile(glm::vec2(nextPos_x + BALL_SIZE_X, nextPos_y));
 		Tile *tileWithOffsetY = getBallTile(glm::vec2(nextPos_x, nextPos_y + BALL_SIZE_Y));
@@ -107,16 +125,28 @@ void Ball::moveBall(int deltaTime)
             if (type == SpriteType::BLOCK or type == SpriteType::WALL 
                 or type == SpriteType::MONEY or type == SpriteType::KEY
                 or type == SpriteType::CALCULATOR or type == SpriteType::ALARM) {
-                if (collidedFromRight(nextPos_x, nextPos_y, tileCollided) or collidedFromLeft(nextPos_x, nextPos_y, tileCollided))
+                if (collidedFromRight(nextPos_x, nextPos_y, tileCollided))
                 {
                     speed.x *= -1;
-                    nextPos_x = posBall.x;
+                    nextPos_x = posBall.x + (posBall.x - (tileCollided->getPosition().x + tileCollided->getBlockSize()));
                     nextPos_y = posBall.y;
                 }
-                else if (collidedFromTop(nextPos_x, nextPos_y, tileCollided) or collidedFromBottom(nextPos_x, nextPos_y, tileCollided))
+                else if(collidedFromLeft(nextPos_x, nextPos_y, tileCollided))
+                {
+                    speed.x *= -1;
+                    nextPos_x = posBall.x - ((posBall.x + BALL_SIZE_X)- tileCollided->getPosition().x);
+                    nextPos_y = posBall.y;
+                }
+                else if (collidedFromTop(nextPos_x, nextPos_y, tileCollided))
                 {
                     speed.y *= -1;
-                    nextPos_y = posBall.y;
+                    nextPos_y = posBall.y - ((posBall.y + BALL_SIZE_Y) - tileCollided->getPosition().y);
+                    nextPos_x = posBall.x;
+                }
+                else if(collidedFromBottom(nextPos_x, nextPos_y, tileCollided)) 
+                {
+                    speed.y *= -1;
+                    nextPos_y = posBall.y + (posBall.y - (tileCollided->getPosition().y + tileCollided->getBlockSize()/2));
                     nextPos_x = posBall.x;
                 }
                 switch (type) {
@@ -168,13 +198,7 @@ void Ball::moveBall(int deltaTime)
             }
             removeTile(tileCollided);
         }
-        if(!arrow && collidedWithPlayer(nextPos_x, nextPos_y))
-        {
-            speed.y *= -1;
-            nextPos_y = posBall.y;
-            nextPos_x = posBall.x;
-            sound.playPlayer();
-        }
+
         posBall.x = nextPos_x;
         posBall.y = nextPos_y;
     }
@@ -246,25 +270,18 @@ bool Ball::collidedFromTop(int next_x, int next_y, Tile* tile)
 
 bool Ball::collidedWithPlayer(int next_x, int next_y)
 {
-    /*glm::vec2 posPlayer = player->getPosition();
-    int minX, maxX, maxY, nextX, nextY;
-    int bbminX, bbmaxX, bbminY, bbmaxY;
-    //espai que ocupa la ball
-    minX = next_x;
-    maxX = next_x + BALL_SIZE_X;
-    maxY = next_y + BALL_SIZE_Y;
-    //espai que ocupa el player
-    bbminX = posPlayer.x;
-    bbmaxX = posPlayer.x + 34;
-    bbminY = posPlayer.y;
-    bbmaxY = posPlayer.y + 20;*/
-
-    /*return ((maxX > bbminX) && (minX < bbmaxX ) && 
-        (bbmaxY > maxY) && (maxY > bbminY));*/
-    return posBall.y + BALL_SIZE_Y < player->getPosition().y &&
-            next_y + BALL_SIZE_Y >= player->getPosition().y &&
-            ((next_x > player->getPosition().x && next_x < player->getPosition().x + player->getPlayerXSize() 
-            or next_x + BALL_SIZE_X > player->getPosition().x && next_x + BALL_SIZE_X < player->getPosition().x + player->getPlayerXSize()));
+    glm::vec2 posPlayer = player->getPosition();
+    if(speed.y < 0.0f && (posBall.y + BALL_SIZE_Y < posPlayer.y or posBall.y + BALL_SIZE_Y < posPlayer.y + 10))
+    {
+        if(next_y + BALL_SIZE_Y >= posPlayer.y &&
+                ((next_x > posPlayer.x && next_x < posPlayer.x + player->getPlayerXSize())
+                or (next_x + BALL_SIZE_X > posPlayer.x && next_x + BALL_SIZE_X < posPlayer.x + player->getPlayerXSize())))
+        {
+            posBall.y -= ((posBall.y + BALL_SIZE_Y) - posPlayer.y);
+            return true;
+        }
+    }
+    return false;
      
 }
 
