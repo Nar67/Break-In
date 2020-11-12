@@ -62,6 +62,7 @@ void Ball::update(int deltaTime)
         stuck = true;
         speed = glm::vec2(float(BALL_SPEED), float(BALL_SPEED));
     }
+    
 }
 
 void Ball::render()
@@ -91,10 +92,7 @@ void Ball::setPosition(const glm::vec2 &pos)
 
 void Ball::moveBall(int deltaTime)
 {
-    if(Game::instance().getKey('g') or Game::instance().getKey('G'))
-    {
-        godMode = !godMode;
-    }
+    
     playerCollisionCooldown += deltaTime;
     int nextPos_x = posBall.x + speed.x * deltaTime;
     int nextPos_y = posBall.y + speed.y * -deltaTime;
@@ -195,7 +193,7 @@ void Ball::moveBall(int deltaTime)
                     offsetRoom -= 32;
                 }
             }
-            if (type == SpriteType::DEATH) {
+            if (type == SpriteType::DEATH and !godMode) {
                 stuck = true;
                 sound.playGameover();
                 map->deadInside();
@@ -394,4 +392,12 @@ void Ball::firstRoom() {
 void Ball::setStop(bool stop) {
     this->stop = stop;
     player->setStop(stop);
+}
+
+void Ball::setGodMode(bool g) {
+    godMode = g;
+    if (g)
+        sound.playGodmode();
+    else
+        sound.playNormalmode();
 }

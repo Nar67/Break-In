@@ -23,6 +23,8 @@ public:
 	void playKey();
 	void playAlarm();
 	void playDeath();
+	void playGodmode();
+	void playNormalmode();
 	bool isCurrentlyPlaying(string song);
 
 	void playBackground();
@@ -44,6 +46,8 @@ private:
 	string ALARM_SOUND = "sound/alarm.ogg";
 	string DEATH_SOUND = "sound/death.ogg";
 	string BACKGROUND_SOUND = "sound/background.ogg";
+	string GODMODE_SOUND = "sound/godmode.ogg";
+	string NORMALMODE_SOUND = "sound/normalmode.ogg";
 
 
 	static irrklang::ISoundEngine* engine;

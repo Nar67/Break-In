@@ -223,6 +223,11 @@ void Scene::loadBall()
 	ball->setTileMap(map);
 }
 
+void Scene::setGodeMode(bool g) {
+	if (ball != NULL and state == SceneState::GAME)
+		ball->setGodMode(g);
+}
+
 void Scene::loadVigilant()
 {
 	vigilant = new Vigilant();

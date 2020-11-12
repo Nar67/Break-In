@@ -35,6 +35,7 @@ public:
 	void nextRoom();
 	void nextBank();
 	void restart();
+	void setGodeMode(bool g);
 
 private:
 	void initShaders();

@@ -5,8 +5,8 @@
 #include "Player.h"
 #include "Game.h"
 
-#define PLAYER_SIZE_X 48
-#define PLAYER_SIZE_Y 54
+#define PLAYER_SIZE_X 40
+#define PLAYER_SIZE_Y 45
 
 #define PLAYER_SPEED 5
 

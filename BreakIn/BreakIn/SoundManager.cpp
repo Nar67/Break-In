@@ -73,6 +73,14 @@ void SoundManager::playDeath() {
 	if (engine)engine->play2D(DEATH_SOUND.c_str(), false);
 }
 
+void SoundManager::playGodmode() {
+	if (engine)engine->play2D(GODMODE_SOUND.c_str(), false);
+}
+
+void SoundManager::playNormalmode() {
+	if (engine)engine->play2D(NORMALMODE_SOUND.c_str(), false);
+}
+
 bool SoundManager::isCurrentlyPlaying(string song) {
 	if (engine) return engine->isCurrentlyPlaying(song.c_str());
 }

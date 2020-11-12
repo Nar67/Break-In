@@ -111,6 +111,12 @@ void Game::keyPressed(int key)
 		}
 	}
 
+	if (key == 'g' || key == 'G')
+	{
+		godMode = !godMode;
+		if (state == GameState::GAME)
+			scene.setGodeMode(godMode);
+	}
 
 
 	keys[key] = true;
